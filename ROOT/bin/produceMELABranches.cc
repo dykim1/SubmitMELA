@@ -95,8 +95,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
       TTree* tree = (TTree*)obj;
 
-      float ME_sm, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg, ME_bkg1, ME_bkg2;
-      float mela_Dbkg;
+      float ME_sm_VBF, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg, ME_bkg1, ME_bkg2;
+      float mela_Dbkg_VBF;
       float mela_Dbkg_ggH;
       float mela_Dbkg_WH;
       float mela_Dbkg_ZH;
@@ -204,12 +204,12 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
       // new branches that will need to be filled
       vector<TBranch*> newBranches;
-      newBranches.push_back(tree->Branch("Dbkg", &mela_Dbkg));
+      newBranches.push_back(tree->Branch("Dbkg_VBF", &mela_Dbkg_VBF));
       newBranches.push_back(tree->Branch("Dbkg_ggH", &mela_Dbkg_ggH));
       newBranches.push_back(tree->Branch("Dbkg_WH", &mela_Dbkg_WH));
       newBranches.push_back(tree->Branch("Dbkg_ZH", &mela_Dbkg_ZH));
       // ME
-      newBranches.push_back(tree->Branch("ME_sm", &ME_sm));
+      newBranches.push_back(tree->Branch("ME_sm_VBF", &ME_sm_VBF));
       newBranches.push_back(tree->Branch("ME_sm_ggH", &ME_sm_ggH));
       newBranches.push_back(tree->Branch("ME_sm_WH", &ME_sm_WH));
       newBranches.push_back(tree->Branch("ME_sm_ZH", &ME_sm_ZH));
@@ -237,16 +237,16 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	nb = tree->GetEntry(jentry);   nbytes += nb;
 	
 	mjj = 0;
-	ME_sm = -100;     // ME for SM process VBF H->tt
+	ME_sm_VBF = -100; // ME for SM process VBF H->tt
 	ME_sm_ggH = -100; // ME for ggH + 2 jets
-	ME_sm_WH = -100;  // ME for WH (W->jj)
-	ME_sm_ZH = -100;  // ME for ZH (Z->jj)
+	ME_sm_WH  = -100; // ME for WH (W->jj)
+	ME_sm_ZH  = -100; // ME for ZH (Z->jj)
 	
 	ME_bkg1 = -100;   // ME for Z+2jets with leading jet being first, trailing second
 	ME_bkg2 = -100;   // ME for Z+2jets with trailing jet being first, leading second
 	ME_bkg  = -100;   // Sum of the two above (what we need to use)
 	
-	mela_Dbkg     = -100; // ME_sm / (ME_sm + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_VBF = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
 	mela_Dbkg_ggH = -100; // same for ggH and Ztt
 	mela_Dbkg_WH  = -100; // same for WH and Ztt
 	mela_Dbkg_ZH  = -100; // same for ZH and Ztt
@@ -300,13 +300,13 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    tauCharge2 = q_1;
 	  
 	  calculateME(pDaughters1, pDaughters2, jet1, jet2, tauCharge1, tauCharge2,
-		      ME_sm, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg1, ME_bkg2,
+		      ME_sm_VBF, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg1, ME_bkg2,
 		      Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
 	  
 	  
 	  ME_bkg = ME_bkg1 + ME_bkg2;
 	  
-	  mela_Dbkg = ME_sm / ( ME_sm + ME_bkg);
+	  mela_Dbkg_VBF = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
 	  mela_Dbkg_ggH = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
 	  mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
 	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
@@ -326,7 +326,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
 void calculateME(TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, TLorentzVector jet2,
                  int tauCharge1, int tauCharge2,
-                 float& ME_sm, float& ME_sm_ggH, float& ME_sm_WH, float& ME_sm_ZH,
+                 float& ME_sm_VBF, float& ME_sm_ggH, float& ME_sm_WH, float& ME_sm_ZH,
                  float& ME_bkg1, float& ME_bkg2,
                  float& Q2V1, float& Q2V2, float& costheta1, float& costheta2, float& Phi, float& costhetastar, float& Phi1) {
 
@@ -351,7 +351,7 @@ void calculateME(TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, 
   mela.setCandidateDecayMode(TVar::CandidateDecay_ff);
   mela.setInputEvent(&daughters, &associated, (SimpleParticleCollection_t*)0, false);
   mela.setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::JJVBF);
-  mela.computeProdP(ME_sm, false);
+  mela.computeProdP(ME_sm_VBF, false);
 
   mela.computeVBFAngles(Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
   
