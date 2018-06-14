@@ -1,0 +1,7 @@
+<use name="rootcore"/>
+<use name="root"/>
+<use name="ZZMatrixElement/MELA"/>
+
+<export>
+  <lib   name="1"/>
+</export>

@@ -1,0 +1,8 @@
+<use name="rootcore"/>
+<use name="root"/>
+<use name="PhysicsTools/FWLite"/>
+<use name="PhysicsTools/Utilities"/>
+<use name="DataFormats/FWLite"/>
+<use name="ZZMatrixElement/MELA"/>
+
+<bin name="produceMELABranches" file="produceMELABranches.cc"> </bin>
