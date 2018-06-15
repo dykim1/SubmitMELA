@@ -330,6 +330,7 @@ void calculateME(TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, 
                  float& ME_bkg1, float& ME_bkg2,
                  float& Q2V1, float& Q2V2, float& costheta1, float& costheta2, float& Phi, float& costhetastar, float& Phi1) {
 
+  /*
   std::cout << "Input " << std::endl;
   std::cout << "\t tau1: " << tau1.Pt() << "\t" << tau1.Eta() << "\t" << tau1.Phi() << "\t" << tau1.M() << std::endl;
   std::cout << "\t tau2: " << tau2.Pt() << "\t" << tau2.Eta() << "\t" << tau2.Phi() << "\t" << tau2.M() << std::endl;
@@ -337,6 +338,7 @@ void calculateME(TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, 
   std::cout << "\t jet2: " << jet2.Pt() << "\t" << jet2.Eta() << "\t" << jet2.Phi() << "\t" << jet2.M() << std::endl;
   std::cout << "And charges: " << tauCharge1 << "\t" << tauCharge2 << std::endl;
   std::cout << std::endl;
+  */
 
   // tau lepton 4-vectors
   SimpleParticleCollection_t daughters;
