@@ -22,3 +22,10 @@ ME_*: matrix elements for each signal process
 Q2V1, Q2V2, costheta1, costheta2, costhetastar, Phi, Phi1: kinematic inputs to MELA
 mjj: invariant mass  of two leading (in pT) jets
 ```
+
+To submit jobs to Wisconsin condor system use the following script in test/melaSubmitter.py:
+
+```
+python melaSubmitter.py -sd /hdfs/store/user/ymaravin/test --jobName melaTest1
+```
+Where /hdfs/store/user/ymaravin/test directory contains the files you want to process
