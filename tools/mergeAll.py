@@ -22,8 +22,8 @@ print datasets
 
 
 for iSet in datasets:
-    if iSet <> "Tbar-tW":
-        continue
+    #if iSet <> "WJets":
+    #    continue
 
     listOfFiles = []
     dir = os.popen("ls " + directory + "/*" + iSet + "*root")
@@ -31,9 +31,12 @@ for iSet in datasets:
     for iFile in files:
         if len(re.split("-" + iSet + "_", iFile)) > 1:
             listOfFiles += [iFile[:-1],]
-    command = "hadd " + iSet + "_svFit_MELA.root " 
+
+    command = "cd " + directory + ";hadd ~/" + iSet + "_svFit_MELA.root " 
     for iFile in listOfFiles:
-        command  += iFile + " "
-    #os.system(command)
-    print command
+        newFile = re.split("\/",  iFile)[-1]
+        #command  += iFile + " "
+        command += newFile + " "
+    os.system(command)
+    #print command
 
