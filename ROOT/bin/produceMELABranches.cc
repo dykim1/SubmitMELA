@@ -101,6 +101,13 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       float mela_Dbkg_WH;
       float mela_Dbkg_ZH;
       
+      // Unc
+      float ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg_UP, ME_bkg1_UP, ME_bkg2_UP;
+      float mela_Dbkg_VBF_UP;
+      float mela_Dbkg_ggH_UP;
+      float mela_Dbkg_WH_UP;
+      float mela_Dbkg_ZH_UP;      
+
       // angles
       float Q2V1;
       float Q2V2;
@@ -136,6 +143,9 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       Float_t tau2_eta;
       Float_t tau2_phi;
       Float_t tau2_m;
+
+      Int_t gen_match_1;
+      Int_t gen_match_2;
       
       
       TBranch *b_q_1;
@@ -168,6 +178,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       TBranch *b_tau2_phi;
       TBranch *b_tau2_eta;
       TBranch *b_tau2_m;
+      TBranch *b_gen_match_1;
+      TBranch *b_gen_match_2;
       
       tree->SetBranchAddress("q_1", &q_1, &b_q_1);
       tree->SetBranchAddress("q_2", &q_2, &b_q_2);
@@ -202,6 +214,9 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       tree->SetBranchAddress("eta_2", &eta_2, &b_eta_2);
       tree->SetBranchAddress("m_2", &m_2, &b_m_2);
 
+      tree->SetBranchAddress("gen_match_1",&gen_match_1,&b_gen_match_1);
+      tree->SetBranchAddress("gen_match_2",&gen_match_2,&b_gen_match_2);
+
       // new branches that will need to be filled
       vector<TBranch*> newBranches;
       newBranches.push_back(tree->Branch("Dbkg_VBF", &mela_Dbkg_VBF));
@@ -225,6 +240,20 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       newBranches.push_back(tree->Branch("Phi", &Phi));
       newBranches.push_back(tree->Branch("costhetastar", &costhetastar));
       newBranches.push_back(tree->Branch("Phi1", &Phi1));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_UP", &mela_Dbkg_VBF_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_UP", &mela_Dbkg_ggH_UP));
+      newBranches.push_back(tree->Branch("Dbkg_WH_UP", &mela_Dbkg_WH_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_UP", &mela_Dbkg_ZH_UP));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_UP", &ME_sm_VBF_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_UP", &ME_sm_ggH_UP));
+      newBranches.push_back(tree->Branch("ME_sm_WH_UP", &ME_sm_WH_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_UP", &ME_sm_ZH_UP));
+      newBranches.push_back(tree->Branch("ME_bkg_UP", &ME_bkg_UP));
+      newBranches.push_back(tree->Branch("ME_bkg1_UP", &ME_bkg1_UP));
+      newBranches.push_back(tree->Branch("ME_bkg2_UP", &ME_bkg2_UP));
       
       float mjj = 0;
       newBranches.push_back(tree->Branch("mjj", &mjj));
@@ -250,6 +279,20 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	mela_Dbkg_ggH = -100; // same for ggH and Ztt
 	mela_Dbkg_WH  = -100; // same for WH and Ztt
 	mela_Dbkg_ZH  = -100; // same for ZH and Ztt
+
+	ME_sm_VBF_UP = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_UP = -100; // ME for ggH + 2 jets
+	ME_sm_WH_UP  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_UP  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_UP = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_UP = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_UP  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_UP = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_UP = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_UP  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_UP  = -100; // same for ZH and Ztt
 	
 	// angles inputs to MELA
 	Q2V1 = -100;
@@ -265,6 +308,14 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  TLorentzVector tau1, tau2;
 	  tau1.SetPtEtaPhiM(tau1_pt, tau1_eta, tau1_phi, tau1_m);
 	  tau2.SetPtEtaPhiM(tau2_pt, tau2_eta, tau2_phi, tau2_m);
+
+	  TLorentzVector tau1_scaled, tau2_scaled;
+	  if (gen_match_1==0) tau1_scaled=tau1*0.982;
+	  else if (gen_match_1==1) tau1_scaled=tau1*1.010;
+	  else if (gen_match_1==10) tau1_scaled=tau1*1.004;
+	  if (gen_match_1==0) tau2_scaled=tau2*0.982;
+	  else if (gen_match_1==1) tau2_scaled=tau2*1.010;
+	  else if (gen_match_1==10) tau2_scaled=tau2*1.004;
 	  
 	  // jet 4-vectors
 	  TLorentzVector jet1(0, 0, 1e-3, 1e-3), jet2(0, 0, 1e-3, 1e-3), higgs(0, 0, 0, 0),
@@ -288,8 +339,24 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    pDaughters2 = tau2;
 	  }
 	  
+	  TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
 	  
-	  
+	  TLorentzVector visTau1_scaled, visTau2_scaled;
+	  if (gen_match_1==0) visTau1_scaled=visTau1*0.982;
+	  else if (gen_match_1==1) visTau1_scaled=visTau1*1.010;
+	  else if (gen_match_1==10) visTau1_scaled=visTau1*1.004;
+	  if (gen_match_1==0) visTau2_scaled=visTau2*0.982;
+	  else if (gen_match_1==1) visTau2_scaled=visTau2*1.010;
+	  else if (gen_match_1==10) visTau2_scaled=visTau2*1.004;
+
+	  if ( !trueTau ) {
+	    pDaughters1_scaled = visTau1_scaled;
+	    pDaughters2_scaled = visTau2_scaled;
+	  } else {
+	    pDaughters1_scaled = tau1_scaled;
+	    pDaughters2_scaled = tau2_scaled;
+	  }
+
 	  // Determine the signs of the tau leptons      
 	  int tauCharge1 = q_1;
 	  int tauCharge2 = q_2;
@@ -310,6 +377,61 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  mela_Dbkg_ggH = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
 	  mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
 	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+
+
+
+	  //***************************************************************************
+	  //********************* Two taus shifted up *********************************
+	  //***************************************************************************
+	  // for now, only tt channel
+	  if (gen_match_2==5 or gen_match_1==5){
+	    std::cout << "Two UP    ---  ";
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg1_UP, ME_bkg2_UP,
+			Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
+
+	    ME_bkg_UP = ME_bkg1_UP + ME_bkg2_UP;
+	    
+	    mela_Dbkg_VBF_UP = ME_sm_VBF_UP / ( ME_sm_VBF_UP + ME_bkg_UP);
+	    mela_Dbkg_ggH_UP = ME_sm_ggH_UP / ( ME_sm_ggH_UP + ME_bkg_UP);
+	    mela_Dbkg_WH_UP  = ME_sm_WH_UP / ( ME_sm_WH_UP + ME_bkg_UP);
+	    mela_Dbkg_ZH_UP  = ME_sm_ZH_UP / ( ME_sm_ZH_UP + ME_bkg_UP);
+	  } else {
+	    ME_bkg_UP = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }
+
+          //***************************************************************************
+          //********************** Tau DM0 shifted up *********************************
+          //***************************************************************************
+	  /*
+          if ((gen_match_2==5 && decayMode2==0) or (gen_match_1==5 && decayMode==0)){
+	    std::cout << "DM0 UP    ---  ";
+	    float ES_UP_scale1 = 1.0;
+	    float ES_UP_scale2 = 1.0;
+	    if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
+	    if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
+	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+	    std::cout << "   tes1: " << ES_UP_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+	    
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_DM0_UP, ME_sm_ggH_DM0_UP, ME_sm_WH_DM0_UP, ME_sm_ZH_DM0_UP, ME_bkg1_DM0_UP, ME_bkg2_DM0_UP,
+			Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
+	  } else {
+	    ME_bkg_DM0_UP = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_DM0_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_DM0_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_DM0_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }*/
+
 	}
 	// Fill new branches
 	for(auto branchToFill : newBranches) branchToFill->Fill();
