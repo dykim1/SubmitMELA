@@ -116,6 +116,14 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       float Phi;
       float costhetastar;
       float Phi1;
+
+      float Q2V1_UP;
+      float Q2V2_UP;
+      float costheta1_UP;
+      float costheta2_UP;
+      float Phi_UP;
+      float costhetastar_UP;
+      float Phi1_UP;
       
       Float_t q_1, q_2;
       Float_t m_sv;
@@ -146,7 +154,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
       Int_t gen_match_1;
       Int_t gen_match_2;
-      
+      Int_t decayModeFinding_1;
+      Int_t decayModeFinding_2;
       
       TBranch *b_q_1;
       TBranch *b_q_2;
@@ -180,6 +189,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       TBranch *b_tau2_m;
       TBranch *b_gen_match_1;
       TBranch *b_gen_match_2;
+      TBranch *b_decayModeFinding_1;
+      TBranch *b_decayModeFinding_2;
       
       tree->SetBranchAddress("q_1", &q_1, &b_q_1);
       tree->SetBranchAddress("q_2", &q_2, &b_q_2);
@@ -216,6 +227,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
       tree->SetBranchAddress("gen_match_1",&gen_match_1,&b_gen_match_1);
       tree->SetBranchAddress("gen_match_2",&gen_match_2,&b_gen_match_2);
+      tree->SetBranchAddress("decayModeFinding_1",&decayModeFinding_1,&b_decayModeFinding_1);
+      tree->SetBranchAddress("decayModeFinding_2",&decayModeFinding_2,&b_decayModeFinding_2);
 
       // new branches that will need to be filled
       vector<TBranch*> newBranches;
@@ -254,7 +267,14 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       newBranches.push_back(tree->Branch("ME_bkg_UP", &ME_bkg_UP));
       newBranches.push_back(tree->Branch("ME_bkg1_UP", &ME_bkg1_UP));
       newBranches.push_back(tree->Branch("ME_bkg2_UP", &ME_bkg2_UP));
-      
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_UP", &Q2V1_UP));
+      newBranches.push_back(tree->Branch("Q2V2_UP", &Q2V2_UP));
+      newBranches.push_back(tree->Branch("costheta1_UP", &costheta1_UP));
+      newBranches.push_back(tree->Branch("costheta2_UP", &costheta2_UP));
+      newBranches.push_back(tree->Branch("Phi_UP", &Phi_UP));
+      newBranches.push_back(tree->Branch("costhetastar_UP", &costhetastar_UP));
+      newBranches.push_back(tree->Branch("Phi1_UP", &Phi1_UP));
       float mjj = 0;
       newBranches.push_back(tree->Branch("mjj", &mjj));
 
@@ -309,14 +329,15 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  tau1.SetPtEtaPhiM(tau1_pt, tau1_eta, tau1_phi, tau1_m);
 	  tau2.SetPtEtaPhiM(tau2_pt, tau2_eta, tau2_phi, tau2_m);
 
+	  /*
 	  TLorentzVector tau1_scaled, tau2_scaled;
-	  if (gen_match_1==0) tau1_scaled=tau1*0.982;
-	  else if (gen_match_1==1) tau1_scaled=tau1*1.010;
-	  else if (gen_match_1==10) tau1_scaled=tau1*1.004;
-	  if (gen_match_1==0) tau2_scaled=tau2*0.982;
-	  else if (gen_match_1==1) tau2_scaled=tau2*1.010;
-	  else if (gen_match_1==10) tau2_scaled=tau2*1.004;
-	  
+	  if (decayModeFinding_1==0) tau1_scaled=tau1*0.982;
+	  else if (decayModeFinding_1==1) tau1_scaled=tau1*1.010;
+	  else if (decayModeFinding_1==10) tau1_scaled=tau1*1.004;
+	  if (decayModeFinding_2==0) tau2_scaled=tau2*0.982;
+	  else if (decayModeFinding_2==1) tau2_scaled=tau2*1.010;
+	  else if (decayModeFinding_2==10) tau2_scaled=tau2*1.004;
+	  */
 	  // jet 4-vectors
 	  TLorentzVector jet1(0, 0, 1e-3, 1e-3), jet2(0, 0, 1e-3, 1e-3), higgs(0, 0, 0, 0),
 	    blank1(0, 0, 0, 0);
@@ -338,16 +359,16 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    pDaughters1 = tau1;
 	    pDaughters2 = tau2;
 	  }
-	  
+	  /*
 	  TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
 	  
 	  TLorentzVector visTau1_scaled, visTau2_scaled;
-	  if (gen_match_1==0) visTau1_scaled=visTau1*0.982;
-	  else if (gen_match_1==1) visTau1_scaled=visTau1*1.010;
-	  else if (gen_match_1==10) visTau1_scaled=visTau1*1.004;
-	  if (gen_match_1==0) visTau2_scaled=visTau2*0.982;
-	  else if (gen_match_1==1) visTau2_scaled=visTau2*1.010;
-	  else if (gen_match_1==10) visTau2_scaled=visTau2*1.004;
+	  if (decayModeFinding_1==0) visTau1_scaled=visTau1*0.982;
+	  else if (decayModeFinding_1==1) visTau1_scaled=visTau1*1.010;
+	  else if (decayModeFinding_1==10) visTau1_scaled=visTau1*1.004;
+	  if (decayModeFinding_2==0) visTau2_scaled=visTau2*0.982;
+	  else if (decayModeFinding_2==1) visTau2_scaled=visTau2*1.010;
+	  else if (decayModeFinding_2==10) visTau2_scaled=visTau2*1.004;
 
 	  if ( !trueTau ) {
 	    pDaughters1_scaled = visTau1_scaled;
@@ -356,7 +377,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    pDaughters1_scaled = tau1_scaled;
 	    pDaughters2_scaled = tau2_scaled;
 	  }
-
+	  */
 	  // Determine the signs of the tau leptons      
 	  int tauCharge1 = q_1;
 	  int tauCharge2 = q_2;
@@ -379,16 +400,32 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
 
 
-
+	  double tesSize = 0.006; // 0.6% uncertainty is considered for each decay mode. AN line1275.
+	  double tesUP = 1.0 + tesSize;
+	  double tesDOWN = 1.0 - tesSize;
 	  //***************************************************************************
 	  //********************* Two taus shifted up *********************************
 	  //***************************************************************************
 	  // for now, only tt channel
 	  if (gen_match_2==5 or gen_match_1==5){
 	    std::cout << "Two UP    ---  ";
+	    float ES_UP_scale1 = 1.0;
+	    float ES_UP_scale2 = 1.0;
+	    if(gen_match_1==5) ES_UP_scale1 = tesUP;
+	    if(gen_match_2==5) ES_UP_scale2 = tesUP;
+	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	    std::cout << "   tes1: " << ES_UP_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled = pDaughters1*ES_UP_scale1;
+	    pDaughters2_scaled = pDaughters2*ES_UP_scale2;
+	    // recomputin composite variables in the analysis.
 	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
 			ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg1_UP, ME_bkg2_UP,
-			Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
+			Q2V1_UP, Q2V2_UP, costheta1_UP, costheta2_UP, Phi_UP, costhetastar_UP, Phi1_UP);
 
 	    ME_bkg_UP = ME_bkg1_UP + ME_bkg2_UP;
 	    
