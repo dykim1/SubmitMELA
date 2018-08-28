@@ -101,13 +101,6 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       float mela_Dbkg_WH;
       float mela_Dbkg_ZH;
       
-      // Unc
-      float ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg_UP, ME_bkg1_UP, ME_bkg2_UP;
-      float mela_Dbkg_VBF_UP;
-      float mela_Dbkg_ggH_UP;
-      float mela_Dbkg_WH_UP;
-      float mela_Dbkg_ZH_UP;      
-
       // angles
       float Q2V1;
       float Q2V2;
@@ -117,6 +110,12 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       float costhetastar;
       float Phi1;
 
+      // Uncertainties
+      float ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg_UP, ME_bkg1_UP, ME_bkg2_UP;
+      float mela_Dbkg_VBF_UP;
+      float mela_Dbkg_ggH_UP;
+      float mela_Dbkg_WH_UP;
+      float mela_Dbkg_ZH_UP;      
       float Q2V1_UP;
       float Q2V2_UP;
       float costheta1_UP;
@@ -124,6 +123,98 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       float Phi_UP;
       float costhetastar_UP;
       float Phi1_UP;
+
+      float ME_sm_VBF_DM0_UP, ME_sm_ggH_DM0_UP, ME_sm_WH_DM0_UP, ME_sm_ZH_DM0_UP, ME_bkg_DM0_UP, ME_bkg1_DM0_UP, ME_bkg2_DM0_UP;
+      float mela_Dbkg_VBF_DM0_UP;
+      float mela_Dbkg_ggH_DM0_UP;
+      float mela_Dbkg_WH_DM0_UP;
+      float mela_Dbkg_ZH_DM0_UP;      
+      float Q2V1_DM0_UP;
+      float Q2V2_DM0_UP;
+      float costheta1_DM0_UP;
+      float costheta2_DM0_UP;
+      float Phi_DM0_UP;
+      float costhetastar_DM0_UP;
+      float Phi1_DM0_UP;
+
+      float ME_sm_VBF_DM1_UP, ME_sm_ggH_DM1_UP, ME_sm_WH_DM1_UP, ME_sm_ZH_DM1_UP, ME_bkg_DM1_UP, ME_bkg1_DM1_UP, ME_bkg2_DM1_UP;
+      float mela_Dbkg_VBF_DM1_UP;
+      float mela_Dbkg_ggH_DM1_UP;
+      float mela_Dbkg_WH_DM1_UP;
+      float mela_Dbkg_ZH_DM1_UP;      
+      float Q2V1_DM1_UP;
+      float Q2V2_DM1_UP;
+      float costheta1_DM1_UP;
+      float costheta2_DM1_UP;
+      float Phi_DM1_UP;
+      float costhetastar_DM1_UP;
+      float Phi1_DM1_UP;
+
+      float ME_sm_VBF_DM10_UP, ME_sm_ggH_DM10_UP, ME_sm_WH_DM10_UP, ME_sm_ZH_DM10_UP, ME_bkg_DM10_UP, ME_bkg1_DM10_UP, ME_bkg2_DM10_UP;
+      float mela_Dbkg_VBF_DM10_UP;
+      float mela_Dbkg_ggH_DM10_UP;
+      float mela_Dbkg_WH_DM10_UP;
+      float mela_Dbkg_ZH_DM10_UP;      
+      float Q2V1_DM10_UP;
+      float Q2V2_DM10_UP;
+      float costheta1_DM10_UP;
+      float costheta2_DM10_UP;
+      float Phi_DM10_UP;
+      float costhetastar_DM10_UP;
+      float Phi1_DM10_UP;
+
+      float ME_sm_VBF_DOWN, ME_sm_ggH_DOWN, ME_sm_WH_DOWN, ME_sm_ZH_DOWN, ME_bkg_DOWN, ME_bkg1_DOWN, ME_bkg2_DOWN;
+      float mela_Dbkg_VBF_DOWN;
+      float mela_Dbkg_ggH_DOWN;
+      float mela_Dbkg_WH_DOWN;
+      float mela_Dbkg_ZH_DOWN;      
+      float Q2V1_DOWN;
+      float Q2V2_DOWN;
+      float costheta1_DOWN;
+      float costheta2_DOWN;
+      float Phi_DOWN;
+      float costhetastar_DOWN;
+      float Phi1_DOWN;
+
+      float ME_sm_VBF_DM0_DOWN, ME_sm_ggH_DM0_DOWN, ME_sm_WH_DM0_DOWN, ME_sm_ZH_DM0_DOWN, ME_bkg_DM0_DOWN, ME_bkg1_DM0_DOWN, ME_bkg2_DM0_DOWN;
+      float mela_Dbkg_VBF_DM0_DOWN;
+      float mela_Dbkg_ggH_DM0_DOWN;
+      float mela_Dbkg_WH_DM0_DOWN;
+      float mela_Dbkg_ZH_DM0_DOWN;      
+      float Q2V1_DM0_DOWN;
+      float Q2V2_DM0_DOWN;
+      float costheta1_DM0_DOWN;
+      float costheta2_DM0_DOWN;
+      float Phi_DM0_DOWN;
+      float costhetastar_DM0_DOWN;
+      float Phi1_DM0_DOWN;
+
+      float ME_sm_VBF_DM1_DOWN, ME_sm_ggH_DM1_DOWN, ME_sm_WH_DM1_DOWN, ME_sm_ZH_DM1_DOWN, ME_bkg_DM1_DOWN, ME_bkg1_DM1_DOWN, ME_bkg2_DM1_DOWN;
+      float mela_Dbkg_VBF_DM1_DOWN;
+      float mela_Dbkg_ggH_DM1_DOWN;
+      float mela_Dbkg_WH_DM1_DOWN;
+      float mela_Dbkg_ZH_DM1_DOWN;      
+      float Q2V1_DM1_DOWN;
+      float Q2V2_DM1_DOWN;
+      float costheta1_DM1_DOWN;
+      float costheta2_DM1_DOWN;
+      float Phi_DM1_DOWN;
+      float costhetastar_DM1_DOWN;
+      float Phi1_DM1_DOWN;
+
+      float ME_sm_VBF_DM10_DOWN, ME_sm_ggH_DM10_DOWN, ME_sm_WH_DM10_DOWN, ME_sm_ZH_DM10_DOWN, ME_bkg_DM10_DOWN, ME_bkg1_DM10_DOWN, ME_bkg2_DM10_DOWN;
+      float mela_Dbkg_VBF_DM10_DOWN;
+      float mela_Dbkg_ggH_DM10_DOWN;
+      float mela_Dbkg_WH_DM10_DOWN;
+      float mela_Dbkg_ZH_DM10_DOWN;      
+      float Q2V1_DM10_DOWN;
+      float Q2V2_DM10_DOWN;
+      float costheta1_DM10_DOWN;
+      float costheta2_DM10_DOWN;
+      float Phi_DM10_DOWN;
+      float costhetastar_DM10_DOWN;
+      float Phi1_DM10_DOWN;
+      // unc end
       
       Float_t q_1, q_2;
       Float_t m_sv;
@@ -254,6 +345,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       newBranches.push_back(tree->Branch("costhetastar", &costhetastar));
       newBranches.push_back(tree->Branch("Phi1", &Phi1));
 
+
+
       // Unc
       newBranches.push_back(tree->Branch("Dbkg_VBF_UP", &mela_Dbkg_VBF_UP));
       newBranches.push_back(tree->Branch("Dbkg_ggH_UP", &mela_Dbkg_ggH_UP));
@@ -275,6 +368,164 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       newBranches.push_back(tree->Branch("Phi_UP", &Phi_UP));
       newBranches.push_back(tree->Branch("costhetastar_UP", &costhetastar_UP));
       newBranches.push_back(tree->Branch("Phi1_UP", &Phi1_UP));
+
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_DM0_UP", &mela_Dbkg_VBF_DM0_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_DM0_UP", &mela_Dbkg_ggH_DM0_UP));
+      newBranches.push_back(tree->Branch("Dbkg_WH_DM0_UP", &mela_Dbkg_WH_DM0_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_DM0_UP", &mela_Dbkg_ZH_DM0_UP));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_DM0_UP", &ME_sm_VBF_DM0_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_DM0_UP", &ME_sm_ggH_DM0_UP));
+      newBranches.push_back(tree->Branch("ME_sm_WH_DM0_UP", &ME_sm_WH_DM0_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_DM0_UP", &ME_sm_ZH_DM0_UP));
+      newBranches.push_back(tree->Branch("ME_bkg_DM0_UP", &ME_bkg_DM0_UP));
+      newBranches.push_back(tree->Branch("ME_bkg1_DM0_UP", &ME_bkg1_DM0_UP));
+      newBranches.push_back(tree->Branch("ME_bkg2_DM0_UP", &ME_bkg2_DM0_UP));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_DM0_UP", &Q2V1_DM0_UP));
+      newBranches.push_back(tree->Branch("Q2V2_DM0_UP", &Q2V2_DM0_UP));
+      newBranches.push_back(tree->Branch("costheta1_DM0_UP", &costheta1_DM0_UP));
+      newBranches.push_back(tree->Branch("costheta2_DM0_UP", &costheta2_DM0_UP));
+      newBranches.push_back(tree->Branch("Phi_DM0_UP", &Phi_DM0_UP));
+      newBranches.push_back(tree->Branch("costhetastar_DM0_UP", &costhetastar_DM0_UP));
+      newBranches.push_back(tree->Branch("Phi1_DM0_UP", &Phi1_DM0_UP));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_DM1_UP", &mela_Dbkg_VBF_DM1_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_DM1_UP", &mela_Dbkg_ggH_DM1_UP));
+      newBranches.push_back(tree->Branch("Dbkg_WH_DM1_UP", &mela_Dbkg_WH_DM1_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_DM1_UP", &mela_Dbkg_ZH_DM1_UP));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_DM1_UP", &ME_sm_VBF_DM1_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_DM1_UP", &ME_sm_ggH_DM1_UP));
+      newBranches.push_back(tree->Branch("ME_sm_WH_DM1_UP", &ME_sm_WH_DM1_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_DM1_UP", &ME_sm_ZH_DM1_UP));
+      newBranches.push_back(tree->Branch("ME_bkg_DM1_UP", &ME_bkg_DM1_UP));
+      newBranches.push_back(tree->Branch("ME_bkg1_DM1_UP", &ME_bkg1_DM1_UP));
+      newBranches.push_back(tree->Branch("ME_bkg2_DM1_UP", &ME_bkg2_DM1_UP));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_DM1_UP", &Q2V1_DM1_UP));
+      newBranches.push_back(tree->Branch("Q2V2_DM1_UP", &Q2V2_DM1_UP));
+      newBranches.push_back(tree->Branch("costheta1_DM1_UP", &costheta1_DM1_UP));
+      newBranches.push_back(tree->Branch("costheta2_DM1_UP", &costheta2_DM1_UP));
+      newBranches.push_back(tree->Branch("Phi_DM1_UP", &Phi_DM1_UP));
+      newBranches.push_back(tree->Branch("costhetastar_DM1_UP", &costhetastar_DM1_UP));
+      newBranches.push_back(tree->Branch("Phi1_DM1_UP", &Phi1_DM1_UP));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_DM10_UP", &mela_Dbkg_VBF_DM10_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_DM10_UP", &mela_Dbkg_ggH_DM10_UP));
+      newBranches.push_back(tree->Branch("Dbkg_WH_DM10_UP", &mela_Dbkg_WH_DM10_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_DM10_UP", &mela_Dbkg_ZH_DM10_UP));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_DM10_UP", &ME_sm_VBF_DM10_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_DM10_UP", &ME_sm_ggH_DM10_UP));
+      newBranches.push_back(tree->Branch("ME_sm_WH_DM10_UP", &ME_sm_WH_DM10_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_DM10_UP", &ME_sm_ZH_DM10_UP));
+      newBranches.push_back(tree->Branch("ME_bkg_DM10_UP", &ME_bkg_DM10_UP));
+      newBranches.push_back(tree->Branch("ME_bkg1_DM10_UP", &ME_bkg1_DM10_UP));
+      newBranches.push_back(tree->Branch("ME_bkg2_DM10_UP", &ME_bkg2_DM10_UP));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_DM10_UP", &Q2V1_DM10_UP));
+      newBranches.push_back(tree->Branch("Q2V2_DM10_UP", &Q2V2_DM10_UP));
+      newBranches.push_back(tree->Branch("costheta1_DM10_UP", &costheta1_DM10_UP));
+      newBranches.push_back(tree->Branch("costheta2_DM10_UP", &costheta2_DM10_UP));
+      newBranches.push_back(tree->Branch("Phi_DM10_UP", &Phi_DM10_UP));
+      newBranches.push_back(tree->Branch("costhetastar_DM10_UP", &costhetastar_DM10_UP));
+      newBranches.push_back(tree->Branch("Phi1_DM10_UP", &Phi1_DM10_UP));
+
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_DOWN", &mela_Dbkg_VBF_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_DOWN", &mela_Dbkg_ggH_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_WH_DOWN", &mela_Dbkg_WH_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_DOWN", &mela_Dbkg_ZH_DOWN));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_DOWN", &ME_sm_VBF_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_DOWN", &ME_sm_ggH_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_WH_DOWN", &ME_sm_WH_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_DOWN", &ME_sm_ZH_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg_DOWN", &ME_bkg_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg1_DOWN", &ME_bkg1_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg2_DOWN", &ME_bkg2_DOWN));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_DOWN", &Q2V1_DOWN));
+      newBranches.push_back(tree->Branch("Q2V2_DOWN", &Q2V2_DOWN));
+      newBranches.push_back(tree->Branch("costheta1_DOWN", &costheta1_DOWN));
+      newBranches.push_back(tree->Branch("costheta2_DOWN", &costheta2_DOWN));
+      newBranches.push_back(tree->Branch("Phi_DOWN", &Phi_DOWN));
+      newBranches.push_back(tree->Branch("costhetastar_DOWN", &costhetastar_DOWN));
+      newBranches.push_back(tree->Branch("Phi1_DOWN", &Phi1_DOWN));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_DM0_DOWN", &mela_Dbkg_VBF_DM0_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_DM0_DOWN", &mela_Dbkg_ggH_DM0_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_WH_DM0_DOWN", &mela_Dbkg_WH_DM0_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_DM0_DOWN", &mela_Dbkg_ZH_DM0_DOWN));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_DM0_DOWN", &ME_sm_VBF_DM0_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_DM0_DOWN", &ME_sm_ggH_DM0_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_WH_DM0_DOWN", &ME_sm_WH_DM0_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_DM0_DOWN", &ME_sm_ZH_DM0_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg_DM0_DOWN", &ME_bkg_DM0_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg1_DM0_DOWN", &ME_bkg1_DM0_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg2_DM0_DOWN", &ME_bkg2_DM0_DOWN));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_DM0_DOWN", &Q2V1_DM0_DOWN));
+      newBranches.push_back(tree->Branch("Q2V2_DM0_DOWN", &Q2V2_DM0_DOWN));
+      newBranches.push_back(tree->Branch("costheta1_DM0_DOWN", &costheta1_DM0_DOWN));
+      newBranches.push_back(tree->Branch("costheta2_DM0_DOWN", &costheta2_DM0_DOWN));
+      newBranches.push_back(tree->Branch("Phi_DM0_DOWN", &Phi_DM0_DOWN));
+      newBranches.push_back(tree->Branch("costhetastar_DM0_DOWN", &costhetastar_DM0_DOWN));
+      newBranches.push_back(tree->Branch("Phi1_DM0_DOWN", &Phi1_DM0_DOWN));
+
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_DM1_DOWN", &mela_Dbkg_VBF_DM1_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_DM1_DOWN", &mela_Dbkg_ggH_DM1_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_WH_DM1_DOWN", &mela_Dbkg_WH_DM1_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_DM1_DOWN", &mela_Dbkg_ZH_DM1_DOWN));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_DM1_DOWN", &ME_sm_VBF_DM1_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_DM1_DOWN", &ME_sm_ggH_DM1_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_WH_DM1_DOWN", &ME_sm_WH_DM1_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_DM1_DOWN", &ME_sm_ZH_DM1_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg_DM1_DOWN", &ME_bkg_DM1_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg1_DM1_DOWN", &ME_bkg1_DM1_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg2_DM1_DOWN", &ME_bkg2_DM1_DOWN));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_DM1_DOWN", &Q2V1_DM1_DOWN));
+      newBranches.push_back(tree->Branch("Q2V2_DM1_DOWN", &Q2V2_DM1_DOWN));
+      newBranches.push_back(tree->Branch("costheta1_DM1_DOWN", &costheta1_DM1_DOWN));
+      newBranches.push_back(tree->Branch("costheta2_DM1_DOWN", &costheta2_DM1_DOWN));
+      newBranches.push_back(tree->Branch("Phi_DM1_DOWN", &Phi_DM1_DOWN));
+      newBranches.push_back(tree->Branch("costhetastar_DM1_DOWN", &costhetastar_DM1_DOWN));
+      newBranches.push_back(tree->Branch("Phi1_DM1_DOWN", &Phi1_DM1_DOWN));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_DM10_DOWN", &mela_Dbkg_VBF_DM10_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_DM10_DOWN", &mela_Dbkg_ggH_DM10_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_WH_DM10_DOWN", &mela_Dbkg_WH_DM10_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_DM10_DOWN", &mela_Dbkg_ZH_DM10_DOWN));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_DM10_DOWN", &ME_sm_VBF_DM10_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_DM10_DOWN", &ME_sm_ggH_DM10_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_WH_DM10_DOWN", &ME_sm_WH_DM10_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_DM10_DOWN", &ME_sm_ZH_DM10_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg_DM10_DOWN", &ME_bkg_DM10_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg1_DM10_DOWN", &ME_bkg1_DM10_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg2_DM10_DOWN", &ME_bkg2_DM10_DOWN));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_DM10_DOWN", &Q2V1_DM10_DOWN));
+      newBranches.push_back(tree->Branch("Q2V2_DM10_DOWN", &Q2V2_DM10_DOWN));
+      newBranches.push_back(tree->Branch("costheta1_DM10_DOWN", &costheta1_DM10_DOWN));
+      newBranches.push_back(tree->Branch("costheta2_DM10_DOWN", &costheta2_DM10_DOWN));
+      newBranches.push_back(tree->Branch("Phi_DM10_DOWN", &Phi_DM10_DOWN));
+      newBranches.push_back(tree->Branch("costhetastar_DM10_DOWN", &costhetastar_DM10_DOWN));
+      newBranches.push_back(tree->Branch("Phi1_DM10_DOWN", &Phi1_DM10_DOWN));
+
       float mjj = 0;
       newBranches.push_back(tree->Branch("mjj", &mjj));
 
@@ -300,6 +551,16 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	mela_Dbkg_WH  = -100; // same for WH and Ztt
 	mela_Dbkg_ZH  = -100; // same for ZH and Ztt
 
+	// angles inputs to MELA
+	Q2V1 = -100;
+	Q2V2 = -100;
+	costheta1    = -100;
+	costheta2    = -100;
+	Phi          = -100;
+	costhetastar = -100;
+	Phi1         = -100;
+
+
 	ME_sm_VBF_UP = -100; // ME for SM process VBF H->tt
 	ME_sm_ggH_UP = -100; // ME for ggH + 2 jets
 	ME_sm_WH_UP  = -100; // ME for WH (W->jj)
@@ -313,15 +574,177 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	mela_Dbkg_ggH_UP = -100; // same for ggH and Ztt
 	mela_Dbkg_WH_UP  = -100; // same for WH and Ztt
 	mela_Dbkg_ZH_UP  = -100; // same for ZH and Ztt
-	
+
 	// angles inputs to MELA
-	Q2V1 = -100;
-	Q2V2 = -100;
-	costheta1    = -100;
-	costheta2    = -100;
-	Phi          = -100;
-	costhetastar = -100;
-	Phi1         = -100;
+	Q2V1_UP = -100;
+	Q2V2_UP = -100;
+	costheta1_UP    = -100;
+	costheta2_UP    = -100;
+	Phi_UP          = -100;
+	costhetastar_UP = -100;
+	Phi1_UP         = -100;
+
+	ME_sm_VBF_DM0_UP = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_DM0_UP = -100; // ME for ggH + 2 jets
+	ME_sm_WH_DM0_UP  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_DM0_UP  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_DM0_UP = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_DM0_UP = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_DM0_UP  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_DM0_UP = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_DM0_UP = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_DM0_UP  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_DM0_UP  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_DM0_UP = -100;
+	Q2V2_DM0_UP = -100;
+	costheta1_DM0_UP    = -100;
+	costheta2_DM0_UP    = -100;
+	Phi_DM0_UP          = -100;
+	costhetastar_DM0_UP = -100;
+	Phi1_DM0_UP         = -100;
+
+	ME_sm_VBF_DM1_UP = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_DM1_UP = -100; // ME for ggH + 2 jets
+	ME_sm_WH_DM1_UP  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_DM1_UP  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_DM1_UP = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_DM1_UP = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_DM1_UP  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_DM1_UP = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_DM1_UP = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_DM1_UP  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_DM1_UP  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_DM1_UP = -100;
+	Q2V2_DM1_UP = -100;
+	costheta1_DM1_UP    = -100;
+	costheta2_DM1_UP    = -100;
+	Phi_DM1_UP          = -100;
+	costhetastar_DM1_UP = -100;
+	Phi1_DM1_UP         = -100;
+
+	ME_sm_VBF_DM10_UP = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_DM10_UP = -100; // ME for ggH + 2 jets
+	ME_sm_WH_DM10_UP  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_DM10_UP  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_DM10_UP = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_DM10_UP = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_DM10_UP  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_DM10_UP = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_DM10_UP = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_DM10_UP  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_DM10_UP  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_DM10_UP = -100;
+	Q2V2_DM10_UP = -100;
+	costheta1_DM10_UP    = -100;
+	costheta2_DM10_UP    = -100;
+	Phi_DM10_UP          = -100;
+	costhetastar_DM10_UP = -100;
+	Phi1_DM10_UP         = -100;
+
+	ME_sm_VBF_DOWN = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_DOWN = -100; // ME for ggH + 2 jets
+	ME_sm_WH_DOWN  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_DOWN  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_DOWN = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_DOWN = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_DOWN  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_DOWN = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_DOWN = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_DOWN  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_DOWN  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_DOWN = -100;
+	Q2V2_DOWN = -100;
+	costheta1_DOWN    = -100;
+	costheta2_DOWN    = -100;
+	Phi_DOWN          = -100;
+	costhetastar_DOWN = -100;
+	Phi1_DOWN         = -100;
+
+	ME_sm_VBF_DM0_DOWN = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_DM0_DOWN = -100; // ME for ggH + 2 jets
+	ME_sm_WH_DM0_DOWN  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_DM0_DOWN  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_DM0_DOWN = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_DM0_DOWN = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_DM0_DOWN  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_DM0_DOWN = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_DM0_DOWN = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_DM0_DOWN  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_DM0_DOWN  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_DM0_DOWN = -100;
+	Q2V2_DM0_DOWN = -100;
+	costheta1_DM0_DOWN    = -100;
+	costheta2_DM0_DOWN    = -100;
+	Phi_DM0_DOWN          = -100;
+	costhetastar_DM0_DOWN = -100;
+	Phi1_DM0_DOWN         = -100;
+
+	ME_sm_VBF_DM1_DOWN = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_DM1_DOWN = -100; // ME for ggH + 2 jets
+	ME_sm_WH_DM1_DOWN  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_DM1_DOWN  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_DM1_DOWN = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_DM1_DOWN = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_DM1_DOWN  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_DM1_DOWN = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_DM1_DOWN = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_DM1_DOWN  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_DM1_DOWN  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_DM1_DOWN = -100;
+	Q2V2_DM1_DOWN = -100;
+	costheta1_DM1_DOWN    = -100;
+	costheta2_DM1_DOWN    = -100;
+	Phi_DM1_DOWN          = -100;
+	costhetastar_DM1_DOWN = -100;
+	Phi1_DM1_DOWN         = -100;
+
+	ME_sm_VBF_DM10_DOWN = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_DM10_DOWN = -100; // ME for ggH + 2 jets
+	ME_sm_WH_DM10_DOWN  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_DM10_DOWN  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_DM10_DOWN = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_DM10_DOWN = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_DM10_DOWN  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_DM10_DOWN = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_DM10_DOWN = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_DM10_DOWN  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_DM10_DOWN  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_DM10_DOWN = -100;
+	Q2V2_DM10_DOWN = -100;
+	costheta1_DM10_DOWN    = -100;
+	costheta2_DM10_DOWN    = -100;
+	Phi_DM10_DOWN          = -100;
+	costhetastar_DM10_DOWN = -100;
+	Phi1_DM10_DOWN         = -100;
+
 	
 	if (njets>=2){
 	  
@@ -329,15 +752,6 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  tau1.SetPtEtaPhiM(tau1_pt, tau1_eta, tau1_phi, tau1_m);
 	  tau2.SetPtEtaPhiM(tau2_pt, tau2_eta, tau2_phi, tau2_m);
 
-	  /*
-	  TLorentzVector tau1_scaled, tau2_scaled;
-	  if (decayModeFinding_1==0) tau1_scaled=tau1*0.982;
-	  else if (decayModeFinding_1==1) tau1_scaled=tau1*1.010;
-	  else if (decayModeFinding_1==10) tau1_scaled=tau1*1.004;
-	  if (decayModeFinding_2==0) tau2_scaled=tau2*0.982;
-	  else if (decayModeFinding_2==1) tau2_scaled=tau2*1.010;
-	  else if (decayModeFinding_2==10) tau2_scaled=tau2*1.004;
-	  */
 	  // jet 4-vectors
 	  TLorentzVector jet1(0, 0, 1e-3, 1e-3), jet2(0, 0, 1e-3, 1e-3), higgs(0, 0, 0, 0),
 	    blank1(0, 0, 0, 0);
@@ -359,25 +773,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    pDaughters1 = tau1;
 	    pDaughters2 = tau2;
 	  }
-	  /*
-	  TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	  
-	  TLorentzVector visTau1_scaled, visTau2_scaled;
-	  if (decayModeFinding_1==0) visTau1_scaled=visTau1*0.982;
-	  else if (decayModeFinding_1==1) visTau1_scaled=visTau1*1.010;
-	  else if (decayModeFinding_1==10) visTau1_scaled=visTau1*1.004;
-	  if (decayModeFinding_2==0) visTau2_scaled=visTau2*0.982;
-	  else if (decayModeFinding_2==1) visTau2_scaled=visTau2*1.010;
-	  else if (decayModeFinding_2==10) visTau2_scaled=visTau2*1.004;
 
-	  if ( !trueTau ) {
-	    pDaughters1_scaled = visTau1_scaled;
-	    pDaughters2_scaled = visTau2_scaled;
-	  } else {
-	    pDaughters1_scaled = tau1_scaled;
-	    pDaughters2_scaled = tau2_scaled;
-	  }
-	  */
 	  // Determine the signs of the tau leptons      
 	  int tauCharge1 = q_1;
 	  int tauCharge2 = q_2;
@@ -420,8 +816,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
 	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
 	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled = pDaughters1*ES_UP_scale1;
-	    pDaughters2_scaled = pDaughters2*ES_UP_scale2;
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
 	    // recomputin composite variables in the analysis.
 	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
 			ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg1_UP, ME_bkg2_UP,
@@ -441,25 +837,35 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    mela_Dbkg_WH_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
 	    mela_Dbkg_ZH_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
 	  }
-
           //***************************************************************************
           //********************** Tau DM0 shifted up *********************************
           //***************************************************************************
-	  /*
-          if ((gen_match_2==5 && decayMode2==0) or (gen_match_1==5 && decayMode==0)){
+          if ((gen_match_2==5 && decayModeFinding_2==0) or (gen_match_1==5 && decayModeFinding_1==0)){
 	    std::cout << "DM0 UP    ---  ";
 	    float ES_UP_scale1 = 1.0;
 	    float ES_UP_scale2 = 1.0;
-	    if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
-	    if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
-	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+	    if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
+	    if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
+	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
 	    std::cout << "   tes1: " << ES_UP_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
 	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-	    
+
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	    // recomputin composite variables in the analysis.
 	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
 			ME_sm_VBF_DM0_UP, ME_sm_ggH_DM0_UP, ME_sm_WH_DM0_UP, ME_sm_ZH_DM0_UP, ME_bkg1_DM0_UP, ME_bkg2_DM0_UP,
-			Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
+			Q2V1_DM0_UP, Q2V2_DM0_UP, costheta1_DM0_UP, costheta2_DM0_UP, Phi_DM0_UP, costhetastar_DM0_UP, Phi1_DM0_UP);
+
+	    ME_bkg_DM0_UP = ME_bkg1_DM0_UP + ME_bkg2_DM0_UP;
+	    
+	    mela_Dbkg_VBF_DM0_UP = ME_sm_VBF_DM0_UP / ( ME_sm_VBF_DM0_UP + ME_bkg_DM0_UP);
+	    mela_Dbkg_ggH_DM0_UP = ME_sm_ggH_DM0_UP / ( ME_sm_ggH_DM0_UP + ME_bkg_DM0_UP);
+	    mela_Dbkg_WH_DM0_UP  = ME_sm_WH_DM0_UP / ( ME_sm_WH_DM0_UP + ME_bkg_DM0_UP);
+	    mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH_DM0_UP / ( ME_sm_ZH_DM0_UP + ME_bkg_DM0_UP);
 	  } else {
 	    ME_bkg_DM0_UP = ME_bkg1 + ME_bkg2;
 	    
@@ -467,8 +873,227 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    mela_Dbkg_ggH_DM0_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
 	    mela_Dbkg_WH_DM0_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
 	    mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }*/
+	  }
+	  //***************************************************************************
+	  //********************** Tau DM1 shifted up *********************************
+	  //***************************************************************************
+	  if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
+	    std::cout << "DM1 UP    ---  ";
+	    float ES_UP_scale1 = 1.0;
+	    float ES_UP_scale2 = 1.0;
+	    if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
+	    if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
+	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	    std::cout << "   tes1: " << ES_UP_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
 
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	    // recomputin composite variables in the analysis.
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_DM1_UP, ME_sm_ggH_DM1_UP, ME_sm_WH_DM1_UP, ME_sm_ZH_DM1_UP, ME_bkg1_DM1_UP, ME_bkg2_DM1_UP,
+			Q2V1_DM1_UP, Q2V2_DM1_UP, costheta1_DM1_UP, costheta2_DM1_UP, Phi_DM1_UP, costhetastar_DM1_UP, Phi1_DM1_UP);
+
+	    ME_bkg_DM1_UP = ME_bkg1_DM1_UP + ME_bkg2_DM1_UP;
+	    
+	    mela_Dbkg_VBF_DM1_UP = ME_sm_VBF_DM1_UP / ( ME_sm_VBF_DM1_UP + ME_bkg_DM1_UP);
+	    mela_Dbkg_ggH_DM1_UP = ME_sm_ggH_DM1_UP / ( ME_sm_ggH_DM1_UP + ME_bkg_DM1_UP);
+	    mela_Dbkg_WH_DM1_UP  = ME_sm_WH_DM1_UP / ( ME_sm_WH_DM1_UP + ME_bkg_DM1_UP);
+	    mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH_DM1_UP / ( ME_sm_ZH_DM1_UP + ME_bkg_DM1_UP);
+	  } else {
+	    ME_bkg_DM1_UP = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_DM1_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_DM1_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_DM1_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }
+	  //***************************************************************************
+	  //********************* Tau DM10 shifted up *********************************
+	  //***************************************************************************
+	  if ((decayModeFinding_2==10 && gen_match_2==5) or (decayModeFinding_1==10 && gen_match_1==5)){
+	    std::cout << "DM10 UP    ---  ";
+	    float ES_UP_scale1 = 1.0;
+	    float ES_UP_scale2 = 1.0;
+	    if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
+	    if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
+	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	    std::cout << "   tes1: " << ES_UP_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());	   
+            // recomputin composite variables in the analysis.
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_DM10_UP, ME_sm_ggH_DM10_UP, ME_sm_WH_DM10_UP, ME_sm_ZH_DM10_UP, ME_bkg1_DM10_UP, ME_bkg2_DM10_UP,
+			Q2V1_DM10_UP, Q2V2_DM10_UP, costheta1_DM10_UP, costheta2_DM10_UP, Phi_DM10_UP, costhetastar_DM10_UP, Phi1_DM10_UP);
+
+	    ME_bkg_DM10_UP = ME_bkg1_DM10_UP + ME_bkg2_DM10_UP;
+	    
+	    mela_Dbkg_VBF_DM10_UP = ME_sm_VBF_DM10_UP / ( ME_sm_VBF_DM10_UP + ME_bkg_DM10_UP);
+	    mela_Dbkg_ggH_DM10_UP = ME_sm_ggH_DM10_UP / ( ME_sm_ggH_DM10_UP + ME_bkg_DM10_UP);
+	    mela_Dbkg_WH_DM10_UP  = ME_sm_WH_DM10_UP / ( ME_sm_WH_DM10_UP + ME_bkg_DM10_UP);
+	    mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH_DM10_UP / ( ME_sm_ZH_DM10_UP + ME_bkg_DM10_UP);
+	  } else {
+	    ME_bkg_DM10_UP = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_DM10_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_DM10_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_DM10_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }
+	  //*****************************************************
+	  //************* Two taus shifted down *****************
+	  //*****************************************************
+	  if (gen_match_1==5 or gen_match_2==5){
+	    std::cout << "Two DOWN  ---  ";
+	    float ES_DOWN_scale1 = 1.0;
+	    float ES_DOWN_scale2 = 1.0;
+	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;
+            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	    std::cout << "   tes1: " << ES_DOWN_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+            // recomputin composite variables in the analysis.
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_DOWN, ME_sm_ggH_DOWN, ME_sm_WH_DOWN, ME_sm_ZH_DOWN, ME_bkg1_DOWN, ME_bkg2_DOWN,
+			Q2V1_DOWN, Q2V2_DOWN, costheta1_DOWN, costheta2_DOWN, Phi_DOWN, costhetastar_DOWN, Phi1_DOWN);
+
+	    ME_bkg_DOWN = ME_bkg1_DOWN + ME_bkg2_DOWN;
+	    
+	    mela_Dbkg_VBF_DOWN = ME_sm_VBF_DOWN / ( ME_sm_VBF_DOWN + ME_bkg_DOWN);
+	    mela_Dbkg_ggH_DOWN = ME_sm_ggH_DOWN / ( ME_sm_ggH_DOWN + ME_bkg_DOWN);
+	    mela_Dbkg_WH_DOWN  = ME_sm_WH_DOWN / ( ME_sm_WH_DOWN + ME_bkg_DOWN);
+	    mela_Dbkg_ZH_DOWN  = ME_sm_ZH_DOWN / ( ME_sm_ZH_DOWN + ME_bkg_DOWN);
+	  } else {
+	    ME_bkg_DOWN = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }
+	  //*****************************************************
+	  //************* Tau DM0 shifted down  *****************
+	  //*****************************************************
+	  if ((decayModeFinding_1==0 && gen_match_1==5) or (decayModeFinding_2==0 && gen_match_2==5)){
+	    float ES_DOWN_scale1 = 1.0;
+	    float ES_DOWN_scale2 = 1.0;
+	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	    std::cout << "   tes1: " << ES_DOWN_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+            // recomputin composite variables in the analysis.
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_DM0_DOWN, ME_sm_ggH_DM0_DOWN, ME_sm_WH_DM0_DOWN, ME_sm_ZH_DM0_DOWN, ME_bkg1_DM0_DOWN, ME_bkg2_DM0_DOWN,
+			Q2V1_DM0_DOWN, Q2V2_DM0_DOWN, costheta1_DM0_DOWN, costheta2_DM0_DOWN, Phi_DM0_DOWN, costhetastar_DM0_DOWN, Phi1_DM0_DOWN);
+
+	    ME_bkg_DM0_DOWN = ME_bkg1_DM0_DOWN + ME_bkg2_DM0_DOWN;
+	    
+	    mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF_DM0_DOWN / ( ME_sm_VBF_DM0_DOWN + ME_bkg_DM0_DOWN);
+	    mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH_DM0_DOWN / ( ME_sm_ggH_DM0_DOWN + ME_bkg_DM0_DOWN);
+	    mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH_DM0_DOWN / ( ME_sm_WH_DM0_DOWN + ME_bkg_DM0_DOWN);
+	    mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH_DM0_DOWN / ( ME_sm_ZH_DM0_DOWN + ME_bkg_DM0_DOWN);
+	  } else {
+	    ME_bkg_DM0_DOWN = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }
+	  //*****************************************************
+	  //************** Tau DM1 shifted down *****************
+	  //*****************************************************
+	  if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
+	    std::cout << "DM1 DOWN  ---  ";
+	    float ES_DOWN_scale1 = 1.0;
+	    float ES_DOWN_scale2 = 1.0;
+	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	    std::cout << "   tes1: " << ES_DOWN_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+            // recomputin composite variables in the analysis.
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_DM1_DOWN, ME_sm_ggH_DM1_DOWN, ME_sm_WH_DM1_DOWN, ME_sm_ZH_DM1_DOWN, ME_bkg1_DM1_DOWN, ME_bkg2_DM1_DOWN,
+			Q2V1_DM1_DOWN, Q2V2_DM1_DOWN, costheta1_DM1_DOWN, costheta2_DM1_DOWN, Phi_DM1_DOWN, costhetastar_DM1_DOWN, Phi1_DM1_DOWN);
+
+	    ME_bkg_DM1_DOWN = ME_bkg1_DM1_DOWN + ME_bkg2_DM1_DOWN;
+	    
+	    mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF_DM1_DOWN / ( ME_sm_VBF_DM1_DOWN + ME_bkg_DM1_DOWN);
+	    mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH_DM1_DOWN / ( ME_sm_ggH_DM1_DOWN + ME_bkg_DM1_DOWN);
+	    mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH_DM1_DOWN / ( ME_sm_WH_DM1_DOWN + ME_bkg_DM1_DOWN);
+	    mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH_DM1_DOWN / ( ME_sm_ZH_DM1_DOWN + ME_bkg_DM1_DOWN);
+	  } else {
+	    ME_bkg_DM1_DOWN = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }
+	  //*****************************************************
+	  //************* Tau DM10 shifted down *****************
+	  //*****************************************************
+	  if ((decayModeFinding_1==10 && gen_match_1==5) or (decayModeFinding_2==10 && gen_match_2==5)){
+	    float ES_DOWN_scale1 = 1.0;
+	    float ES_DOWN_scale2 = 1.0;
+	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	    std::cout << "   tes1: " << ES_DOWN_scale1;
+	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+
+	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+            // recomputin composite variables in the analysis.
+	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_DM10_DOWN, ME_sm_ggH_DM10_DOWN, ME_sm_WH_DM10_DOWN, ME_sm_ZH_DM10_DOWN, ME_bkg1_DM10_DOWN, ME_bkg2_DM10_DOWN,
+			Q2V1_DM10_DOWN, Q2V2_DM10_DOWN, costheta1_DM10_DOWN, costheta2_DM10_DOWN, Phi_DM10_DOWN, costhetastar_DM10_DOWN, Phi1_DM10_DOWN);
+
+	    ME_bkg_DM10_DOWN = ME_bkg1_DM10_DOWN + ME_bkg2_DM10_DOWN;
+	    
+	    mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF_DM10_DOWN / ( ME_sm_VBF_DM10_DOWN + ME_bkg_DM10_DOWN);
+	    mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH_DM10_DOWN / ( ME_sm_ggH_DM10_DOWN + ME_bkg_DM10_DOWN);
+	    mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH_DM10_DOWN / ( ME_sm_WH_DM10_DOWN + ME_bkg_DM10_DOWN);
+	    mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH_DM10_DOWN / ( ME_sm_ZH_DM10_DOWN + ME_bkg_DM10_DOWN);
+	  } else {
+	    ME_bkg_DM10_DOWN = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  }
 	}
 	// Fill new branches
 	for(auto branchToFill : newBranches) branchToFill->Fill();
