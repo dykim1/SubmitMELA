@@ -796,7 +796,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
 
 
-	  double tesSize = 0.006; // 0.6% uncertainty is considered for each decay mode. AN line1275.
+	  double tesSize = 0.012; // 0.6% uncertainty is considered for each decay mode. AN line1275. Confirm with Abdollah, it should be 1.2%
 	  double tesUP = 1.0 + tesSize;
 	  double tesDOWN = 1.0 - tesSize;
 	  //***************************************************************************
