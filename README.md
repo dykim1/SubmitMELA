@@ -12,7 +12,7 @@ scram b -j 8
 The code really takes only two inputs: inputFile for inputFile and outputFile for output.
 For example:
 ```
-produceMELABranches inputFile=DYJets2_11.root outputFile=test.root
+produceMELABranches inputFile=DYJets2_11.root outputFile=test.root doES=1
 ```
 
 The code adds the following branches to the tree:

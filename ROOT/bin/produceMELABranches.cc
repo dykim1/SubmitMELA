@@ -42,13 +42,13 @@ int main (int argc, char* argv[]) {
   parser.addOption("newFile",optutl::CommandLineParser::kString,"newFile","newFile.root");
   parser.addOption("inputFile",optutl::CommandLineParser::kString,"input File");
   parser.addOption("trueTau",optutl::CommandLineParser::kBool,"use true 4-vectors of tau leptons",true);
-
+  parser.addOption("doES",optutl::CommandLineParser::kDouble,"doES",0.0);
   parser.parseArguments (argc, argv);
   std::cout << "Input commands:" 
 	    << "\n -- input file: " << parser.stringValue("inputFile")
 	    << "\n -- output file: " << parser.stringValue("newFile")
 	    << "\n -- use true tau 4-vectors (1 - yes, 0 - no): " << parser.boolValue("trueTau") << std::endl;
-	    
+            << "\n -- doES: " << parser.doubleValue("doES")
   char treeToUse[80] = "first";
 
   TFile *fProduce;
@@ -795,306 +795,309 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
 	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
 
+	  if (doES) {
 
-	  double tesSize = 0.012; // 0.6% uncertainty is considered for each decay mode. AN line1275. Confirm with Abdollah, it should be 1.2%
-	  double tesUP = 1.0 + tesSize;
-	  double tesDOWN = 1.0 - tesSize;
-	  //***************************************************************************
-	  //********************* Two taus shifted up *********************************
-	  //***************************************************************************
-	  // for now, only tt channel
-	  if (gen_match_2==5 or gen_match_1==5){
-	    std::cout << "Two UP    ---  ";
-	    float ES_UP_scale1 = 1.0;
-	    float ES_UP_scale2 = 1.0;
-	    if(gen_match_1==5) ES_UP_scale1 = tesUP;
-	    if(gen_match_2==5) ES_UP_scale2 = tesUP;
-	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_UP_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	    // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg1_UP, ME_bkg2_UP,
-			Q2V1_UP, Q2V2_UP, costheta1_UP, costheta2_UP, Phi_UP, costhetastar_UP, Phi1_UP);
-
-	    ME_bkg_UP = ME_bkg1_UP + ME_bkg2_UP;
-	    
-	    mela_Dbkg_VBF_UP = ME_sm_VBF_UP / ( ME_sm_VBF_UP + ME_bkg_UP);
-	    mela_Dbkg_ggH_UP = ME_sm_ggH_UP / ( ME_sm_ggH_UP + ME_bkg_UP);
-	    mela_Dbkg_WH_UP  = ME_sm_WH_UP / ( ME_sm_WH_UP + ME_bkg_UP);
-	    mela_Dbkg_ZH_UP  = ME_sm_ZH_UP / ( ME_sm_ZH_UP + ME_bkg_UP);
-	  } else {
-	    ME_bkg_UP = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
-          //***************************************************************************
-          //********************** Tau DM0 shifted up *********************************
-          //***************************************************************************
-          if ((gen_match_2==5 && decayModeFinding_2==0) or (gen_match_1==5 && decayModeFinding_1==0)){
-	    std::cout << "DM0 UP    ---  ";
-	    float ES_UP_scale1 = 1.0;
-	    float ES_UP_scale2 = 1.0;
-	    if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
-	    if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
-	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_UP_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	    // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_DM0_UP, ME_sm_ggH_DM0_UP, ME_sm_WH_DM0_UP, ME_sm_ZH_DM0_UP, ME_bkg1_DM0_UP, ME_bkg2_DM0_UP,
-			Q2V1_DM0_UP, Q2V2_DM0_UP, costheta1_DM0_UP, costheta2_DM0_UP, Phi_DM0_UP, costhetastar_DM0_UP, Phi1_DM0_UP);
-
-	    ME_bkg_DM0_UP = ME_bkg1_DM0_UP + ME_bkg2_DM0_UP;
-	    
-	    mela_Dbkg_VBF_DM0_UP = ME_sm_VBF_DM0_UP / ( ME_sm_VBF_DM0_UP + ME_bkg_DM0_UP);
-	    mela_Dbkg_ggH_DM0_UP = ME_sm_ggH_DM0_UP / ( ME_sm_ggH_DM0_UP + ME_bkg_DM0_UP);
-	    mela_Dbkg_WH_DM0_UP  = ME_sm_WH_DM0_UP / ( ME_sm_WH_DM0_UP + ME_bkg_DM0_UP);
-	    mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH_DM0_UP / ( ME_sm_ZH_DM0_UP + ME_bkg_DM0_UP);
-	  } else {
-	    ME_bkg_DM0_UP = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_DM0_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_DM0_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_DM0_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
-	  //***************************************************************************
-	  //********************** Tau DM1 shifted up *********************************
-	  //***************************************************************************
-	  if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
-	    std::cout << "DM1 UP    ---  ";
-	    float ES_UP_scale1 = 1.0;
-	    float ES_UP_scale2 = 1.0;
-	    if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
-	    if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
-	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_UP_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	    // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_DM1_UP, ME_sm_ggH_DM1_UP, ME_sm_WH_DM1_UP, ME_sm_ZH_DM1_UP, ME_bkg1_DM1_UP, ME_bkg2_DM1_UP,
-			Q2V1_DM1_UP, Q2V2_DM1_UP, costheta1_DM1_UP, costheta2_DM1_UP, Phi_DM1_UP, costhetastar_DM1_UP, Phi1_DM1_UP);
-
-	    ME_bkg_DM1_UP = ME_bkg1_DM1_UP + ME_bkg2_DM1_UP;
-	    
-	    mela_Dbkg_VBF_DM1_UP = ME_sm_VBF_DM1_UP / ( ME_sm_VBF_DM1_UP + ME_bkg_DM1_UP);
-	    mela_Dbkg_ggH_DM1_UP = ME_sm_ggH_DM1_UP / ( ME_sm_ggH_DM1_UP + ME_bkg_DM1_UP);
-	    mela_Dbkg_WH_DM1_UP  = ME_sm_WH_DM1_UP / ( ME_sm_WH_DM1_UP + ME_bkg_DM1_UP);
-	    mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH_DM1_UP / ( ME_sm_ZH_DM1_UP + ME_bkg_DM1_UP);
-	  } else {
-	    ME_bkg_DM1_UP = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_DM1_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_DM1_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_DM1_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
-	  //***************************************************************************
-	  //********************* Tau DM10 shifted up *********************************
-	  //***************************************************************************
-	  if ((decayModeFinding_2==10 && gen_match_2==5) or (decayModeFinding_1==10 && gen_match_1==5)){
-	    std::cout << "DM10 UP    ---  ";
-	    float ES_UP_scale1 = 1.0;
-	    float ES_UP_scale2 = 1.0;
-	    if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
-	    if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
-	    std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_UP_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());	   
-            // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_DM10_UP, ME_sm_ggH_DM10_UP, ME_sm_WH_DM10_UP, ME_sm_ZH_DM10_UP, ME_bkg1_DM10_UP, ME_bkg2_DM10_UP,
-			Q2V1_DM10_UP, Q2V2_DM10_UP, costheta1_DM10_UP, costheta2_DM10_UP, Phi_DM10_UP, costhetastar_DM10_UP, Phi1_DM10_UP);
-
-	    ME_bkg_DM10_UP = ME_bkg1_DM10_UP + ME_bkg2_DM10_UP;
-	    
-	    mela_Dbkg_VBF_DM10_UP = ME_sm_VBF_DM10_UP / ( ME_sm_VBF_DM10_UP + ME_bkg_DM10_UP);
-	    mela_Dbkg_ggH_DM10_UP = ME_sm_ggH_DM10_UP / ( ME_sm_ggH_DM10_UP + ME_bkg_DM10_UP);
-	    mela_Dbkg_WH_DM10_UP  = ME_sm_WH_DM10_UP / ( ME_sm_WH_DM10_UP + ME_bkg_DM10_UP);
-	    mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH_DM10_UP / ( ME_sm_ZH_DM10_UP + ME_bkg_DM10_UP);
-	  } else {
-	    ME_bkg_DM10_UP = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_DM10_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_DM10_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_DM10_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
-	  //*****************************************************
-	  //************* Two taus shifted down *****************
-	  //*****************************************************
-	  if (gen_match_1==5 or gen_match_2==5){
-	    std::cout << "Two DOWN  ---  ";
-	    float ES_DOWN_scale1 = 1.0;
-	    float ES_DOWN_scale2 = 1.0;
-	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;
-            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_DOWN_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-            // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_DOWN, ME_sm_ggH_DOWN, ME_sm_WH_DOWN, ME_sm_ZH_DOWN, ME_bkg1_DOWN, ME_bkg2_DOWN,
-			Q2V1_DOWN, Q2V2_DOWN, costheta1_DOWN, costheta2_DOWN, Phi_DOWN, costhetastar_DOWN, Phi1_DOWN);
-
-	    ME_bkg_DOWN = ME_bkg1_DOWN + ME_bkg2_DOWN;
-	    
-	    mela_Dbkg_VBF_DOWN = ME_sm_VBF_DOWN / ( ME_sm_VBF_DOWN + ME_bkg_DOWN);
-	    mela_Dbkg_ggH_DOWN = ME_sm_ggH_DOWN / ( ME_sm_ggH_DOWN + ME_bkg_DOWN);
-	    mela_Dbkg_WH_DOWN  = ME_sm_WH_DOWN / ( ME_sm_WH_DOWN + ME_bkg_DOWN);
-	    mela_Dbkg_ZH_DOWN  = ME_sm_ZH_DOWN / ( ME_sm_ZH_DOWN + ME_bkg_DOWN);
-	  } else {
-	    ME_bkg_DOWN = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
-	  //*****************************************************
-	  //************* Tau DM0 shifted down  *****************
-	  //*****************************************************
-	  if ((decayModeFinding_1==0 && gen_match_1==5) or (decayModeFinding_2==0 && gen_match_2==5)){
-	    float ES_DOWN_scale1 = 1.0;
-	    float ES_DOWN_scale2 = 1.0;
-	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_DOWN_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-            // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_DM0_DOWN, ME_sm_ggH_DM0_DOWN, ME_sm_WH_DM0_DOWN, ME_sm_ZH_DM0_DOWN, ME_bkg1_DM0_DOWN, ME_bkg2_DM0_DOWN,
-			Q2V1_DM0_DOWN, Q2V2_DM0_DOWN, costheta1_DM0_DOWN, costheta2_DM0_DOWN, Phi_DM0_DOWN, costhetastar_DM0_DOWN, Phi1_DM0_DOWN);
-
-	    ME_bkg_DM0_DOWN = ME_bkg1_DM0_DOWN + ME_bkg2_DM0_DOWN;
-	    
-	    mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF_DM0_DOWN / ( ME_sm_VBF_DM0_DOWN + ME_bkg_DM0_DOWN);
-	    mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH_DM0_DOWN / ( ME_sm_ggH_DM0_DOWN + ME_bkg_DM0_DOWN);
-	    mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH_DM0_DOWN / ( ME_sm_WH_DM0_DOWN + ME_bkg_DM0_DOWN);
-	    mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH_DM0_DOWN / ( ME_sm_ZH_DM0_DOWN + ME_bkg_DM0_DOWN);
-	  } else {
-	    ME_bkg_DM0_DOWN = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
-	  //*****************************************************
-	  //************** Tau DM1 shifted down *****************
-	  //*****************************************************
-	  if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
-	    std::cout << "DM1 DOWN  ---  ";
-	    float ES_DOWN_scale1 = 1.0;
-	    float ES_DOWN_scale2 = 1.0;
-	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_DOWN_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-            // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_DM1_DOWN, ME_sm_ggH_DM1_DOWN, ME_sm_WH_DM1_DOWN, ME_sm_ZH_DM1_DOWN, ME_bkg1_DM1_DOWN, ME_bkg2_DM1_DOWN,
-			Q2V1_DM1_DOWN, Q2V2_DM1_DOWN, costheta1_DM1_DOWN, costheta2_DM1_DOWN, Phi_DM1_DOWN, costhetastar_DM1_DOWN, Phi1_DM1_DOWN);
-
-	    ME_bkg_DM1_DOWN = ME_bkg1_DM1_DOWN + ME_bkg2_DM1_DOWN;
-	    
-	    mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF_DM1_DOWN / ( ME_sm_VBF_DM1_DOWN + ME_bkg_DM1_DOWN);
-	    mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH_DM1_DOWN / ( ME_sm_ggH_DM1_DOWN + ME_bkg_DM1_DOWN);
-	    mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH_DM1_DOWN / ( ME_sm_WH_DM1_DOWN + ME_bkg_DM1_DOWN);
-	    mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH_DM1_DOWN / ( ME_sm_ZH_DM1_DOWN + ME_bkg_DM1_DOWN);
-	  } else {
-	    ME_bkg_DM1_DOWN = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
-	  //*****************************************************
-	  //************* Tau DM10 shifted down *****************
-	  //*****************************************************
-	  if ((decayModeFinding_1==10 && gen_match_1==5) or (decayModeFinding_2==10 && gen_match_2==5)){
-	    float ES_DOWN_scale1 = 1.0;
-	    float ES_DOWN_scale2 = 1.0;
-	    if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	    if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-            std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
-	    std::cout << "   tes1: " << ES_DOWN_scale1;
-	    std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
-	    std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-
-	    // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	    TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	    pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	    pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-            // recomputin composite variables in the analysis.
-	    calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF_DM10_DOWN, ME_sm_ggH_DM10_DOWN, ME_sm_WH_DM10_DOWN, ME_sm_ZH_DM10_DOWN, ME_bkg1_DM10_DOWN, ME_bkg2_DM10_DOWN,
-			Q2V1_DM10_DOWN, Q2V2_DM10_DOWN, costheta1_DM10_DOWN, costheta2_DM10_DOWN, Phi_DM10_DOWN, costhetastar_DM10_DOWN, Phi1_DM10_DOWN);
-
-	    ME_bkg_DM10_DOWN = ME_bkg1_DM10_DOWN + ME_bkg2_DM10_DOWN;
-	    
-	    mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF_DM10_DOWN / ( ME_sm_VBF_DM10_DOWN + ME_bkg_DM10_DOWN);
-	    mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH_DM10_DOWN / ( ME_sm_ggH_DM10_DOWN + ME_bkg_DM10_DOWN);
-	    mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH_DM10_DOWN / ( ME_sm_WH_DM10_DOWN + ME_bkg_DM10_DOWN);
-	    mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH_DM10_DOWN / ( ME_sm_ZH_DM10_DOWN + ME_bkg_DM10_DOWN);
-	  } else {
-	    ME_bkg_DM10_DOWN = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	  }
+	    double tesSize = 0.012; // 0.6% uncertainty is considered for each decay mode. AN line1275. Confirm with Abdollah, it should be 1.2%
+	    double tesUP = 1.0 + tesSize;
+	    double tesDOWN = 1.0 - tesSize;
+	    //***************************************************************************
+	    //********************* Two taus shifted up *********************************
+	    //***************************************************************************
+	    // for now, only tt channel
+	    if (gen_match_2==5 or gen_match_1==5){
+	      std::cout << "Two UP    ---  ";
+	      float ES_UP_scale1 = 1.0;
+	      float ES_UP_scale2 = 1.0;
+	      if(gen_match_1==5) ES_UP_scale1 = tesUP;
+	      if(gen_match_2==5) ES_UP_scale2 = tesUP;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_UP_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg1_UP, ME_bkg2_UP,
+			  Q2V1_UP, Q2V2_UP, costheta1_UP, costheta2_UP, Phi_UP, costhetastar_UP, Phi1_UP);
+	      
+	      ME_bkg_UP = ME_bkg1_UP + ME_bkg2_UP;
+	      
+	      mela_Dbkg_VBF_UP = ME_sm_VBF_UP / ( ME_sm_VBF_UP + ME_bkg_UP);
+	      mela_Dbkg_ggH_UP = ME_sm_ggH_UP / ( ME_sm_ggH_UP + ME_bkg_UP);
+	      mela_Dbkg_WH_UP  = ME_sm_WH_UP / ( ME_sm_WH_UP + ME_bkg_UP);
+	      mela_Dbkg_ZH_UP  = ME_sm_ZH_UP / ( ME_sm_ZH_UP + ME_bkg_UP);
+	    } else {
+	      ME_bkg_UP = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	    //***************************************************************************
+	    //********************** Tau DM0 shifted up *********************************
+	    //***************************************************************************
+	    if ((gen_match_2==5 && decayModeFinding_2==0) or (gen_match_1==5 && decayModeFinding_1==0)){
+	      std::cout << "DM0 UP    ---  ";
+	      float ES_UP_scale1 = 1.0;
+	      float ES_UP_scale2 = 1.0;
+	      if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
+	      if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_UP_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_DM0_UP, ME_sm_ggH_DM0_UP, ME_sm_WH_DM0_UP, ME_sm_ZH_DM0_UP, ME_bkg1_DM0_UP, ME_bkg2_DM0_UP,
+			  Q2V1_DM0_UP, Q2V2_DM0_UP, costheta1_DM0_UP, costheta2_DM0_UP, Phi_DM0_UP, costhetastar_DM0_UP, Phi1_DM0_UP);
+	      
+	      ME_bkg_DM0_UP = ME_bkg1_DM0_UP + ME_bkg2_DM0_UP;
+	      
+	      mela_Dbkg_VBF_DM0_UP = ME_sm_VBF_DM0_UP / ( ME_sm_VBF_DM0_UP + ME_bkg_DM0_UP);
+	      mela_Dbkg_ggH_DM0_UP = ME_sm_ggH_DM0_UP / ( ME_sm_ggH_DM0_UP + ME_bkg_DM0_UP);
+	      mela_Dbkg_WH_DM0_UP  = ME_sm_WH_DM0_UP / ( ME_sm_WH_DM0_UP + ME_bkg_DM0_UP);
+	      mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH_DM0_UP / ( ME_sm_ZH_DM0_UP + ME_bkg_DM0_UP);
+	    } else {
+	      ME_bkg_DM0_UP = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_DM0_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_DM0_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_DM0_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	    //***************************************************************************
+	    //********************** Tau DM1 shifted up *********************************
+	    //***************************************************************************
+	    if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
+	      std::cout << "DM1 UP    ---  ";
+	      float ES_UP_scale1 = 1.0;
+	      float ES_UP_scale2 = 1.0;
+	      if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
+	      if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_UP_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_DM1_UP, ME_sm_ggH_DM1_UP, ME_sm_WH_DM1_UP, ME_sm_ZH_DM1_UP, ME_bkg1_DM1_UP, ME_bkg2_DM1_UP,
+			  Q2V1_DM1_UP, Q2V2_DM1_UP, costheta1_DM1_UP, costheta2_DM1_UP, Phi_DM1_UP, costhetastar_DM1_UP, Phi1_DM1_UP);
+	      
+	      ME_bkg_DM1_UP = ME_bkg1_DM1_UP + ME_bkg2_DM1_UP;
+	      
+	      mela_Dbkg_VBF_DM1_UP = ME_sm_VBF_DM1_UP / ( ME_sm_VBF_DM1_UP + ME_bkg_DM1_UP);
+	      mela_Dbkg_ggH_DM1_UP = ME_sm_ggH_DM1_UP / ( ME_sm_ggH_DM1_UP + ME_bkg_DM1_UP);
+	      mela_Dbkg_WH_DM1_UP  = ME_sm_WH_DM1_UP / ( ME_sm_WH_DM1_UP + ME_bkg_DM1_UP);
+	      mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH_DM1_UP / ( ME_sm_ZH_DM1_UP + ME_bkg_DM1_UP);
+	    } else {
+	      ME_bkg_DM1_UP = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_DM1_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_DM1_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_DM1_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	    //***************************************************************************
+	    //********************* Tau DM10 shifted up *********************************
+	    //***************************************************************************
+	    if ((decayModeFinding_2==10 && gen_match_2==5) or (decayModeFinding_1==10 && gen_match_1==5)){
+	      std::cout << "DM10 UP    ---  ";
+	      float ES_UP_scale1 = 1.0;
+	      float ES_UP_scale2 = 1.0;
+	      if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
+	      if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_UP_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());	   
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_DM10_UP, ME_sm_ggH_DM10_UP, ME_sm_WH_DM10_UP, ME_sm_ZH_DM10_UP, ME_bkg1_DM10_UP, ME_bkg2_DM10_UP,
+			  Q2V1_DM10_UP, Q2V2_DM10_UP, costheta1_DM10_UP, costheta2_DM10_UP, Phi_DM10_UP, costhetastar_DM10_UP, Phi1_DM10_UP);
+	      
+	      ME_bkg_DM10_UP = ME_bkg1_DM10_UP + ME_bkg2_DM10_UP;
+	      
+	      mela_Dbkg_VBF_DM10_UP = ME_sm_VBF_DM10_UP / ( ME_sm_VBF_DM10_UP + ME_bkg_DM10_UP);
+	      mela_Dbkg_ggH_DM10_UP = ME_sm_ggH_DM10_UP / ( ME_sm_ggH_DM10_UP + ME_bkg_DM10_UP);
+	      mela_Dbkg_WH_DM10_UP  = ME_sm_WH_DM10_UP / ( ME_sm_WH_DM10_UP + ME_bkg_DM10_UP);
+	      mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH_DM10_UP / ( ME_sm_ZH_DM10_UP + ME_bkg_DM10_UP);
+	    } else {
+	      ME_bkg_DM10_UP = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_DM10_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_DM10_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_DM10_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	    //*****************************************************
+	    //************* Two taus shifted down *****************
+	    //*****************************************************
+	    if (gen_match_1==5 or gen_match_2==5){
+	      std::cout << "Two DOWN  ---  ";
+	      float ES_DOWN_scale1 = 1.0;
+	      float ES_DOWN_scale2 = 1.0;
+	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_DOWN_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_DOWN, ME_sm_ggH_DOWN, ME_sm_WH_DOWN, ME_sm_ZH_DOWN, ME_bkg1_DOWN, ME_bkg2_DOWN,
+			  Q2V1_DOWN, Q2V2_DOWN, costheta1_DOWN, costheta2_DOWN, Phi_DOWN, costhetastar_DOWN, Phi1_DOWN);
+	      
+	      ME_bkg_DOWN = ME_bkg1_DOWN + ME_bkg2_DOWN;
+	      
+	      mela_Dbkg_VBF_DOWN = ME_sm_VBF_DOWN / ( ME_sm_VBF_DOWN + ME_bkg_DOWN);
+	      mela_Dbkg_ggH_DOWN = ME_sm_ggH_DOWN / ( ME_sm_ggH_DOWN + ME_bkg_DOWN);
+	      mela_Dbkg_WH_DOWN  = ME_sm_WH_DOWN / ( ME_sm_WH_DOWN + ME_bkg_DOWN);
+	      mela_Dbkg_ZH_DOWN  = ME_sm_ZH_DOWN / ( ME_sm_ZH_DOWN + ME_bkg_DOWN);
+	    } else {
+	      ME_bkg_DOWN = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	    //*****************************************************
+	    //************* Tau DM0 shifted down  *****************
+	    //*****************************************************
+	    if ((decayModeFinding_1==0 && gen_match_1==5) or (decayModeFinding_2==0 && gen_match_2==5)){
+	      float ES_DOWN_scale1 = 1.0;
+	      float ES_DOWN_scale2 = 1.0;
+	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_DOWN_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_DM0_DOWN, ME_sm_ggH_DM0_DOWN, ME_sm_WH_DM0_DOWN, ME_sm_ZH_DM0_DOWN, ME_bkg1_DM0_DOWN, ME_bkg2_DM0_DOWN,
+			  Q2V1_DM0_DOWN, Q2V2_DM0_DOWN, costheta1_DM0_DOWN, costheta2_DM0_DOWN, Phi_DM0_DOWN, costhetastar_DM0_DOWN, Phi1_DM0_DOWN);
+	      
+	      ME_bkg_DM0_DOWN = ME_bkg1_DM0_DOWN + ME_bkg2_DM0_DOWN;
+	      
+	      mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF_DM0_DOWN / ( ME_sm_VBF_DM0_DOWN + ME_bkg_DM0_DOWN);
+	      mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH_DM0_DOWN / ( ME_sm_ggH_DM0_DOWN + ME_bkg_DM0_DOWN);
+	      mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH_DM0_DOWN / ( ME_sm_WH_DM0_DOWN + ME_bkg_DM0_DOWN);
+	      mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH_DM0_DOWN / ( ME_sm_ZH_DM0_DOWN + ME_bkg_DM0_DOWN);
+	    } else {
+	      ME_bkg_DM0_DOWN = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	    //*****************************************************
+	    //************** Tau DM1 shifted down *****************
+	    //*****************************************************
+	    if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
+	      std::cout << "DM1 DOWN  ---  ";
+	      float ES_DOWN_scale1 = 1.0;
+	      float ES_DOWN_scale2 = 1.0;
+	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_DOWN_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_DM1_DOWN, ME_sm_ggH_DM1_DOWN, ME_sm_WH_DM1_DOWN, ME_sm_ZH_DM1_DOWN, ME_bkg1_DM1_DOWN, ME_bkg2_DM1_DOWN,
+			  Q2V1_DM1_DOWN, Q2V2_DM1_DOWN, costheta1_DM1_DOWN, costheta2_DM1_DOWN, Phi_DM1_DOWN, costhetastar_DM1_DOWN, Phi1_DM1_DOWN);
+	      
+	      ME_bkg_DM1_DOWN = ME_bkg1_DM1_DOWN + ME_bkg2_DM1_DOWN;
+	      
+	      mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF_DM1_DOWN / ( ME_sm_VBF_DM1_DOWN + ME_bkg_DM1_DOWN);
+	      mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH_DM1_DOWN / ( ME_sm_ggH_DM1_DOWN + ME_bkg_DM1_DOWN);
+	      mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH_DM1_DOWN / ( ME_sm_WH_DM1_DOWN + ME_bkg_DM1_DOWN);
+	      mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH_DM1_DOWN / ( ME_sm_ZH_DM1_DOWN + ME_bkg_DM1_DOWN);
+	    } else {
+	      ME_bkg_DM1_DOWN = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	    //*****************************************************
+	    //************* Tau DM10 shifted down *****************
+	    //*****************************************************
+	    if ((decayModeFinding_1==10 && gen_match_1==5) or (decayModeFinding_2==10 && gen_match_2==5)){
+	      float ES_DOWN_scale1 = 1.0;
+	      float ES_DOWN_scale2 = 1.0;
+	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "   tes1: " << ES_DOWN_scale1;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+	      
+	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+	      // recomputin composite variables in the analysis.
+	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			  ME_sm_VBF_DM10_DOWN, ME_sm_ggH_DM10_DOWN, ME_sm_WH_DM10_DOWN, ME_sm_ZH_DM10_DOWN, ME_bkg1_DM10_DOWN, ME_bkg2_DM10_DOWN,
+			  Q2V1_DM10_DOWN, Q2V2_DM10_DOWN, costheta1_DM10_DOWN, costheta2_DM10_DOWN, Phi_DM10_DOWN, costhetastar_DM10_DOWN, Phi1_DM10_DOWN);
+	      
+	      ME_bkg_DM10_DOWN = ME_bkg1_DM10_DOWN + ME_bkg2_DM10_DOWN;
+	      
+	      mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF_DM10_DOWN / ( ME_sm_VBF_DM10_DOWN + ME_bkg_DM10_DOWN);
+	      mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH_DM10_DOWN / ( ME_sm_ggH_DM10_DOWN + ME_bkg_DM10_DOWN);
+	      mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH_DM10_DOWN / ( ME_sm_WH_DM10_DOWN + ME_bkg_DM10_DOWN);
+	      mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH_DM10_DOWN / ( ME_sm_ZH_DM10_DOWN + ME_bkg_DM10_DOWN);
+	    } else {
+	      ME_bkg_DM10_DOWN = ME_bkg1 + ME_bkg2;
+	      
+	      mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	      mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	      mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	      mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    }
+	  } // end of doES
 	}
+	
 	// Fill new branches
 	for(auto branchToFill : newBranches) branchToFill->Fill();
 
