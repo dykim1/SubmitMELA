@@ -330,6 +330,43 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       Float_t tau2_phi;
       Float_t tau2_m;
 
+      // Kinematics of objects for MET cluster and uncluster uncertainties
+      Float_t tau1_pt_UncMet_UP;
+      Float_t tau1_eta_UncMet_UP;
+      Float_t tau1_phi_UncMet_UP;
+      Float_t tau1_m_UncMet_UP;
+      Float_t tau2_pt_UncMet_UP;
+      Float_t tau2_eta_UncMet_UP;
+      Float_t tau2_phi_UncMet_UP;
+      Float_t tau2_m_UncMet_UP;
+
+      Float_t tau1_pt_UncMet_DOWN;
+      Float_t tau1_eta_UncMet_DOWN;
+      Float_t tau1_phi_UncMet_DOWN;
+      Float_t tau1_m_UncMet_DOWN;
+      Float_t tau2_pt_UncMet_DOWN;
+      Float_t tau2_eta_UncMet_DOWN;
+      Float_t tau2_phi_UncMet_DOWN;
+      Float_t tau2_m_UncMet_DOWN;
+
+      Float_t tau1_pt_ClusteredMet_UP;
+      Float_t tau1_eta_ClusteredMet_UP;
+      Float_t tau1_phi_ClusteredMet_UP;
+      Float_t tau1_m_ClusteredMet_UP;
+      Float_t tau2_pt_ClusteredMet_UP;
+      Float_t tau2_eta_ClusteredMet_UP;
+      Float_t tau2_phi_ClusteredMet_UP;
+      Float_t tau2_m_ClusteredMet_UP;
+
+      Float_t tau1_pt_ClusteredMet_DOWN;
+      Float_t tau1_eta_ClusteredMet_DOWN;
+      Float_t tau1_phi_ClusteredMet_DOWN;
+      Float_t tau1_m_ClusteredMet_DOWN;
+      Float_t tau2_pt_ClusteredMet_DOWN;
+      Float_t tau2_eta_ClusteredMet_DOWN;
+      Float_t tau2_phi_ClusteredMet_DOWN;
+      Float_t tau2_m_ClusteredMet_DOWN;
+
       Int_t gen_match_1;
       Int_t gen_match_2;
 
@@ -361,11 +398,47 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       TBranch *b_tau1_phi;
       TBranch *b_tau1_eta;
       TBranch *b_tau1_m;
-      
       TBranch *b_tau2_pt;
       TBranch *b_tau2_phi;
       TBranch *b_tau2_eta;
       TBranch *b_tau2_m;
+      // Kinematics of objects for MET cluster and uncluster uncertainties
+      TBranch *b_tau1_pt_UncMet_UP;
+      TBranch *b_tau1_phi_UncMet_UP;
+      TBranch *b_tau1_eta_UncMet_UP;
+      TBranch *b_tau1_m_UncMet_UP;
+      TBranch *b_tau2_pt_UncMet_UP;
+      TBranch *b_tau2_phi_UncMet_UP;
+      TBranch *b_tau2_eta_UncMet_UP;
+      TBranch *b_tau2_m_UncMet_UP;
+
+      TBranch *b_tau1_pt_UncMet_DOWN;
+      TBranch *b_tau1_phi_UncMet_DOWN;
+      TBranch *b_tau1_eta_UncMet_DOWN;
+      TBranch *b_tau1_m_UncMet_DOWN;
+      TBranch *b_tau2_pt_UncMet_DOWN;
+      TBranch *b_tau2_phi_UncMet_DOWN;
+      TBranch *b_tau2_eta_UncMet_DOWN;
+      TBranch *b_tau2_m_UncMet_DOWN;
+
+      TBranch *b_tau1_pt_ClusteredMet_UP;
+      TBranch *b_tau1_phi_ClusteredMet_UP;
+      TBranch *b_tau1_eta_ClusteredMet_UP;
+      TBranch *b_tau1_m_ClusteredMet_UP;
+      TBranch *b_tau2_pt_ClusteredMet_UP;
+      TBranch *b_tau2_phi_ClusteredMet_UP;
+      TBranch *b_tau2_eta_ClusteredMet_UP;
+      TBranch *b_tau2_m_ClusteredMet_UP;
+
+      TBranch *b_tau1_pt_ClusteredMet_DOWN;
+      TBranch *b_tau1_phi_ClusteredMet_DOWN;
+      TBranch *b_tau1_eta_ClusteredMet_DOWN;
+      TBranch *b_tau1_m_ClusteredMet_DOWN;
+      TBranch *b_tau2_pt_ClusteredMet_DOWN;
+      TBranch *b_tau2_phi_ClusteredMet_DOWN;
+      TBranch *b_tau2_eta_ClusteredMet_DOWN;
+      TBranch *b_tau2_m_ClusteredMet_DOWN;
+
       TBranch *b_gen_match_1;
       TBranch *b_gen_match_2;
       TBranch *b_t1_decayMode;
@@ -384,6 +457,47 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       tree->SetBranchAddress("tau2_eta", &tau2_eta, &b_tau2_eta);
       tree->SetBranchAddress("tau2_phi", &tau2_phi, &b_tau2_phi);
       tree->SetBranchAddress("tau2_m", &tau2_m, &b_tau2_m);
+
+      // Kinematics of objects for MET cluster and uncluster uncertainties
+      tree->SetBranchAddress("tau1_pt_UncMet_UP", &tau1_pt_UncMet_UP, &b_tau1_pt_UncMet_UP);
+      tree->SetBranchAddress("tau1_eta_UncMet_UP", &tau1_eta_UncMet_UP, &b_tau1_eta_UncMet_UP);
+      tree->SetBranchAddress("tau1_phi_UncMet_UP", &tau1_phi_UncMet_UP, &b_tau1_phi_UncMet_UP);
+      tree->SetBranchAddress("tau1_m_UncMet_UP", &tau1_m_UncMet_UP, &b_tau1_m_UncMet_UP);
+      
+      tree->SetBranchAddress("tau2_pt_UncMet_UP", &tau2_pt_UncMet_UP, &b_tau2_pt_UncMet_UP);
+      tree->SetBranchAddress("tau2_eta_UncMet_UP", &tau2_eta_UncMet_UP, &b_tau2_eta_UncMet_UP);
+      tree->SetBranchAddress("tau2_phi_UncMet_UP", &tau2_phi_UncMet_UP, &b_tau2_phi_UncMet_UP);
+      tree->SetBranchAddress("tau2_m_UncMet_UP", &tau2_m_UncMet_UP, &b_tau2_m_UncMet_UP);
+
+      tree->SetBranchAddress("tau1_pt_UncMet_DOWN", &tau1_pt_UncMet_DOWN, &b_tau1_pt_UncMet_DOWN);
+      tree->SetBranchAddress("tau1_eta_UncMet_DOWN", &tau1_eta_UncMet_DOWN, &b_tau1_eta_UncMet_DOWN);
+      tree->SetBranchAddress("tau1_phi_UncMet_DOWN", &tau1_phi_UncMet_DOWN, &b_tau1_phi_UncMet_DOWN);
+      tree->SetBranchAddress("tau1_m_UncMet_DOWN", &tau1_m_UncMet_DOWN, &b_tau1_m_UncMet_DOWN);
+      
+      tree->SetBranchAddress("tau2_pt_UncMet_DOWN", &tau2_pt_UncMet_DOWN, &b_tau2_pt_UncMet_DOWN);
+      tree->SetBranchAddress("tau2_eta_UncMet_DOWN", &tau2_eta_UncMet_DOWN, &b_tau2_eta_UncMet_DOWN);
+      tree->SetBranchAddress("tau2_phi_UncMet_DOWN", &tau2_phi_UncMet_DOWN, &b_tau2_phi_UncMet_DOWN);
+      tree->SetBranchAddress("tau2_m_UncMet_DOWN", &tau2_m_UncMet_DOWN, &b_tau2_m_UncMet_DOWN);
+
+      tree->SetBranchAddress("tau1_pt_ClusteredMet_UP", &tau1_pt_ClusteredMet_UP, &b_tau1_pt_ClusteredMet_UP);
+      tree->SetBranchAddress("tau1_eta_ClusteredMet_UP", &tau1_eta_ClusteredMet_UP, &b_tau1_eta_ClusteredMet_UP);
+      tree->SetBranchAddress("tau1_phi_ClusteredMet_UP", &tau1_phi_ClusteredMet_UP, &b_tau1_phi_ClusteredMet_UP);
+      tree->SetBranchAddress("tau1_m_ClusteredMet_UP", &tau1_m_ClusteredMet_UP, &b_tau1_m_ClusteredMet_UP);
+      
+      tree->SetBranchAddress("tau2_pt_ClusteredMet_UP", &tau2_pt_ClusteredMet_UP, &b_tau2_pt_ClusteredMet_UP);
+      tree->SetBranchAddress("tau2_eta_ClusteredMet_UP", &tau2_eta_ClusteredMet_UP, &b_tau2_eta_ClusteredMet_UP);
+      tree->SetBranchAddress("tau2_phi_ClusteredMet_UP", &tau2_phi_ClusteredMet_UP, &b_tau2_phi_ClusteredMet_UP);
+      tree->SetBranchAddress("tau2_m_ClusteredMet_UP", &tau2_m_ClusteredMet_UP, &b_tau2_m_ClusteredMet_UP);
+
+      tree->SetBranchAddress("tau1_pt_ClusteredMet_DOWN", &tau1_pt_ClusteredMet_DOWN, &b_tau1_pt_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau1_eta_ClusteredMet_DOWN", &tau1_eta_ClusteredMet_DOWN, &b_tau1_eta_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau1_phi_ClusteredMet_DOWN", &tau1_phi_ClusteredMet_DOWN, &b_tau1_phi_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau1_m_ClusteredMet_DOWN", &tau1_m_ClusteredMet_DOWN, &b_tau1_m_ClusteredMet_DOWN);
+      
+      tree->SetBranchAddress("tau2_pt_ClusteredMet_DOWN", &tau2_pt_ClusteredMet_DOWN, &b_tau2_pt_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau2_eta_ClusteredMet_DOWN", &tau2_eta_ClusteredMet_DOWN, &b_tau2_eta_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau2_phi_ClusteredMet_DOWN", &tau2_phi_ClusteredMet_DOWN, &b_tau2_phi_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau2_m_ClusteredMet_DOWN", &tau2_m_ClusteredMet_DOWN, &b_tau2_m_ClusteredMet_DOWN);
       
       tree->SetBranchAddress("njets", &njets, &b_njets);
       tree->SetBranchAddress("jpt_1", &jpt_1, &b_jpt_1);
@@ -411,6 +525,43 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       if ( channel == "tt" ) tree->SetBranchAddress("t2_decayMode", &decayMode2, &b_t2_decayMode);
       if ( channel != "tt" ) tree->SetBranchAddress("l2_decayMode",&decayMode2, &b_l2_decayMode);
 
+      // Kinematics of objects for MET cluster and uncluster uncertainties
+      tree->SetBranchAddress("tau1_pt_UncMet_UP", &tau1_pt_UncMet_UP, &b_tau1_pt_UncMet_UP);
+      tree->SetBranchAddress("tau1_eta_UncMet_UP", &tau1_eta_UncMet_UP, &b_tau1_eta_UncMet_UP);
+      tree->SetBranchAddress("tau1_phi_UncMet_UP", &tau1_phi_UncMet_UP, &b_tau1_phi_UncMet_UP);
+      tree->SetBranchAddress("tau1_m_UncMet_UP", &tau1_m_UncMet_UP, &b_tau1_m_UncMet_UP);
+      tree->SetBranchAddress("tau2_pt_UncMet_UP", &tau2_pt_UncMet_UP, &b_tau2_pt_UncMet_UP);
+      tree->SetBranchAddress("tau2_eta_UncMet_UP", &tau2_eta_UncMet_UP, &b_tau2_eta_UncMet_UP);
+      tree->SetBranchAddress("tau2_phi_UncMet_UP", &tau2_phi_UncMet_UP, &b_tau2_phi_UncMet_UP);
+      tree->SetBranchAddress("tau2_m_UncMet_UP", &tau2_m_UncMet_UP, &b_tau2_m_UncMet_UP);
+
+      tree->SetBranchAddress("tau1_pt_UncMet_DOWN", &tau1_pt_UncMet_DOWN, &b_tau1_pt_UncMet_DOWN);
+      tree->SetBranchAddress("tau1_eta_UncMet_DOWN", &tau1_eta_UncMet_DOWN, &b_tau1_eta_UncMet_DOWN);
+      tree->SetBranchAddress("tau1_phi_UncMet_DOWN", &tau1_phi_UncMet_DOWN, &b_tau1_phi_UncMet_DOWN);
+      tree->SetBranchAddress("tau1_m_UncMet_DOWN", &tau1_m_UncMet_DOWN, &b_tau1_m_UncMet_DOWN);
+      tree->SetBranchAddress("tau2_pt_UncMet_DOWN", &tau2_pt_UncMet_DOWN, &b_tau2_pt_UncMet_DOWN);
+      tree->SetBranchAddress("tau2_eta_UncMet_DOWN", &tau2_eta_UncMet_DOWN, &b_tau2_eta_UncMet_DOWN);
+      tree->SetBranchAddress("tau2_phi_UncMet_DOWN", &tau2_phi_UncMet_DOWN, &b_tau2_phi_UncMet_DOWN);
+      tree->SetBranchAddress("tau2_m_UncMet_DOWN", &tau2_m_UncMet_DOWN, &b_tau2_m_UncMet_DOWN);
+
+
+      tree->SetBranchAddress("tau1_pt_ClusteredMet_UP", &tau1_pt_ClusteredMet_UP, &b_tau1_pt_ClusteredMet_UP);
+      tree->SetBranchAddress("tau1_eta_ClusteredMet_UP", &tau1_eta_ClusteredMet_UP, &b_tau1_eta_ClusteredMet_UP);
+      tree->SetBranchAddress("tau1_phi_ClusteredMet_UP", &tau1_phi_ClusteredMet_UP, &b_tau1_phi_ClusteredMet_UP);
+      tree->SetBranchAddress("tau1_m_ClusteredMet_UP", &tau1_m_ClusteredMet_UP, &b_tau1_m_ClusteredMet_UP);
+      tree->SetBranchAddress("tau2_pt_ClusteredMet_UP", &tau2_pt_ClusteredMet_UP, &b_tau2_pt_ClusteredMet_UP);
+      tree->SetBranchAddress("tau2_eta_ClusteredMet_UP", &tau2_eta_ClusteredMet_UP, &b_tau2_eta_ClusteredMet_UP);
+      tree->SetBranchAddress("tau2_phi_ClusteredMet_UP", &tau2_phi_ClusteredMet_UP, &b_tau2_phi_ClusteredMet_UP);
+      tree->SetBranchAddress("tau2_m_ClusteredMet_UP", &tau2_m_ClusteredMet_UP, &b_tau2_m_ClusteredMet_UP);
+
+      tree->SetBranchAddress("tau1_pt_ClusteredMet_DOWN", &tau1_pt_ClusteredMet_DOWN, &b_tau1_pt_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau1_eta_ClusteredMet_DOWN", &tau1_eta_ClusteredMet_DOWN, &b_tau1_eta_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau1_phi_ClusteredMet_DOWN", &tau1_phi_ClusteredMet_DOWN, &b_tau1_phi_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau1_m_ClusteredMet_DOWN", &tau1_m_ClusteredMet_DOWN, &b_tau1_m_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau2_pt_ClusteredMet_DOWN", &tau2_pt_ClusteredMet_DOWN, &b_tau2_pt_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau2_eta_ClusteredMet_DOWN", &tau2_eta_ClusteredMet_DOWN, &b_tau2_eta_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau2_phi_ClusteredMet_DOWN", &tau2_phi_ClusteredMet_DOWN, &b_tau2_phi_ClusteredMet_DOWN);
+      tree->SetBranchAddress("tau2_m_ClusteredMet_DOWN", &tau2_m_ClusteredMet_DOWN, &b_tau2_m_ClusteredMet_DOWN);
 
 
       // new branches that will need to be filled
@@ -1022,355 +1173,424 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	
 
 	if (njets>=2){
-	  
-	  TLorentzVector tau1, tau2;
-	  tau1.SetPtEtaPhiM(tau1_pt, tau1_eta, tau1_phi, tau1_m);
-	  tau2.SetPtEtaPhiM(tau2_pt, tau2_eta, tau2_phi, tau2_m);
+	  if (channel=="tt") {	  
+	    TLorentzVector tau1, tau2;
+	    tau1.SetPtEtaPhiM(tau1_pt, tau1_eta, tau1_phi, tau1_m);
+	    tau2.SetPtEtaPhiM(tau2_pt, tau2_eta, tau2_phi, tau2_m);
 
-	  // jet 4-vectors
-	  TLorentzVector jet1(0, 0, 1e-3, 1e-3), jet2(0, 0, 1e-3, 1e-3), higgs(0, 0, 0, 0),
-	    blank1(0, 0, 0, 0);
-	  jet1.SetPtEtaPhiM(jpt_1, jeta_1, jphi_1, 0);
-	  jet2.SetPtEtaPhiM(jpt_2, jeta_2, jphi_2, 0);
-	  mjj = (jet1 +  jet2).M();
+	    // jet 4-vectors
+	    TLorentzVector jet1(0, 0, 1e-3, 1e-3), jet2(0, 0, 1e-3, 1e-3), higgs(0, 0, 0, 0),
+	      blank1(0, 0, 0, 0);
+	    jet1.SetPtEtaPhiM(jpt_1, jeta_1, jphi_1, 0);
+	    jet2.SetPtEtaPhiM(jpt_2, jeta_2, jphi_2, 0);
+	    mjj = (jet1 +  jet2).M();
 	  
-	  // tau lepton 4-vectors
-	  TLorentzVector pDaughters1, pDaughters2;
+	    // tau lepton 4-vectors
+	    TLorentzVector pDaughters1, pDaughters2;
 	  
-	  TLorentzVector visTau1, visTau2;
-	  visTau1.SetPtEtaPhiM(pt_1, eta_1, phi_1, m_1);
-	  visTau2.SetPtEtaPhiM(pt_2, eta_2, phi_2, m_2);
+	    TLorentzVector visTau1, visTau2;
+	    visTau1.SetPtEtaPhiM(pt_1, eta_1, phi_1, m_1);
+	    visTau2.SetPtEtaPhiM(pt_2, eta_2, phi_2, m_2);
 	  
-	  if ( !trueTau ) {
-	    pDaughters1 = visTau1;
-	    pDaughters2 = visTau2;
-	  } else {
-	    pDaughters1 = tau1;
-	    pDaughters2 = tau2;
-	  }
+	    if ( !trueTau ) {
+	      pDaughters1 = visTau1;
+	      pDaughters2 = visTau2;
+	    } else {
+	      pDaughters1 = tau1;
+	      pDaughters2 = tau2;
+	    }
 
-	  // Determine the signs of the tau leptons      
-	  int tauCharge1 = q_1;
-	  int tauCharge2 = q_2;
+	    // Determine the signs of the tau leptons      
+	    int tauCharge1 = q_1;
+	    int tauCharge2 = q_2;
 	  
-	  if ( tau1.DeltaR(visTau1) > tau1.DeltaR(visTau2) )
-	    tauCharge1 = q_2;
-	  if ( tau2.DeltaR(visTau2) > tau2.DeltaR(visTau1) ) 
-	    tauCharge2 = q_1;
+	    if ( tau1.DeltaR(visTau1) > tau1.DeltaR(visTau2) )
+	      tauCharge1 = q_2;
+	    if ( tau2.DeltaR(visTau2) > tau2.DeltaR(visTau1) ) 
+	      tauCharge2 = q_1;
 	  
-	  calculateME(pDaughters1, pDaughters2, jet1, jet2, tauCharge1, tauCharge2,
-		      ME_sm_VBF, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg1, ME_bkg2,
-		      Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
-	  
-	  
-	  ME_bkg = ME_bkg1 + ME_bkg2;
-	  
-	  mela_Dbkg_VBF = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	  mela_Dbkg_ggH = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	  mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    calculateME(pDaughters1, pDaughters2, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg1, ME_bkg2,
+			Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
+	    
+	    ME_bkg = ME_bkg1 + ME_bkg2;
+	    
+	    mela_Dbkg_VBF = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	    mela_Dbkg_ggH = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	    mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	    mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	    
+	    //*****************************************************
+	    // MET SYSTEMATICS
+	    // Taus Pt have been corrected at skimming level (TEC)
+	    // TEC propagated to shifted METs
+	    //*****************************************************
+	    std::cout << "MET Unclustered Energy Up   ---  " << std::endl;
+	    TLorentzVector pDaughters1_UncMet_UP, pDaughters2_UncMet_UP;
+	    pDaughters1_UncMet_UP.SetPtEtaPhiM(tau1_pt_UncMet_UP, tau1_eta_UncMet_UP, tau1_phi_UncMet_UP, tau1_m_UncMet_UP);
+	    pDaughters2_UncMet_UP.SetPtEtaPhiM(tau2_pt_UncMet_UP, tau2_eta_UncMet_UP, tau2_phi_UncMet_UP, tau2_m_UncMet_UP);
 
-	  if (doES && channel=="tt") {
+	    calculateME(pDaughters1_UncMet_UP, pDaughters2_UncMet_UP, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_UncMet_UP, ME_sm_ggH_UncMet_UP, ME_sm_WH_UncMet_UP, ME_sm_ZH_UncMet_UP, ME_bkg1_UncMet_UP, ME_bkg2_UncMet_UP,
+			Q2V1_UncMet_UP, Q2V2_UncMet_UP, costheta1_UncMet_UP, costheta2_UncMet_UP, Phi_UncMet_UP, costhetastar_UncMet_UP, Phi1_UncMet_UP);
 
-	    double tesSize = 0.012; // 0.6% uncertainty is considered for each decay mode. AN line1275. Confirm with Abdollah, it should be 1.2%
-	    double tesUP = 1.0 + tesSize;
-	    double tesDOWN = 1.0 - tesSize;
-	    //***************************************************************************
-	    //********************* Two taus shifted up *********************************
-	    //***************************************************************************
-	    // for now, only tt channel
-	    if (gen_match_2==5 or gen_match_1==5){
-	      std::cout << "Two UP    ---  ";
-	      float ES_UP_scale1 = 1.0;
-	      float ES_UP_scale2 = 1.0;
-	      if(gen_match_1==5) ES_UP_scale1 = tesUP;
-	      if(gen_match_2==5) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg1_UP, ME_bkg2_UP,
-			  Q2V1_UP, Q2V2_UP, costheta1_UP, costheta2_UP, Phi_UP, costhetastar_UP, Phi1_UP);
-	      
-	      ME_bkg_UP = ME_bkg1_UP + ME_bkg2_UP;
-	      
-	      mela_Dbkg_VBF_UP = ME_sm_VBF_UP / ( ME_sm_VBF_UP + ME_bkg_UP);
-	      mela_Dbkg_ggH_UP = ME_sm_ggH_UP / ( ME_sm_ggH_UP + ME_bkg_UP);
-	      mela_Dbkg_WH_UP  = ME_sm_WH_UP / ( ME_sm_WH_UP + ME_bkg_UP);
-	      mela_Dbkg_ZH_UP  = ME_sm_ZH_UP / ( ME_sm_ZH_UP + ME_bkg_UP);
-	    } else {
-	      ME_bkg_UP = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	    //***************************************************************************
-	    //********************** Tau DM0 shifted up *********************************
-	    //***************************************************************************
-	    if ((gen_match_2==5 && decayMode2==0) or (gen_match_1==5 && decayMode==0)){
-	      std::cout << "DM0 UP    ---  ";
-	      float ES_UP_scale1 = 1.0;
-	      float ES_UP_scale2 = 1.0;
-	      if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
-	      if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_DM0_UP, ME_sm_ggH_DM0_UP, ME_sm_WH_DM0_UP, ME_sm_ZH_DM0_UP, ME_bkg1_DM0_UP, ME_bkg2_DM0_UP,
-			  Q2V1_DM0_UP, Q2V2_DM0_UP, costheta1_DM0_UP, costheta2_DM0_UP, Phi_DM0_UP, costhetastar_DM0_UP, Phi1_DM0_UP);
-	      
-	      ME_bkg_DM0_UP = ME_bkg1_DM0_UP + ME_bkg2_DM0_UP;
-	      
-	      mela_Dbkg_VBF_DM0_UP = ME_sm_VBF_DM0_UP / ( ME_sm_VBF_DM0_UP + ME_bkg_DM0_UP);
-	      mela_Dbkg_ggH_DM0_UP = ME_sm_ggH_DM0_UP / ( ME_sm_ggH_DM0_UP + ME_bkg_DM0_UP);
-	      mela_Dbkg_WH_DM0_UP  = ME_sm_WH_DM0_UP / ( ME_sm_WH_DM0_UP + ME_bkg_DM0_UP);
-	      mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH_DM0_UP / ( ME_sm_ZH_DM0_UP + ME_bkg_DM0_UP);
-	    } else {
-	      ME_bkg_DM0_UP = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_DM0_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_DM0_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_DM0_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	    //***************************************************************************
-	    //********************** Tau DM1 shifted up *********************************
-	    //***************************************************************************
-	    if ((decayMode==1 && gen_match_1==5) or (decayMode2==1 && gen_match_2==5)){
-	      std::cout << "DM1 UP    ---  ";
-	      float ES_UP_scale1 = 1.0;
-	      float ES_UP_scale2 = 1.0;
-	      if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
-	      if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_DM1_UP, ME_sm_ggH_DM1_UP, ME_sm_WH_DM1_UP, ME_sm_ZH_DM1_UP, ME_bkg1_DM1_UP, ME_bkg2_DM1_UP,
-			  Q2V1_DM1_UP, Q2V2_DM1_UP, costheta1_DM1_UP, costheta2_DM1_UP, Phi_DM1_UP, costhetastar_DM1_UP, Phi1_DM1_UP);
-	      
-	      ME_bkg_DM1_UP = ME_bkg1_DM1_UP + ME_bkg2_DM1_UP;
-	      
-	      mela_Dbkg_VBF_DM1_UP = ME_sm_VBF_DM1_UP / ( ME_sm_VBF_DM1_UP + ME_bkg_DM1_UP);
-	      mela_Dbkg_ggH_DM1_UP = ME_sm_ggH_DM1_UP / ( ME_sm_ggH_DM1_UP + ME_bkg_DM1_UP);
-	      mela_Dbkg_WH_DM1_UP  = ME_sm_WH_DM1_UP / ( ME_sm_WH_DM1_UP + ME_bkg_DM1_UP);
-	      mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH_DM1_UP / ( ME_sm_ZH_DM1_UP + ME_bkg_DM1_UP);
-	    } else {
-	      ME_bkg_DM1_UP = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_DM1_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_DM1_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_DM1_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	    //***************************************************************************
-	    //********************* Tau DM10 shifted up *********************************
-	    //***************************************************************************
-	    if ((decayMode2==10 && gen_match_2==5) or (decayMode==10 && gen_match_1==5)){
-	      std::cout << "DM10 UP    ---  ";
-	      float ES_UP_scale1 = 1.0;
-	      float ES_UP_scale2 = 1.0;
-	      if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
-	      if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());	   
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_DM10_UP, ME_sm_ggH_DM10_UP, ME_sm_WH_DM10_UP, ME_sm_ZH_DM10_UP, ME_bkg1_DM10_UP, ME_bkg2_DM10_UP,
-			  Q2V1_DM10_UP, Q2V2_DM10_UP, costheta1_DM10_UP, costheta2_DM10_UP, Phi_DM10_UP, costhetastar_DM10_UP, Phi1_DM10_UP);
-	      
-	      ME_bkg_DM10_UP = ME_bkg1_DM10_UP + ME_bkg2_DM10_UP;
-	      
-	      mela_Dbkg_VBF_DM10_UP = ME_sm_VBF_DM10_UP / ( ME_sm_VBF_DM10_UP + ME_bkg_DM10_UP);
-	      mela_Dbkg_ggH_DM10_UP = ME_sm_ggH_DM10_UP / ( ME_sm_ggH_DM10_UP + ME_bkg_DM10_UP);
-	      mela_Dbkg_WH_DM10_UP  = ME_sm_WH_DM10_UP / ( ME_sm_WH_DM10_UP + ME_bkg_DM10_UP);
-	      mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH_DM10_UP / ( ME_sm_ZH_DM10_UP + ME_bkg_DM10_UP);
-	    } else {
-	      ME_bkg_DM10_UP = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_DM10_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_DM10_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_DM10_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	    //*****************************************************
-	    //************* Two taus shifted down *****************
-	    //*****************************************************
-	    if (gen_match_1==5 or gen_match_2==5){
-	      std::cout << "Two DOWN  ---  ";
-	      float ES_DOWN_scale1 = 1.0;
-	      float ES_DOWN_scale2 = 1.0;
-	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_DOWN, ME_sm_ggH_DOWN, ME_sm_WH_DOWN, ME_sm_ZH_DOWN, ME_bkg1_DOWN, ME_bkg2_DOWN,
-			  Q2V1_DOWN, Q2V2_DOWN, costheta1_DOWN, costheta2_DOWN, Phi_DOWN, costhetastar_DOWN, Phi1_DOWN);
-	      
-	      ME_bkg_DOWN = ME_bkg1_DOWN + ME_bkg2_DOWN;
-	      
-	      mela_Dbkg_VBF_DOWN = ME_sm_VBF_DOWN / ( ME_sm_VBF_DOWN + ME_bkg_DOWN);
-	      mela_Dbkg_ggH_DOWN = ME_sm_ggH_DOWN / ( ME_sm_ggH_DOWN + ME_bkg_DOWN);
-	      mela_Dbkg_WH_DOWN  = ME_sm_WH_DOWN / ( ME_sm_WH_DOWN + ME_bkg_DOWN);
-	      mela_Dbkg_ZH_DOWN  = ME_sm_ZH_DOWN / ( ME_sm_ZH_DOWN + ME_bkg_DOWN);
-	    } else {
-	      ME_bkg_DOWN = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	    //*****************************************************
-	    //************* Tau DM0 shifted down  *****************
-	    //*****************************************************
-	    if ((decayMode==0 && gen_match_1==5) or (decayMode2==0 && gen_match_2==5)){
-	      float ES_DOWN_scale1 = 1.0;
-	      float ES_DOWN_scale2 = 1.0;
-	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_DM0_DOWN, ME_sm_ggH_DM0_DOWN, ME_sm_WH_DM0_DOWN, ME_sm_ZH_DM0_DOWN, ME_bkg1_DM0_DOWN, ME_bkg2_DM0_DOWN,
-			  Q2V1_DM0_DOWN, Q2V2_DM0_DOWN, costheta1_DM0_DOWN, costheta2_DM0_DOWN, Phi_DM0_DOWN, costhetastar_DM0_DOWN, Phi1_DM0_DOWN);
-	      
-	      ME_bkg_DM0_DOWN = ME_bkg1_DM0_DOWN + ME_bkg2_DM0_DOWN;
-	      
-	      mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF_DM0_DOWN / ( ME_sm_VBF_DM0_DOWN + ME_bkg_DM0_DOWN);
-	      mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH_DM0_DOWN / ( ME_sm_ggH_DM0_DOWN + ME_bkg_DM0_DOWN);
-	      mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH_DM0_DOWN / ( ME_sm_WH_DM0_DOWN + ME_bkg_DM0_DOWN);
-	      mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH_DM0_DOWN / ( ME_sm_ZH_DM0_DOWN + ME_bkg_DM0_DOWN);
-	    } else {
-	      ME_bkg_DM0_DOWN = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	    //*****************************************************
-	    //************** Tau DM1 shifted down *****************
-	    //*****************************************************
-	    if ((decayMode==1 && gen_match_1==5) or (decayMode2==1 && gen_match_2==5)){
-	      std::cout << "DM1 DOWN  ---  ";
-	      float ES_DOWN_scale1 = 1.0;
-	      float ES_DOWN_scale2 = 1.0;
-	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_DM1_DOWN, ME_sm_ggH_DM1_DOWN, ME_sm_WH_DM1_DOWN, ME_sm_ZH_DM1_DOWN, ME_bkg1_DM1_DOWN, ME_bkg2_DM1_DOWN,
-			  Q2V1_DM1_DOWN, Q2V2_DM1_DOWN, costheta1_DM1_DOWN, costheta2_DM1_DOWN, Phi_DM1_DOWN, costhetastar_DM1_DOWN, Phi1_DM1_DOWN);
-	      
-	      ME_bkg_DM1_DOWN = ME_bkg1_DM1_DOWN + ME_bkg2_DM1_DOWN;
-	      
-	      mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF_DM1_DOWN / ( ME_sm_VBF_DM1_DOWN + ME_bkg_DM1_DOWN);
-	      mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH_DM1_DOWN / ( ME_sm_ggH_DM1_DOWN + ME_bkg_DM1_DOWN);
-	      mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH_DM1_DOWN / ( ME_sm_WH_DM1_DOWN + ME_bkg_DM1_DOWN);
-	      mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH_DM1_DOWN / ( ME_sm_ZH_DM1_DOWN + ME_bkg_DM1_DOWN);
-	    } else {
-	      ME_bkg_DM1_DOWN = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	    //*****************************************************
-	    //************* Tau DM10 shifted down *****************
-	    //*****************************************************
-	    if ((decayMode==10 && gen_match_1==5) or (decayMode2==10 && gen_match_2==5)){
-	      float ES_DOWN_scale1 = 1.0;
-	      float ES_DOWN_scale2 = 1.0;
-	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
-	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
-	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
-	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
-	      
-	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
-	      TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
-	      pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
-	      pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
-	      // recomputin composite variables in the analysis.
-	      calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
-			  ME_sm_VBF_DM10_DOWN, ME_sm_ggH_DM10_DOWN, ME_sm_WH_DM10_DOWN, ME_sm_ZH_DM10_DOWN, ME_bkg1_DM10_DOWN, ME_bkg2_DM10_DOWN,
-			  Q2V1_DM10_DOWN, Q2V2_DM10_DOWN, costheta1_DM10_DOWN, costheta2_DM10_DOWN, Phi_DM10_DOWN, costhetastar_DM10_DOWN, Phi1_DM10_DOWN);
-	      
-	      ME_bkg_DM10_DOWN = ME_bkg1_DM10_DOWN + ME_bkg2_DM10_DOWN;
-	      
-	      mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF_DM10_DOWN / ( ME_sm_VBF_DM10_DOWN + ME_bkg_DM10_DOWN);
-	      mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH_DM10_DOWN / ( ME_sm_ggH_DM10_DOWN + ME_bkg_DM10_DOWN);
-	      mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH_DM10_DOWN / ( ME_sm_WH_DM10_DOWN + ME_bkg_DM10_DOWN);
-	      mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH_DM10_DOWN / ( ME_sm_ZH_DM10_DOWN + ME_bkg_DM10_DOWN);
-	    } else {
-	      ME_bkg_DM10_DOWN = ME_bkg1 + ME_bkg2;
-	      
-	      mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	      mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	      mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	      mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
-	    }
-	  } // end of doES
+	    ME_bkg_UncMet_UP = ME_bkg1_UncMet_UP + ME_bkg2_UncMet_UP;
+	    
+	    mela_Dbkg_VBF_UncMet_UP = ME_sm_VBF_UncMet_UP / ( ME_sm_VBF_UncMet_UP + ME_bkg_UncMet_UP);
+	    mela_Dbkg_ggH_UncMet_UP = ME_sm_ggH_UncMet_UP / ( ME_sm_ggH_UncMet_UP + ME_bkg_UncMet_UP);
+	    mela_Dbkg_WH_UncMet_UP  = ME_sm_WH_UncMet_UP / ( ME_sm_WH_UncMet_UP + ME_bkg_UncMet_UP);
+	    mela_Dbkg_ZH_UncMet_UP  = ME_sm_ZH_UncMet_UP / ( ME_sm_ZH_UncMet_UP + ME_bkg_UncMet_UP);
+
+	    std::cout << "MET Unclustered Energy Down ---  " << std::endl;
+	    TLorentzVector pDaughters1_UncMet_DOWN, pDaughters2_UncMet_DOWN;
+	    pDaughters1_UncMet_DOWN.SetPtEtaPhiM(tau1_pt_UncMet_DOWN, tau1_eta_UncMet_DOWN, tau1_phi_UncMet_DOWN, tau1_m_UncMet_DOWN);
+	    pDaughters2_UncMet_DOWN.SetPtEtaPhiM(tau2_pt_UncMet_DOWN, tau2_eta_UncMet_DOWN, tau2_phi_UncMet_DOWN, tau2_m_UncMet_DOWN);
+
+	    calculateME(pDaughters1_UncMet_DOWN, pDaughters2_UncMet_DOWN, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_UncMet_DOWN, ME_sm_ggH_UncMet_DOWN, ME_sm_WH_UncMet_DOWN, ME_sm_ZH_UncMet_DOWN, ME_bkg1_UncMet_DOWN, ME_bkg2_UncMet_DOWN,
+			Q2V1_UncMet_DOWN, Q2V2_UncMet_DOWN, costheta1_UncMet_DOWN, costheta2_UncMet_DOWN, Phi_UncMet_DOWN, costhetastar_UncMet_DOWN, Phi1_UncMet_DOWN);
+
+	    ME_bkg_UncMet_DOWN = ME_bkg1_UncMet_DOWN + ME_bkg2_UncMet_DOWN;
+	    
+	    mela_Dbkg_VBF_UncMet_DOWN = ME_sm_VBF_UncMet_DOWN / ( ME_sm_VBF_UncMet_DOWN + ME_bkg_UncMet_DOWN);
+	    mela_Dbkg_ggH_UncMet_DOWN = ME_sm_ggH_UncMet_DOWN / ( ME_sm_ggH_UncMet_DOWN + ME_bkg_UncMet_DOWN);
+	    mela_Dbkg_WH_UncMet_DOWN  = ME_sm_WH_UncMet_DOWN / ( ME_sm_WH_UncMet_DOWN + ME_bkg_UncMet_DOWN);
+	    mela_Dbkg_ZH_UncMet_DOWN  = ME_sm_ZH_UncMet_DOWN / ( ME_sm_ZH_UncMet_DOWN + ME_bkg_UncMet_DOWN);
+
+	    std::cout << "MET Clustered Energy Up     ---  " << std::endl;
+	    TLorentzVector pDaughters1_ClusteredMet_UP, pDaughters2_ClusteredMet_UP;
+	    pDaughters1_ClusteredMet_UP.SetPtEtaPhiM(tau1_pt_ClusteredMet_UP, tau1_eta_ClusteredMet_UP, tau1_phi_ClusteredMet_UP, tau1_m_ClusteredMet_UP);
+	    pDaughters2_ClusteredMet_UP.SetPtEtaPhiM(tau2_pt_ClusteredMet_UP, tau2_eta_ClusteredMet_UP, tau2_phi_ClusteredMet_UP, tau2_m_ClusteredMet_UP);
+
+	    calculateME(pDaughters1_ClusteredMet_UP, pDaughters2_ClusteredMet_UP, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_ClusteredMet_UP, ME_sm_ggH_ClusteredMet_UP, ME_sm_WH_ClusteredMet_UP, ME_sm_ZH_ClusteredMet_UP, ME_bkg1_ClusteredMet_UP, ME_bkg2_ClusteredMet_UP,
+			Q2V1_ClusteredMet_UP, Q2V2_ClusteredMet_UP, costheta1_ClusteredMet_UP, costheta2_ClusteredMet_UP, Phi_ClusteredMet_UP, costhetastar_ClusteredMet_UP, Phi1_ClusteredMet_UP);
+
+	    ME_bkg_ClusteredMet_UP = ME_bkg1_ClusteredMet_UP + ME_bkg2_ClusteredMet_UP;
+	    
+	    mela_Dbkg_VBF_ClusteredMet_UP = ME_sm_VBF_ClusteredMet_UP / ( ME_sm_VBF_ClusteredMet_UP + ME_bkg_ClusteredMet_UP);
+	    mela_Dbkg_ggH_ClusteredMet_UP = ME_sm_ggH_ClusteredMet_UP / ( ME_sm_ggH_ClusteredMet_UP + ME_bkg_ClusteredMet_UP);
+	    mela_Dbkg_WH_ClusteredMet_UP  = ME_sm_WH_ClusteredMet_UP / ( ME_sm_WH_ClusteredMet_UP + ME_bkg_ClusteredMet_UP);
+	    mela_Dbkg_ZH_ClusteredMet_UP  = ME_sm_ZH_ClusteredMet_UP / ( ME_sm_ZH_ClusteredMet_UP + ME_bkg_ClusteredMet_UP);
+
+	    std::cout << "MET Clustered Energy Down   ---  " << std::endl;
+	    TLorentzVector pDaughters1_ClusteredMet_DOWN, pDaughters2_ClusteredMet_DOWN;
+	    pDaughters1_ClusteredMet_DOWN.SetPtEtaPhiM(tau1_pt_ClusteredMet_DOWN, tau1_eta_ClusteredMet_DOWN, tau1_phi_ClusteredMet_DOWN, tau1_m_ClusteredMet_DOWN);
+	    pDaughters2_ClusteredMet_DOWN.SetPtEtaPhiM(tau2_pt_ClusteredMet_DOWN, tau2_eta_ClusteredMet_DOWN, tau2_phi_ClusteredMet_DOWN, tau2_m_ClusteredMet_DOWN);
+
+	    calculateME(pDaughters1_ClusteredMet_DOWN, pDaughters2_ClusteredMet_DOWN, jet1, jet2, tauCharge1, tauCharge2,
+			ME_sm_VBF_ClusteredMet_DOWN, ME_sm_ggH_ClusteredMet_DOWN, ME_sm_WH_ClusteredMet_DOWN, ME_sm_ZH_ClusteredMet_DOWN, ME_bkg1_ClusteredMet_DOWN, ME_bkg2_ClusteredMet_DOWN,
+			Q2V1_ClusteredMet_DOWN, Q2V2_ClusteredMet_DOWN, costheta1_ClusteredMet_DOWN, costheta2_ClusteredMet_DOWN, Phi_ClusteredMet_DOWN, costhetastar_ClusteredMet_DOWN, Phi1_ClusteredMet_DOWN);
+
+	    ME_bkg_ClusteredMet_DOWN = ME_bkg1_ClusteredMet_DOWN + ME_bkg2_ClusteredMet_DOWN;
+	    
+	    mela_Dbkg_VBF_ClusteredMet_DOWN = ME_sm_VBF_ClusteredMet_DOWN / ( ME_sm_VBF_ClusteredMet_DOWN + ME_bkg_ClusteredMet_DOWN);
+	    mela_Dbkg_ggH_ClusteredMet_DOWN = ME_sm_ggH_ClusteredMet_DOWN / ( ME_sm_ggH_ClusteredMet_DOWN + ME_bkg_ClusteredMet_DOWN);
+	    mela_Dbkg_WH_ClusteredMet_DOWN  = ME_sm_WH_ClusteredMet_DOWN / ( ME_sm_WH_ClusteredMet_DOWN + ME_bkg_ClusteredMet_DOWN);
+	    mela_Dbkg_ZH_ClusteredMet_DOWN  = ME_sm_ZH_ClusteredMet_DOWN / ( ME_sm_ZH_ClusteredMet_DOWN + ME_bkg_ClusteredMet_DOWN);
+	    
+
+	    if(doES) {
+	      double tesSize = 0.012; // 0.6% uncertainty is considered for each decay mode. AN line1275. Confirm with Abdollah, it should be 1.2%
+	      double tesUP = 1.0 + tesSize;
+	      double tesDOWN = 1.0 - tesSize;
+	      //***************************************************************************
+	      //********************* Two taus shifted up *********************************
+	      //***************************************************************************
+	      // for now, only tt channel
+	      if (gen_match_2==5 or gen_match_1==5){
+		std::cout << "Two UP    ---  ";
+		float ES_UP_scale1 = 1.0;
+		float ES_UP_scale2 = 1.0;
+		if(gen_match_1==5) ES_UP_scale1 = tesUP;
+		if(gen_match_2==5) ES_UP_scale2 = tesUP;
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_UP_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_UP, ME_sm_ggH_UP, ME_sm_WH_UP, ME_sm_ZH_UP, ME_bkg1_UP, ME_bkg2_UP,
+			    Q2V1_UP, Q2V2_UP, costheta1_UP, costheta2_UP, Phi_UP, costhetastar_UP, Phi1_UP);
+		
+		ME_bkg_UP = ME_bkg1_UP + ME_bkg2_UP;
+		
+		mela_Dbkg_VBF_UP = ME_sm_VBF_UP / ( ME_sm_VBF_UP + ME_bkg_UP);
+		mela_Dbkg_ggH_UP = ME_sm_ggH_UP / ( ME_sm_ggH_UP + ME_bkg_UP);
+		mela_Dbkg_WH_UP  = ME_sm_WH_UP / ( ME_sm_WH_UP + ME_bkg_UP);
+		mela_Dbkg_ZH_UP  = ME_sm_ZH_UP / ( ME_sm_ZH_UP + ME_bkg_UP);
+	      } else {
+		ME_bkg_UP = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	      //***************************************************************************
+	      //********************** Tau DM0 shifted up *********************************
+	      //***************************************************************************
+	      if ((gen_match_2==5 && decayMode2==0) or (gen_match_1==5 && decayMode==0)){
+		std::cout << "DM0 UP    ---  ";
+		float ES_UP_scale1 = 1.0;
+		float ES_UP_scale2 = 1.0;
+		if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
+		if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_UP_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_DM0_UP, ME_sm_ggH_DM0_UP, ME_sm_WH_DM0_UP, ME_sm_ZH_DM0_UP, ME_bkg1_DM0_UP, ME_bkg2_DM0_UP,
+			    Q2V1_DM0_UP, Q2V2_DM0_UP, costheta1_DM0_UP, costheta2_DM0_UP, Phi_DM0_UP, costhetastar_DM0_UP, Phi1_DM0_UP);
+		
+		ME_bkg_DM0_UP = ME_bkg1_DM0_UP + ME_bkg2_DM0_UP;
+		
+		mela_Dbkg_VBF_DM0_UP = ME_sm_VBF_DM0_UP / ( ME_sm_VBF_DM0_UP + ME_bkg_DM0_UP);
+		mela_Dbkg_ggH_DM0_UP = ME_sm_ggH_DM0_UP / ( ME_sm_ggH_DM0_UP + ME_bkg_DM0_UP);
+		mela_Dbkg_WH_DM0_UP  = ME_sm_WH_DM0_UP / ( ME_sm_WH_DM0_UP + ME_bkg_DM0_UP);
+		mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH_DM0_UP / ( ME_sm_ZH_DM0_UP + ME_bkg_DM0_UP);
+	      } else {
+		ME_bkg_DM0_UP = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_DM0_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_DM0_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_DM0_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_DM0_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	      //***************************************************************************
+	      //********************** Tau DM1 shifted up *********************************
+	      //***************************************************************************
+	      if ((decayMode==1 && gen_match_1==5) or (decayMode2==1 && gen_match_2==5)){
+		std::cout << "DM1 UP    ---  ";
+		float ES_UP_scale1 = 1.0;
+		float ES_UP_scale2 = 1.0;
+		if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
+		if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_UP_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_DM1_UP, ME_sm_ggH_DM1_UP, ME_sm_WH_DM1_UP, ME_sm_ZH_DM1_UP, ME_bkg1_DM1_UP, ME_bkg2_DM1_UP,
+			    Q2V1_DM1_UP, Q2V2_DM1_UP, costheta1_DM1_UP, costheta2_DM1_UP, Phi_DM1_UP, costhetastar_DM1_UP, Phi1_DM1_UP);
+		
+		ME_bkg_DM1_UP = ME_bkg1_DM1_UP + ME_bkg2_DM1_UP;
+		
+		mela_Dbkg_VBF_DM1_UP = ME_sm_VBF_DM1_UP / ( ME_sm_VBF_DM1_UP + ME_bkg_DM1_UP);
+		mela_Dbkg_ggH_DM1_UP = ME_sm_ggH_DM1_UP / ( ME_sm_ggH_DM1_UP + ME_bkg_DM1_UP);
+		mela_Dbkg_WH_DM1_UP  = ME_sm_WH_DM1_UP / ( ME_sm_WH_DM1_UP + ME_bkg_DM1_UP);
+		mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH_DM1_UP / ( ME_sm_ZH_DM1_UP + ME_bkg_DM1_UP);
+	      } else {
+		ME_bkg_DM1_UP = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_DM1_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_DM1_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_DM1_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_DM1_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	      //***************************************************************************
+	      //********************* Tau DM10 shifted up *********************************
+	      //***************************************************************************
+	      if ((decayMode2==10 && gen_match_2==5) or (decayMode==10 && gen_match_1==5)){
+		std::cout << "DM10 UP    ---  ";
+		float ES_UP_scale1 = 1.0;
+		float ES_UP_scale2 = 1.0;
+		if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
+		if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_UP_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_UP_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_UP_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());	   
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_DM10_UP, ME_sm_ggH_DM10_UP, ME_sm_WH_DM10_UP, ME_sm_ZH_DM10_UP, ME_bkg1_DM10_UP, ME_bkg2_DM10_UP,
+			    Q2V1_DM10_UP, Q2V2_DM10_UP, costheta1_DM10_UP, costheta2_DM10_UP, Phi_DM10_UP, costhetastar_DM10_UP, Phi1_DM10_UP);
+		
+		ME_bkg_DM10_UP = ME_bkg1_DM10_UP + ME_bkg2_DM10_UP;
+		
+		mela_Dbkg_VBF_DM10_UP = ME_sm_VBF_DM10_UP / ( ME_sm_VBF_DM10_UP + ME_bkg_DM10_UP);
+		mela_Dbkg_ggH_DM10_UP = ME_sm_ggH_DM10_UP / ( ME_sm_ggH_DM10_UP + ME_bkg_DM10_UP);
+		mela_Dbkg_WH_DM10_UP  = ME_sm_WH_DM10_UP / ( ME_sm_WH_DM10_UP + ME_bkg_DM10_UP);
+		mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH_DM10_UP / ( ME_sm_ZH_DM10_UP + ME_bkg_DM10_UP);
+	      } else {
+		ME_bkg_DM10_UP = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_DM10_UP = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_DM10_UP = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_DM10_UP  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_DM10_UP  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	      //*****************************************************
+	      //************* Two taus shifted down *****************
+	      //*****************************************************
+	      if (gen_match_1==5 or gen_match_2==5){
+		std::cout << "Two DOWN  ---  ";
+		float ES_DOWN_scale1 = 1.0;
+		float ES_DOWN_scale2 = 1.0;
+		if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+		if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_DOWN_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_DOWN, ME_sm_ggH_DOWN, ME_sm_WH_DOWN, ME_sm_ZH_DOWN, ME_bkg1_DOWN, ME_bkg2_DOWN,
+			    Q2V1_DOWN, Q2V2_DOWN, costheta1_DOWN, costheta2_DOWN, Phi_DOWN, costhetastar_DOWN, Phi1_DOWN);
+		
+		ME_bkg_DOWN = ME_bkg1_DOWN + ME_bkg2_DOWN;
+		
+		mela_Dbkg_VBF_DOWN = ME_sm_VBF_DOWN / ( ME_sm_VBF_DOWN + ME_bkg_DOWN);
+		mela_Dbkg_ggH_DOWN = ME_sm_ggH_DOWN / ( ME_sm_ggH_DOWN + ME_bkg_DOWN);
+		mela_Dbkg_WH_DOWN  = ME_sm_WH_DOWN / ( ME_sm_WH_DOWN + ME_bkg_DOWN);
+		mela_Dbkg_ZH_DOWN  = ME_sm_ZH_DOWN / ( ME_sm_ZH_DOWN + ME_bkg_DOWN);
+	      } else {
+		ME_bkg_DOWN = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	      //*****************************************************
+	      //************* Tau DM0 shifted down  *****************
+	      //*****************************************************
+	      if ((decayMode==0 && gen_match_1==5) or (decayMode2==0 && gen_match_2==5)){
+		float ES_DOWN_scale1 = 1.0;
+		float ES_DOWN_scale2 = 1.0;
+		if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+		if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_DOWN_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_DM0_DOWN, ME_sm_ggH_DM0_DOWN, ME_sm_WH_DM0_DOWN, ME_sm_ZH_DM0_DOWN, ME_bkg1_DM0_DOWN, ME_bkg2_DM0_DOWN,
+			    Q2V1_DM0_DOWN, Q2V2_DM0_DOWN, costheta1_DM0_DOWN, costheta2_DM0_DOWN, Phi_DM0_DOWN, costhetastar_DM0_DOWN, Phi1_DM0_DOWN);
+		
+		ME_bkg_DM0_DOWN = ME_bkg1_DM0_DOWN + ME_bkg2_DM0_DOWN;
+		
+		mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF_DM0_DOWN / ( ME_sm_VBF_DM0_DOWN + ME_bkg_DM0_DOWN);
+		mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH_DM0_DOWN / ( ME_sm_ggH_DM0_DOWN + ME_bkg_DM0_DOWN);
+		mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH_DM0_DOWN / ( ME_sm_WH_DM0_DOWN + ME_bkg_DM0_DOWN);
+		mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH_DM0_DOWN / ( ME_sm_ZH_DM0_DOWN + ME_bkg_DM0_DOWN);
+	      } else {
+		ME_bkg_DM0_DOWN = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_DM0_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_DM0_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_DM0_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_DM0_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	      //*****************************************************
+	      //************** Tau DM1 shifted down *****************
+	      //*****************************************************
+	      if ((decayMode==1 && gen_match_1==5) or (decayMode2==1 && gen_match_2==5)){
+		std::cout << "DM1 DOWN  ---  ";
+		float ES_DOWN_scale1 = 1.0;
+		float ES_DOWN_scale2 = 1.0;
+		if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+		if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_DOWN_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_DM1_DOWN, ME_sm_ggH_DM1_DOWN, ME_sm_WH_DM1_DOWN, ME_sm_ZH_DM1_DOWN, ME_bkg1_DM1_DOWN, ME_bkg2_DM1_DOWN,
+			    Q2V1_DM1_DOWN, Q2V2_DM1_DOWN, costheta1_DM1_DOWN, costheta2_DM1_DOWN, Phi_DM1_DOWN, costhetastar_DM1_DOWN, Phi1_DM1_DOWN);
+		
+		ME_bkg_DM1_DOWN = ME_bkg1_DM1_DOWN + ME_bkg2_DM1_DOWN;
+		
+		mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF_DM1_DOWN / ( ME_sm_VBF_DM1_DOWN + ME_bkg_DM1_DOWN);
+		mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH_DM1_DOWN / ( ME_sm_ggH_DM1_DOWN + ME_bkg_DM1_DOWN);
+		mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH_DM1_DOWN / ( ME_sm_WH_DM1_DOWN + ME_bkg_DM1_DOWN);
+		mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH_DM1_DOWN / ( ME_sm_ZH_DM1_DOWN + ME_bkg_DM1_DOWN);
+	      } else {
+		ME_bkg_DM1_DOWN = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_DM1_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_DM1_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_DM1_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_DM1_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	      //*****************************************************
+	      //************* Tau DM10 shifted down *****************
+	      //*****************************************************
+	      if ((decayMode==10 && gen_match_1==5) or (decayMode2==10 && gen_match_2==5)){
+		float ES_DOWN_scale1 = 1.0;
+		float ES_DOWN_scale2 = 1.0;
+		if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
+		if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
+		std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
+		std::cout << "   tes1: " << ES_DOWN_scale1;
+		std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
+		std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
+		
+		// AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
+		TLorentzVector pDaughters1_scaled, pDaughters2_scaled; 
+		pDaughters1_scaled.SetPtEtaPhiM(pDaughters1.Pt()*ES_DOWN_scale1,pDaughters1.Eta(),pDaughters1.Phi(),pDaughters1.M());
+		pDaughters2_scaled.SetPtEtaPhiM(pDaughters2.Pt()*ES_DOWN_scale2,pDaughters2.Eta(),pDaughters2.Phi(),pDaughters2.M());
+		// recomputin composite variables in the analysis.
+		calculateME(pDaughters1_scaled, pDaughters2_scaled, jet1, jet2, tauCharge1, tauCharge2,
+			    ME_sm_VBF_DM10_DOWN, ME_sm_ggH_DM10_DOWN, ME_sm_WH_DM10_DOWN, ME_sm_ZH_DM10_DOWN, ME_bkg1_DM10_DOWN, ME_bkg2_DM10_DOWN,
+			    Q2V1_DM10_DOWN, Q2V2_DM10_DOWN, costheta1_DM10_DOWN, costheta2_DM10_DOWN, Phi_DM10_DOWN, costhetastar_DM10_DOWN, Phi1_DM10_DOWN);
+		
+		ME_bkg_DM10_DOWN = ME_bkg1_DM10_DOWN + ME_bkg2_DM10_DOWN;
+		
+		mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF_DM10_DOWN / ( ME_sm_VBF_DM10_DOWN + ME_bkg_DM10_DOWN);
+		mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH_DM10_DOWN / ( ME_sm_ggH_DM10_DOWN + ME_bkg_DM10_DOWN);
+		mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH_DM10_DOWN / ( ME_sm_WH_DM10_DOWN + ME_bkg_DM10_DOWN);
+		mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH_DM10_DOWN / ( ME_sm_ZH_DM10_DOWN + ME_bkg_DM10_DOWN);
+	      } else {
+		ME_bkg_DM10_DOWN = ME_bkg1 + ME_bkg2;
+		
+		mela_Dbkg_VBF_DM10_DOWN = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+		mela_Dbkg_ggH_DM10_DOWN = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+		mela_Dbkg_WH_DM10_DOWN  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+		mela_Dbkg_ZH_DM10_DOWN  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	      }
+	    } // end of doES
+	  } // end of tt channel
 	}
 	
 	// Fill new branches
