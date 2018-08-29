@@ -29,7 +29,7 @@ void calculateME(TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, 
 		 float& ME_bkg1, float& ME_bkg2,
 		 float& Q2V1, float& Q2V2, float& costheta1, float& costheta2, float& Phi, float& costhetastar, float& Phi1);
 
-void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeToUse[], bool trueTau = true);
+void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeToUse[], bool trueTau = true, int doES = 0);
 
 // files from Tyler R. to copy directory/root file content exactly
 void copyFiles( optutl::CommandLineParser parser, TFile* fOld, TFile* fNew) ;
@@ -47,8 +47,8 @@ int main (int argc, char* argv[]) {
   std::cout << "Input commands:" 
 	    << "\n -- input file: " << parser.stringValue("inputFile")
 	    << "\n -- output file: " << parser.stringValue("newFile")
-	    << "\n -- use true tau 4-vectors (1 - yes, 0 - no): " << parser.boolValue("trueTau") << std::endl;
-            << "\n -- doES: " << parser.doubleValue("doES")
+	    << "\n -- use true tau 4-vectors (1 - yes, 0 - no): " << parser.boolValue("trueTau")
+            << "\n -- doES: " << parser.doubleValue("doES") << std::endl;
   char treeToUse[80] = "first";
 
   TFile *fProduce;
@@ -62,14 +62,14 @@ int main (int argc, char* argv[]) {
   std::cout<<"listing the directories================="<<std::endl;
   fProduce->ls();
 
-  processFile(fProduce, parser,  treeToUse, parser.boolValue("trueTau"));
+  processFile(fProduce, parser,  treeToUse, parser.boolValue("trueTau"), parser.doubleValue("doES"));
   f->Close();
 
   return 0;
 }
 
 
-void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeToUse[], bool trueTau)
+void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeToUse[], bool trueTau, int doES)
 {
   std::cout << "Starting!!!" << std::endl;
   std::cout << "treeToUse: " << treeToUse << std::endl;
@@ -78,20 +78,55 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
   TDirectory *dirsav = gDirectory;
   TIter next(dir->GetListOfKeys());
   TKey *key;
-
+  std::string channel = "x";
   dir->cd();
+  std::vector<TString> processedNames;
+
   while ((key = (TKey*)next())) {
     printf("Found key=%s \n",key->GetName());
 
     TObject *obj = key->ReadObj();
     if (obj->IsA()->InheritsFrom(TDirectory::Class())) {
+      std::cout << "This is a directory, diving in!" << std::endl;
+      // zero the processedNames vector, to allow processing trees with duplicate names in separate directories
+      processedNames.clear();
+
       dir->cd(key->GetName());
       TDirectory *subdir = gDirectory;
       sprintf(treeToUse,"%s",key->GetName());
-      processFile(subdir, parser, treeToUse, parser.boolValue("trueTau"));
+      processFile(subdir, parser, treeToUse, parser.boolValue("trueTau"),parser.doubleValue("doES"));
 
       dirsav->cd();
     } else if(obj->IsA()->InheritsFrom(TTree::Class())) {
+      // check  if this tree was already processed
+      std::vector<TString>::const_iterator it = find(processedNames.begin(), processedNames.end(), key->GetName());
+      if ( it != processedNames.end() ) {
+	std::cout << "This tree was already processed, skipping..." <<  std::endl;
+        continue;
+      }
+      std::cout << "This is the tree! Start processing" << std::endl;
+      processedNames.push_back(key->GetName());
+      
+      // Identify the process
+      if ( std::string(key->GetName()).find("tt") != std::string::npos )  {
+        channel = "tt";
+	std::cout << "Identified channel tt" << std::endl;
+      } 
+      else if ( std::string(key->GetName()).find("em") != std::string::npos )  {
+	channel = "em";
+	std::cout << "Identified channel em" << std::endl;
+      }
+      else if ( std::string(key->GetName()).find("et") != std::string::npos ) {
+        channel = "et";
+	std::cout << "Identified channel et" << std::endl;
+      } 
+      else if ( std::string(key->GetName()).find("mt") != std::string::npos ) {
+        channel = "mt";
+	std::cout << "Identified channel mt" << std::endl;
+      } else {
+	std::cout<<"Tree "<< key->GetName() <<" does not match ... Skipping!!"<<std::endl;
+        return;
+      }
 
       TTree* tree = (TTree*)obj;
 
@@ -214,6 +249,58 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       float Phi_DM10_DOWN;
       float costhetastar_DM10_DOWN;
       float Phi1_DM10_DOWN;
+
+      float ME_sm_VBF_UncMet_UP, ME_sm_ggH_UncMet_UP, ME_sm_WH_UncMet_UP, ME_sm_ZH_UncMet_UP, ME_bkg_UncMet_UP, ME_bkg1_UncMet_UP, ME_bkg2_UncMet_UP;
+      float mela_Dbkg_VBF_UncMet_UP;
+      float mela_Dbkg_ggH_UncMet_UP;
+      float mela_Dbkg_WH_UncMet_UP;
+      float mela_Dbkg_ZH_UncMet_UP;      
+      float Q2V1_UncMet_UP;
+      float Q2V2_UncMet_UP;
+      float costheta1_UncMet_UP;
+      float costheta2_UncMet_UP;
+      float Phi_UncMet_UP;
+      float costhetastar_UncMet_UP;
+      float Phi1_UncMet_UP;
+
+      float ME_sm_VBF_UncMet_DOWN, ME_sm_ggH_UncMet_DOWN, ME_sm_WH_UncMet_DOWN, ME_sm_ZH_UncMet_DOWN, ME_bkg_UncMet_DOWN, ME_bkg1_UncMet_DOWN, ME_bkg2_UncMet_DOWN;
+      float mela_Dbkg_VBF_UncMet_DOWN;
+      float mela_Dbkg_ggH_UncMet_DOWN;
+      float mela_Dbkg_WH_UncMet_DOWN;
+      float mela_Dbkg_ZH_UncMet_DOWN;      
+      float Q2V1_UncMet_DOWN;
+      float Q2V2_UncMet_DOWN;
+      float costheta1_UncMet_DOWN;
+      float costheta2_UncMet_DOWN;
+      float Phi_UncMet_DOWN;
+      float costhetastar_UncMet_DOWN;
+      float Phi1_UncMet_DOWN;
+
+      float ME_sm_VBF_ClusteredMet_UP, ME_sm_ggH_ClusteredMet_UP, ME_sm_WH_ClusteredMet_UP, ME_sm_ZH_ClusteredMet_UP, ME_bkg_ClusteredMet_UP, ME_bkg1_ClusteredMet_UP, ME_bkg2_ClusteredMet_UP;
+      float mela_Dbkg_VBF_ClusteredMet_UP;
+      float mela_Dbkg_ggH_ClusteredMet_UP;
+      float mela_Dbkg_WH_ClusteredMet_UP;
+      float mela_Dbkg_ZH_ClusteredMet_UP;      
+      float Q2V1_ClusteredMet_UP;
+      float Q2V2_ClusteredMet_UP;
+      float costheta1_ClusteredMet_UP;
+      float costheta2_ClusteredMet_UP;
+      float Phi_ClusteredMet_UP;
+      float costhetastar_ClusteredMet_UP;
+      float Phi1_ClusteredMet_UP;
+
+      float ME_sm_VBF_ClusteredMet_DOWN, ME_sm_ggH_ClusteredMet_DOWN, ME_sm_WH_ClusteredMet_DOWN, ME_sm_ZH_ClusteredMet_DOWN, ME_bkg_ClusteredMet_DOWN, ME_bkg1_ClusteredMet_DOWN, ME_bkg2_ClusteredMet_DOWN;
+      float mela_Dbkg_VBF_ClusteredMet_DOWN;
+      float mela_Dbkg_ggH_ClusteredMet_DOWN;
+      float mela_Dbkg_WH_ClusteredMet_DOWN;
+      float mela_Dbkg_ZH_ClusteredMet_DOWN;      
+      float Q2V1_ClusteredMet_DOWN;
+      float Q2V2_ClusteredMet_DOWN;
+      float costheta1_ClusteredMet_DOWN;
+      float costheta2_ClusteredMet_DOWN;
+      float Phi_ClusteredMet_DOWN;
+      float costhetastar_ClusteredMet_DOWN;
+      float Phi1_ClusteredMet_DOWN;
       // unc end
       
       Float_t q_1, q_2;
@@ -245,8 +332,9 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
       Int_t gen_match_1;
       Int_t gen_match_2;
-      Int_t decayModeFinding_1;
-      Int_t decayModeFinding_2;
+
+      float decayMode=-999.;
+      float decayMode2;
       
       TBranch *b_q_1;
       TBranch *b_q_2;
@@ -280,8 +368,9 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       TBranch *b_tau2_m;
       TBranch *b_gen_match_1;
       TBranch *b_gen_match_2;
-      TBranch *b_decayModeFinding_1;
-      TBranch *b_decayModeFinding_2;
+      TBranch *b_t1_decayMode;
+      TBranch *b_t2_decayMode;
+      TBranch *b_l2_decayMode;
       
       tree->SetBranchAddress("q_1", &q_1, &b_q_1);
       tree->SetBranchAddress("q_2", &q_2, &b_q_2);
@@ -318,8 +407,11 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
       tree->SetBranchAddress("gen_match_1",&gen_match_1,&b_gen_match_1);
       tree->SetBranchAddress("gen_match_2",&gen_match_2,&b_gen_match_2);
-      tree->SetBranchAddress("decayModeFinding_1",&decayModeFinding_1,&b_decayModeFinding_1);
-      tree->SetBranchAddress("decayModeFinding_2",&decayModeFinding_2,&b_decayModeFinding_2);
+      if ( channel == "tt" ) tree->SetBranchAddress("t1_decayMode", &decayMode, &b_t1_decayMode);
+      if ( channel == "tt" ) tree->SetBranchAddress("t2_decayMode", &decayMode2, &b_t2_decayMode);
+      if ( channel != "tt" ) tree->SetBranchAddress("l2_decayMode",&decayMode2, &b_l2_decayMode);
+
+
 
       // new branches that will need to be filled
       vector<TBranch*> newBranches;
@@ -525,6 +617,95 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       newBranches.push_back(tree->Branch("Phi_DM10_DOWN", &Phi_DM10_DOWN));
       newBranches.push_back(tree->Branch("costhetastar_DM10_DOWN", &costhetastar_DM10_DOWN));
       newBranches.push_back(tree->Branch("Phi1_DM10_DOWN", &Phi1_DM10_DOWN));
+
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_UncMet_UP", &mela_Dbkg_VBF_UncMet_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_UncMet_UP", &mela_Dbkg_ggH_UncMet_UP));
+      newBranches.push_back(tree->Branch("Dbkg_WH_UncMet_UP", &mela_Dbkg_WH_UncMet_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_UncMet_UP", &mela_Dbkg_ZH_UncMet_UP));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_UncMet_UP", &ME_sm_VBF_UncMet_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_UncMet_UP", &ME_sm_ggH_UncMet_UP));
+      newBranches.push_back(tree->Branch("ME_sm_WH_UncMet_UP", &ME_sm_WH_UncMet_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_UncMet_UP", &ME_sm_ZH_UncMet_UP));
+      newBranches.push_back(tree->Branch("ME_bkg_UncMet_UP", &ME_bkg_UncMet_UP));
+      newBranches.push_back(tree->Branch("ME_bkg1_UncMet_UP", &ME_bkg1_UncMet_UP));
+      newBranches.push_back(tree->Branch("ME_bkg2_UncMet_UP", &ME_bkg2_UncMet_UP));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_UncMet_UP", &Q2V1_UncMet_UP));
+      newBranches.push_back(tree->Branch("Q2V2_UncMet_UP", &Q2V2_UncMet_UP));
+      newBranches.push_back(tree->Branch("costheta1_UncMet_UP", &costheta1_UncMet_UP));
+      newBranches.push_back(tree->Branch("costheta2_UncMet_UP", &costheta2_UncMet_UP));
+      newBranches.push_back(tree->Branch("Phi_UncMet_UP", &Phi_UncMet_UP));
+      newBranches.push_back(tree->Branch("costhetastar_UncMet_UP", &costhetastar_UncMet_UP));
+      newBranches.push_back(tree->Branch("Phi1_UncMet_UP", &Phi1_UncMet_UP));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_UncMet_DOWN", &mela_Dbkg_VBF_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_UncMet_DOWN", &mela_Dbkg_ggH_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_WH_UncMet_DOWN", &mela_Dbkg_WH_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_UncMet_DOWN", &mela_Dbkg_ZH_UncMet_DOWN));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_UncMet_DOWN", &ME_sm_VBF_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_UncMet_DOWN", &ME_sm_ggH_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_WH_UncMet_DOWN", &ME_sm_WH_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_UncMet_DOWN", &ME_sm_ZH_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg_UncMet_DOWN", &ME_bkg_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg1_UncMet_DOWN", &ME_bkg1_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg2_UncMet_DOWN", &ME_bkg2_UncMet_DOWN));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_UncMet_DOWN", &Q2V1_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("Q2V2_UncMet_DOWN", &Q2V2_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("costheta1_UncMet_DOWN", &costheta1_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("costheta2_UncMet_DOWN", &costheta2_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("Phi_UncMet_DOWN", &Phi_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("costhetastar_UncMet_DOWN", &costhetastar_UncMet_DOWN));
+      newBranches.push_back(tree->Branch("Phi1_UncMet_DOWN", &Phi1_UncMet_DOWN));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_ClusteredMet_UP", &mela_Dbkg_VBF_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_ClusteredMet_UP", &mela_Dbkg_ggH_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("Dbkg_WH_ClusteredMet_UP", &mela_Dbkg_WH_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_ClusteredMet_UP", &mela_Dbkg_ZH_ClusteredMet_UP));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_ClusteredMet_UP", &ME_sm_VBF_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_ClusteredMet_UP", &ME_sm_ggH_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("ME_sm_WH_ClusteredMet_UP", &ME_sm_WH_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_ClusteredMet_UP", &ME_sm_ZH_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("ME_bkg_ClusteredMet_UP", &ME_bkg_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("ME_bkg1_ClusteredMet_UP", &ME_bkg1_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("ME_bkg2_ClusteredMet_UP", &ME_bkg2_ClusteredMet_UP));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_ClusteredMet_UP", &Q2V1_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("Q2V2_ClusteredMet_UP", &Q2V2_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("costheta1_ClusteredMet_UP", &costheta1_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("costheta2_ClusteredMet_UP", &costheta2_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("Phi_ClusteredMet_UP", &Phi_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("costhetastar_ClusteredMet_UP", &costhetastar_ClusteredMet_UP));
+      newBranches.push_back(tree->Branch("Phi1_ClusteredMet_UP", &Phi1_ClusteredMet_UP));
+
+      // Unc
+      newBranches.push_back(tree->Branch("Dbkg_VBF_ClusteredMet_DOWN", &mela_Dbkg_VBF_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ggH_ClusteredMet_DOWN", &mela_Dbkg_ggH_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_WH_ClusteredMet_DOWN", &mela_Dbkg_WH_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("Dbkg_ZH_ClusteredMet_DOWN", &mela_Dbkg_ZH_ClusteredMet_DOWN));
+      // ME
+      newBranches.push_back(tree->Branch("ME_sm_VBF_ClusteredMet_DOWN", &ME_sm_VBF_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ggH_ClusteredMet_DOWN", &ME_sm_ggH_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_WH_ClusteredMet_DOWN", &ME_sm_WH_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_sm_ZH_ClusteredMet_DOWN", &ME_sm_ZH_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg_ClusteredMet_DOWN", &ME_bkg_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg1_ClusteredMet_DOWN", &ME_bkg1_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("ME_bkg2_ClusteredMet_DOWN", &ME_bkg2_ClusteredMet_DOWN));
+      // angles
+      newBranches.push_back(tree->Branch("Q2V1_ClusteredMet_DOWN", &Q2V1_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("Q2V2_ClusteredMet_DOWN", &Q2V2_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("costheta1_ClusteredMet_DOWN", &costheta1_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("costheta2_ClusteredMet_DOWN", &costheta2_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("Phi_ClusteredMet_DOWN", &Phi_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("costhetastar_ClusteredMet_DOWN", &costhetastar_ClusteredMet_DOWN));
+      newBranches.push_back(tree->Branch("Phi1_ClusteredMet_DOWN", &Phi1_ClusteredMet_DOWN));
 
       float mjj = 0;
       newBranches.push_back(tree->Branch("mjj", &mjj));
@@ -745,7 +926,101 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	costhetastar_DM10_DOWN = -100;
 	Phi1_DM10_DOWN         = -100;
 
+	ME_sm_VBF_UncMet_UP = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_UncMet_UP = -100; // ME for ggH + 2 jets
+	ME_sm_WH_UncMet_UP  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_UncMet_UP  = -100; // ME for ZH (Z->jj)
 	
+	ME_bkg1_UncMet_UP = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_UncMet_UP = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_UncMet_UP  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_UncMet_UP = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_UncMet_UP = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_UncMet_UP  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_UncMet_UP  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_UncMet_UP = -100;
+	Q2V2_UncMet_UP = -100;
+	costheta1_UncMet_UP    = -100;
+	costheta2_UncMet_UP    = -100;
+	Phi_UncMet_UP          = -100;
+	costhetastar_UncMet_UP = -100;
+	Phi1_UncMet_UP         = -100;
+
+	ME_sm_VBF_UncMet_DOWN = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_UncMet_DOWN = -100; // ME for ggH + 2 jets
+	ME_sm_WH_UncMet_DOWN  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_UncMet_DOWN  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_UncMet_DOWN = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_UncMet_DOWN = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_UncMet_DOWN  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_UncMet_DOWN = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_UncMet_DOWN = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_UncMet_DOWN  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_UncMet_DOWN  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_UncMet_DOWN = -100;
+	Q2V2_UncMet_DOWN = -100;
+	costheta1_UncMet_DOWN    = -100;
+	costheta2_UncMet_DOWN    = -100;
+	Phi_UncMet_DOWN          = -100;
+	costhetastar_UncMet_DOWN = -100;
+	Phi1_UncMet_DOWN         = -100;
+
+	ME_sm_VBF_ClusteredMet_UP = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_ClusteredMet_UP = -100; // ME for ggH + 2 jets
+	ME_sm_WH_ClusteredMet_UP  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_ClusteredMet_UP  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_ClusteredMet_UP = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_ClusteredMet_UP = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_ClusteredMet_UP  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_ClusteredMet_UP = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_ClusteredMet_UP = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_ClusteredMet_UP  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_ClusteredMet_UP  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_ClusteredMet_UP = -100;
+	Q2V2_ClusteredMet_UP = -100;
+	costheta1_ClusteredMet_UP    = -100;
+	costheta2_ClusteredMet_UP    = -100;
+	Phi_ClusteredMet_UP          = -100;
+	costhetastar_ClusteredMet_UP = -100;
+	Phi1_ClusteredMet_UP         = -100;
+
+
+
+	ME_sm_VBF_ClusteredMet_DOWN = -100; // ME for SM process VBF H->tt
+	ME_sm_ggH_ClusteredMet_DOWN = -100; // ME for ggH + 2 jets
+	ME_sm_WH_ClusteredMet_DOWN  = -100; // ME for WH (W->jj)
+	ME_sm_ZH_ClusteredMet_DOWN  = -100; // ME for ZH (Z->jj)
+	
+	ME_bkg1_ClusteredMet_DOWN = -100;   // ME for Z+2jets with leading jet being first, trailing second
+	ME_bkg2_ClusteredMet_DOWN = -100;   // ME for Z+2jets with trailing jet being first, leading second
+	ME_bkg_ClusteredMet_DOWN  = -100;   // Sum of the two above (what we need to use)
+	
+	mela_Dbkg_VBF_ClusteredMet_DOWN = -100; // ME_sm_VBF / (ME_sm_VBF + ME_bkg) <- normalized probability to separate H->tt and Z->tt
+	mela_Dbkg_ggH_ClusteredMet_DOWN = -100; // same for ggH and Ztt
+	mela_Dbkg_WH_ClusteredMet_DOWN  = -100; // same for WH and Ztt
+	mela_Dbkg_ZH_ClusteredMet_DOWN  = -100; // same for ZH and Ztt
+
+	// angles inputs to MELA
+	Q2V1_ClusteredMet_DOWN = -100;
+	Q2V2_ClusteredMet_DOWN = -100;
+	costheta1_ClusteredMet_DOWN    = -100;
+	costheta2_ClusteredMet_DOWN    = -100;
+	Phi_ClusteredMet_DOWN          = -100;
+	costhetastar_ClusteredMet_DOWN = -100;
+	Phi1_ClusteredMet_DOWN         = -100;
+	
+
 	if (njets>=2){
 	  
 	  TLorentzVector tau1, tau2;
@@ -795,7 +1070,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	  mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
 	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
 
-	  if (doES) {
+	  if (doES && channel=="tt") {
 
 	    double tesSize = 0.012; // 0.6% uncertainty is considered for each decay mode. AN line1275. Confirm with Abdollah, it should be 1.2%
 	    double tesUP = 1.0 + tesSize;
@@ -810,9 +1085,9 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	      float ES_UP_scale2 = 1.0;
 	      if(gen_match_1==5) ES_UP_scale1 = tesUP;
 	      if(gen_match_2==5) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
@@ -841,15 +1116,15 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    //***************************************************************************
 	    //********************** Tau DM0 shifted up *********************************
 	    //***************************************************************************
-	    if ((gen_match_2==5 && decayModeFinding_2==0) or (gen_match_1==5 && decayModeFinding_1==0)){
+	    if ((gen_match_2==5 && decayMode2==0) or (gen_match_1==5 && decayMode==0)){
 	      std::cout << "DM0 UP    ---  ";
 	      float ES_UP_scale1 = 1.0;
 	      float ES_UP_scale2 = 1.0;
-	      if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
-	      if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
+	      if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
@@ -878,15 +1153,15 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    //***************************************************************************
 	    //********************** Tau DM1 shifted up *********************************
 	    //***************************************************************************
-	    if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
+	    if ((decayMode==1 && gen_match_1==5) or (decayMode2==1 && gen_match_2==5)){
 	      std::cout << "DM1 UP    ---  ";
 	      float ES_UP_scale1 = 1.0;
 	      float ES_UP_scale2 = 1.0;
-	      if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
-	      if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
+	      if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
@@ -915,15 +1190,15 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    //***************************************************************************
 	    //********************* Tau DM10 shifted up *********************************
 	    //***************************************************************************
-	    if ((decayModeFinding_2==10 && gen_match_2==5) or (decayModeFinding_1==10 && gen_match_1==5)){
+	    if ((decayMode2==10 && gen_match_2==5) or (decayMode==10 && gen_match_1==5)){
 	      std::cout << "DM10 UP    ---  ";
 	      float ES_UP_scale1 = 1.0;
 	      float ES_UP_scale2 = 1.0;
-	      if(gen_match_1==5 && decayModeFinding_1==0) ES_UP_scale1 = tesUP;
-	      if(gen_match_2==5 && decayModeFinding_2==0) ES_UP_scale2 = tesUP;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      if(gen_match_1==5 && decayMode==0) ES_UP_scale1 = tesUP;
+	      if(gen_match_2==5 && decayMode2==0) ES_UP_scale2 = tesUP;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_UP_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_UP_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
@@ -958,9 +1233,9 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	      float ES_DOWN_scale2 = 1.0;
 	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
 	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
@@ -989,14 +1264,14 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    //*****************************************************
 	    //************* Tau DM0 shifted down  *****************
 	    //*****************************************************
-	    if ((decayModeFinding_1==0 && gen_match_1==5) or (decayModeFinding_2==0 && gen_match_2==5)){
+	    if ((decayMode==0 && gen_match_1==5) or (decayMode2==0 && gen_match_2==5)){
 	      float ES_DOWN_scale1 = 1.0;
 	      float ES_DOWN_scale2 = 1.0;
 	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
 	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
@@ -1025,15 +1300,15 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    //*****************************************************
 	    //************** Tau DM1 shifted down *****************
 	    //*****************************************************
-	    if ((decayModeFinding_1==1 && gen_match_1==5) or (decayModeFinding_2==1 && gen_match_2==5)){
+	    if ((decayMode==1 && gen_match_1==5) or (decayMode2==1 && gen_match_2==5)){
 	      std::cout << "DM1 DOWN  ---  ";
 	      float ES_DOWN_scale1 = 1.0;
 	      float ES_DOWN_scale2 = 1.0;
 	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
 	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
@@ -1062,14 +1337,14 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    //*****************************************************
 	    //************* Tau DM10 shifted down *****************
 	    //*****************************************************
-	    if ((decayModeFinding_1==10 && gen_match_1==5) or (decayModeFinding_2==10 && gen_match_2==5)){
+	    if ((decayMode==10 && gen_match_1==5) or (decayMode2==10 && gen_match_2==5)){
 	      float ES_DOWN_scale1 = 1.0;
 	      float ES_DOWN_scale2 = 1.0;
 	      if (gen_match_1==5) ES_DOWN_scale1 = tesDOWN;
 	      if (gen_match_2==5) ES_DOWN_scale2 = tesDOWN;	  
-	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayModeFinding_1;
+	      std::cout << "TES values: gen1: " << gen_match_1 << "   dm_1: " << decayMode;
 	      std::cout << "   tes1: " << ES_DOWN_scale1;
-	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayModeFinding_2;
+	      std::cout << "   gen2: " << gen_match_2 << "   dm_2: " << decayMode2;
 	      std::cout << "   tes2: " << ES_DOWN_scale2 << std::endl;
 	      
 	      // AN line 1281 : TES uncertainty is applied by shifting the tau 4-vector up and down 0.6%,
