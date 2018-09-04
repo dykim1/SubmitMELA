@@ -25,6 +25,7 @@ def parse_command_line(argv):
     parser.add_argument('-d','--customDir',nargs='?',type=str,const='',help='Custom input directory')
     parser.add_argument('-sd','--sampledir',nargs='?',type=str,const='',help='The Sample Input directory')
     parser.add_argument('-ms','--metShift',nargs='?',type=str,const='',help='Shift the met')
+    parser.add_argument('-es','--doES',nargs='?',type=str,const='',help='Doing TES shifts?')
     args = parser.parse_args(argv)
 
     return args
@@ -86,6 +87,9 @@ def main(argv=None):
     bash_name = '%s/%s_%i_%s.sh' % (dag_dir+'inputs', channel, period, sample_name)
     bashScript = "#!/bin/bash\n value=$(<$INPUT)\n echo \"$value\"\n"
     bashScript += '$CMSSW_BASE/bin/$SCRAM_ARCH/produceMELABranches inputFile=$value newFile=\'$OUTPUT\'' #% (channel, sample_name, period)
+    if args.doES : doES = "doES="+args.doES
+    else : doES = ''
+    bashScript += ' %s' % (doES)
     bashScript += '\n'
     with open(bash_name,'w') as file:
         file.write(bashScript)

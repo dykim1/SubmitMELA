@@ -311,6 +311,8 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       Int_t   njets;
       Float_t jpt_1, jeta_1, jphi_1;
       Float_t jpt_2, jeta_2, jphi_2;
+      Float_t jpt_1_JESUp, jpt_1_JESDown;
+      Float_t jpt_2_JESUp, jpt_2_JESDown;
       Float_t pt_2;
       Float_t phi_2;
       Float_t eta_2;
@@ -377,9 +379,13 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       TBranch *b_q_2;
       TBranch *b_njets;   //!
       TBranch *b_jpt_1;   //!
+      TBranch *b_jpt_1_JESUp;   //!
+      TBranch *b_jpt_1_JESDown;   //!
       TBranch *b_jeta_1;   //!
       TBranch *b_jphi_1;   //!
       TBranch *b_jpt_2;   //!
+      TBranch *b_jpt_2_JESUp;   //!
+      TBranch *b_jpt_2_JESDown;   //!
       TBranch *b_jeta_2;   //!
       TBranch *b_jphi_2;   //!
       TBranch *b_m_sv;   //!
@@ -562,6 +568,11 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       tree->SetBranchAddress("tau2_eta_ClusteredMet_DOWN", &tau2_eta_ClusteredMet_DOWN, &b_tau2_eta_ClusteredMet_DOWN);
       tree->SetBranchAddress("tau2_phi_ClusteredMet_DOWN", &tau2_phi_ClusteredMet_DOWN, &b_tau2_phi_ClusteredMet_DOWN);
       tree->SetBranchAddress("tau2_m_ClusteredMet_DOWN", &tau2_m_ClusteredMet_DOWN, &b_tau2_m_ClusteredMet_DOWN);
+      
+      tree->SetBranchAddress("jpt_1_JESUp", &jpt_1_JESUp, &b_jpt_1_JESUp);
+      tree->SetBranchAddress("jpt_1_JESDown", &jpt_1_JESDown, &b_jpt_1_JESDown);
+      tree->SetBranchAddress("jpt_2_JESUp", &jpt_2_JESUp, &b_jpt_2_JESUp);
+      tree->SetBranchAddress("jpt_2_JESDown", &jpt_2_JESDown, &b_jpt_2_JESDown);
 
 
       // new branches that will need to be filled
@@ -860,6 +871,10 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
       float mjj = 0;
       newBranches.push_back(tree->Branch("mjj", &mjj));
+      float mjj_ClusteredMet_UP = 0;
+      newBranches.push_back(tree->Branch("mjj_ClusteredMet_UP", &mjj_ClusteredMet_UP));
+      float mjj_ClusteredMet_DOWN = 0;
+      newBranches.push_back(tree->Branch("mjj_ClusteredMet_DOWN", &mjj_ClusteredMet_DOWN));
 
       Long64_t nentries = tree->GetEntries();
 
@@ -1123,6 +1138,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	costhetastar_UncMet_DOWN = -100;
 	Phi1_UncMet_DOWN         = -100;
 
+	mjj_ClusteredMet_UP = 0;
 	ME_sm_VBF_ClusteredMet_UP = -100; // ME for SM process VBF H->tt
 	ME_sm_ggH_ClusteredMet_UP = -100; // ME for ggH + 2 jets
 	ME_sm_WH_ClusteredMet_UP  = -100; // ME for WH (W->jj)
@@ -1147,7 +1163,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	Phi1_ClusteredMet_UP         = -100;
 
 
-
+	mjj_ClusteredMet_DOWN = 0;
 	ME_sm_VBF_ClusteredMet_DOWN = -100; // ME for SM process VBF H->tt
 	ME_sm_ggH_ClusteredMet_DOWN = -100; // ME for ggH + 2 jets
 	ME_sm_WH_ClusteredMet_DOWN  = -100; // ME for WH (W->jj)
@@ -1221,7 +1237,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
 	    
 	    //*****************************************************
-	    // MET SYSTEMATICS
+	    // MET and JETs SYSTEMATICS
 	    // Taus Pt have been corrected at skimming level (TEC)
 	    // TEC propagated to shifted METs
 	    //*****************************************************
@@ -1257,12 +1273,18 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    mela_Dbkg_WH_UncMet_DOWN  = ME_sm_WH_UncMet_DOWN / ( ME_sm_WH_UncMet_DOWN + ME_bkg_UncMet_DOWN);
 	    mela_Dbkg_ZH_UncMet_DOWN  = ME_sm_ZH_UncMet_DOWN / ( ME_sm_ZH_UncMet_DOWN + ME_bkg_UncMet_DOWN);
 
+
 	    std::cout << "MET Clustered Energy Up     ---  " << std::endl;
+	    TLorentzVector jet1_ClusteredMet_UP(0, 0, 1e-3, 1e-3), jet2_ClusteredMet_UP(0, 0, 1e-3, 1e-3);
+	    jet1_ClusteredMet_UP.SetPtEtaPhiM(jpt_1_JESUp, jeta_1, jphi_1, 0);
+	    jet2_ClusteredMet_UP.SetPtEtaPhiM(jpt_2_JESUp, jeta_2, jphi_2, 0);
+	    mjj_ClusteredMet_UP = (jet1_ClusteredMet_UP +  jet2_ClusteredMet_UP).M();
+
 	    TLorentzVector pDaughters1_ClusteredMet_UP, pDaughters2_ClusteredMet_UP;
 	    pDaughters1_ClusteredMet_UP.SetPtEtaPhiM(tau1_pt_ClusteredMet_UP, tau1_eta_ClusteredMet_UP, tau1_phi_ClusteredMet_UP, tau1_m_ClusteredMet_UP);
 	    pDaughters2_ClusteredMet_UP.SetPtEtaPhiM(tau2_pt_ClusteredMet_UP, tau2_eta_ClusteredMet_UP, tau2_phi_ClusteredMet_UP, tau2_m_ClusteredMet_UP);
 
-	    calculateME(pDaughters1_ClusteredMet_UP, pDaughters2_ClusteredMet_UP, jet1, jet2, tauCharge1, tauCharge2,
+	    calculateME(pDaughters1_ClusteredMet_UP, pDaughters2_ClusteredMet_UP, jet1_ClusteredMet_UP, jet2_ClusteredMet_UP, tauCharge1, tauCharge2,
 			ME_sm_VBF_ClusteredMet_UP, ME_sm_ggH_ClusteredMet_UP, ME_sm_WH_ClusteredMet_UP, ME_sm_ZH_ClusteredMet_UP, ME_bkg1_ClusteredMet_UP, ME_bkg2_ClusteredMet_UP,
 			Q2V1_ClusteredMet_UP, Q2V2_ClusteredMet_UP, costheta1_ClusteredMet_UP, costheta2_ClusteredMet_UP, Phi_ClusteredMet_UP, costhetastar_ClusteredMet_UP, Phi1_ClusteredMet_UP);
 
@@ -1274,11 +1296,16 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    mela_Dbkg_ZH_ClusteredMet_UP  = ME_sm_ZH_ClusteredMet_UP / ( ME_sm_ZH_ClusteredMet_UP + ME_bkg_ClusteredMet_UP);
 
 	    std::cout << "MET Clustered Energy Down   ---  " << std::endl;
+	    TLorentzVector jet1_ClusteredMet_DOWN(0, 0, 1e-3, 1e-3), jet2_ClusteredMet_DOWN(0, 0, 1e-3, 1e-3);
+	    jet1_ClusteredMet_DOWN.SetPtEtaPhiM(jpt_1_JESDown, jeta_1, jphi_1, 0);
+	    jet2_ClusteredMet_DOWN.SetPtEtaPhiM(jpt_2_JESDown, jeta_2, jphi_2, 0);
+	    mjj_ClusteredMet_DOWN = (jet1_ClusteredMet_DOWN +  jet2_ClusteredMet_DOWN).M();
+
 	    TLorentzVector pDaughters1_ClusteredMet_DOWN, pDaughters2_ClusteredMet_DOWN;
 	    pDaughters1_ClusteredMet_DOWN.SetPtEtaPhiM(tau1_pt_ClusteredMet_DOWN, tau1_eta_ClusteredMet_DOWN, tau1_phi_ClusteredMet_DOWN, tau1_m_ClusteredMet_DOWN);
 	    pDaughters2_ClusteredMet_DOWN.SetPtEtaPhiM(tau2_pt_ClusteredMet_DOWN, tau2_eta_ClusteredMet_DOWN, tau2_phi_ClusteredMet_DOWN, tau2_m_ClusteredMet_DOWN);
 
-	    calculateME(pDaughters1_ClusteredMet_DOWN, pDaughters2_ClusteredMet_DOWN, jet1, jet2, tauCharge1, tauCharge2,
+	    calculateME(pDaughters1_ClusteredMet_DOWN, pDaughters2_ClusteredMet_DOWN, jet1_ClusteredMet_DOWN, jet2_ClusteredMet_DOWN, tauCharge1, tauCharge2,
 			ME_sm_VBF_ClusteredMet_DOWN, ME_sm_ggH_ClusteredMet_DOWN, ME_sm_WH_ClusteredMet_DOWN, ME_sm_ZH_ClusteredMet_DOWN, ME_bkg1_ClusteredMet_DOWN, ME_bkg2_ClusteredMet_DOWN,
 			Q2V1_ClusteredMet_DOWN, Q2V2_ClusteredMet_DOWN, costheta1_ClusteredMet_DOWN, costheta2_ClusteredMet_DOWN, Phi_ClusteredMet_DOWN, costhetastar_ClusteredMet_DOWN, Phi1_ClusteredMet_DOWN);
 
