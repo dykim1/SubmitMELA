@@ -66,7 +66,7 @@ int main (int argc, char* argv[]) {
   fProduce->ls();
 
 
-  string unc[] = {"nominal","ClusteredMet_UP","ClusteredMet_DOWN","UncMet_UP","UncMet_DOWN","JESUp","JESDown"};
+  string unc[] = {"nominal","ClusteredMet_Up","ClusteredMet_Down","UncMet_Up","UncMet_Down","JESUp","JESDown"};
   for (unsigned int i=0; i < sizeof(unc)/sizeof(unc[0]); i++) {
     processFile(fProduce, parser,  treeToUse, parser.boolValue("trueTau"),unc[i]);
   }
