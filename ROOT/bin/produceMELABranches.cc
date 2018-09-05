@@ -127,7 +127,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
         channel = "et";
 	std::cout << "Identified channel et" << std::endl;
       } 
-      else if ( std::string(key->GetName()).find("mt") != std::string::npos ) {
+      else if ( std::string(key->GetName()).find("mutau") != std::string::npos ) {
         channel = "mt";
 	std::cout << "Identified channel mt" << std::endl;
       } else {
@@ -338,7 +338,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 
 	if (njets>=2){
 	  
-	  if (channel=="tt") {
+	  //if (channel=="tt") {
 	    //std::cout << "pt :" << scenario.get_tau1_pt() << std::endl;
 	    TLorentzVector tau1, tau2;
 	    tau1.SetPtEtaPhiM(scenario.get_tau1_pt(), scenario.get_tau1_eta(), scenario.get_tau1_phi(), scenario.get_tau1_m());
@@ -390,7 +390,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	    mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
 	  }
 
-	} // tt channel end
+	//} // tt channel end
 	// Fill new branches
 	for(auto branchToFill : newBranches) branchToFill->Fill();
 
