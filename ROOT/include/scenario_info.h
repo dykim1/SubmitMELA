@@ -41,41 +41,16 @@ scenario_info::scenario_info(TTree* tree, std::string unc) {
   TIter next(tree->GetListOfBranches());
   TBranch *branch;
   while ((branch = (TBranch*)next())) {
-    if ((tau1_pt_unc+unc)==branch->GetName()) {
-      //std::cout << tau1_pt_unc+unc << std::endl;
-      tau1_pt_unc=branch->GetName();
-    }
-    else if ((tau1_eta_unc+unc)==branch->GetName()) {
-      //std::cout << tau1_eta_unc+unc << std::endl;
-      tau1_eta_unc=branch->GetName();
-    }
-    else if ((tau1_phi_unc+unc)==branch->GetName()) {
-      //std::cout << tau1_phi_unc+unc << std::endl;
-      tau1_phi_unc=branch->GetName();
-    }
-    else if ((tau2_pt_unc+unc)==branch->GetName()) {
-      //std::cout << tau2_pt_unc+unc << std::endl;
-      tau2_pt_unc=branch->GetName();
-    }
-    else if ((tau2_eta_unc+unc)==branch->GetName()) {
-      //std::cout << tau2_eta_unc+unc << std::endl;
-      tau2_eta_unc=branch->GetName();
-    }
-    else if ((tau2_phi_unc+unc)==branch->GetName()) {
-      //std::cout << tau2_phi_unc+unc << std::endl;
-      tau2_phi_unc=branch->GetName();
-    }
-    else if ((jpt_1_unc+unc)==branch->GetName()) {
-      //std::cout << jpt_1_unc+unc << std::endl;
-      jpt_1_unc=branch->GetName();
-    }
-    else if ((jpt_2_unc+unc)==branch->GetName()) {
-      //std::cout << jpt_2_unc+unc << std::endl;
-      jpt_2_unc=branch->GetName();
-    }
-
+    if ((tau1_pt_unc+unc)==branch->GetName())             tau1_pt_unc=branch->GetName();
+    else if ((tau1_eta_unc+unc)==branch->GetName())       tau1_eta_unc=branch->GetName();
+    else if ((tau1_phi_unc+unc)==branch->GetName())       tau1_phi_unc=branch->GetName();
+    else if ((tau2_pt_unc+unc)==branch->GetName())        tau2_pt_unc=branch->GetName();
+    else if ((tau2_eta_unc+unc)==branch->GetName())       tau2_eta_unc=branch->GetName();
+    else if ((tau2_phi_unc+unc)==branch->GetName())       tau2_phi_unc=branch->GetName();
+    else if ((jpt_1_unc+unc)==branch->GetName())          jpt_1_unc=branch->GetName();
+    else if ((jpt_2_unc+unc)==branch->GetName())          jpt_2_unc=branch->GetName();
   }
-  //std::cout << "-------------- " << unc << " --------------" << std::endl << std::endl;
+  // print used tau and jet kinematics
   std::cout << tau1_pt_unc << std::endl;
   std::cout << tau1_eta_unc << std::endl;
   std::cout << tau1_phi_unc << std::endl;
@@ -84,7 +59,9 @@ scenario_info::scenario_info(TTree* tree, std::string unc) {
   std::cout << tau2_phi_unc << std::endl;
   std::cout << jpt_1_unc << std::endl;
   std::cout << jpt_2_unc << std::endl;
-  std::cout << "-------------- " << unc << " --------------" << std::endl << std::endl;
+  std::cout << "-------------- used kinematics --------------" << std::endl << std::endl;
+
+  // pick up printed branches
   tree -> SetBranchAddress( tau1_pt_unc.c_str()  , &tau1_pt  );
   tree -> SetBranchAddress( tau1_eta_unc.c_str() , &tau1_eta );
   tree -> SetBranchAddress( tau1_phi_unc.c_str() , &tau1_phi );

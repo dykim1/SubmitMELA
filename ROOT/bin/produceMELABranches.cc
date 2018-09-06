@@ -65,7 +65,7 @@ int main (int argc, char* argv[]) {
   std::cout<<"listing the directories================="<<std::endl;
   fProduce->ls();
 
-
+  // Add systematics here! 
   string unc[] = {"nominal","ClusteredMet_Up","ClusteredMet_Down","UncMet_Up","UncMet_Down","JESUp","JESDown"};
   for (unsigned int i=0; i < sizeof(unc)/sizeof(unc[0]); i++) {
     processFile(fProduce, parser,  treeToUse, parser.boolValue("trueTau"),unc[i]);
@@ -136,120 +136,59 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       }
 
       TTree* tree = (TTree*)obj;
-
+      // mela
       float ME_sm_VBF, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg, ME_bkg1, ME_bkg2;
-      float mela_Dbkg_VBF;
-      float mela_Dbkg_ggH;
-      float mela_Dbkg_WH;
-      float mela_Dbkg_ZH;
-      
+      float mela_Dbkg_VBF, mela_Dbkg_ggH, mela_Dbkg_WH, mela_Dbkg_ZH;
       // angles
-      float Q2V1;
-      float Q2V2;
-      float costheta1;
-      float costheta2;
+      float Q2V1,Q2V2;
+      float costheta1,costheta2;
       float Phi;
       float costhetastar;
       float Phi1;
-      
-      Float_t q_1, q_2;
-      Float_t m_sv;
-      Float_t pt_sv;
-      Float_t eta_sv;
-      Float_t phi_sv;
+      // taus kinematics
+      Float_t pt_1, eta_1, phi_1, m_1, q_1;
+      Float_t pt_2, eta_2, phi_2, m_2, q_2;
+      // jets kinematics
       Int_t   njets;
-      //Float_t jpt_1, jeta_1, jphi_1;
-      //Float_t jpt_2, jeta_2, jphi_2;
       Float_t jeta_1, jphi_1; 
       Float_t jeta_2, jphi_2; 
-      Float_t pt_2;
-      Float_t phi_2;
-      Float_t eta_2;
-      Float_t m_2;
-      Float_t pt_1;
-      Float_t phi_1;
-      Float_t eta_1;
-      Float_t m_1;
-      
-      /*
-      Float_t tau1_pt;
-      Float_t tau1_eta;
-      Float_t tau1_phi;
-      Float_t tau1_m;
-      
-      Float_t tau2_pt;
-      Float_t tau2_eta;
-      Float_t tau2_phi;
-      Float_t tau2_m;
-      */
+
       
       TBranch *b_q_1;
       TBranch *b_q_2;
-      TBranch *b_njets;   //!
-      //TBranch *b_jpt_1;   //!
-      TBranch *b_jeta_1;   //!
-      TBranch *b_jphi_1;   //!
-      //TBranch *b_jpt_2;   //!
-      TBranch *b_jeta_2;   //!
-      TBranch *b_jphi_2;   //!
-      TBranch *b_m_sv;   //!
-      TBranch *b_pt_sv;   //!
-      TBranch *b_eta_sv;   //!
-      TBranch *b_phi_sv;   //!
-      TBranch *b_pt_2;   //!
-      TBranch *b_phi_2;   //!
-      TBranch *b_eta_2;   //!
-      TBranch *b_m_2;   //!
       TBranch *b_pt_1;   //!
       TBranch *b_phi_1;   //!
       TBranch *b_eta_1;   //!
       TBranch *b_m_1;   //!
-      /*
-      TBranch *b_tau1_pt;
-      TBranch *b_tau1_phi;
-      TBranch *b_tau1_eta;
-      TBranch *b_tau1_m;
-      
-      TBranch *b_tau2_pt;
-      TBranch *b_tau2_phi;
-      TBranch *b_tau2_eta;
-      TBranch *b_tau2_m;
-      */
+      TBranch *b_pt_2;   //!
+      TBranch *b_phi_2;   //!
+      TBranch *b_eta_2;   //!
+      TBranch *b_m_2;   //!
+      TBranch *b_njets;   //!
+      TBranch *b_jeta_1;   //!
+      TBranch *b_jphi_1;   //!
+      TBranch *b_jeta_2;   //!
+      TBranch *b_jphi_2;   //!
 
-      tree->SetBranchAddress("q_1", &q_1, &b_q_1);
-      tree->SetBranchAddress("q_2", &q_2, &b_q_2);
-      /*
-      tree->SetBranchAddress("tau1_pt", &tau1_pt, &b_tau1_pt);
-      tree->SetBranchAddress("tau1_eta", &tau1_eta, &b_tau1_eta);
-      tree->SetBranchAddress("tau1_phi", &tau1_phi, &b_tau1_phi);
-      tree->SetBranchAddress("tau1_m", &tau1_m, &b_tau1_m);
-      
-      tree->SetBranchAddress("tau2_pt", &tau2_pt, &b_tau2_pt);
-      tree->SetBranchAddress("tau2_eta", &tau2_eta, &b_tau2_eta);
-      tree->SetBranchAddress("tau2_phi", &tau2_phi, &b_tau2_phi);
-      tree->SetBranchAddress("tau2_m", &tau2_m, &b_tau2_m);
-      */
-      tree->SetBranchAddress("njets", &njets, &b_njets);
-      //tree->SetBranchAddress("jpt_1", &jpt_1, &b_jpt_1);
-      tree->SetBranchAddress("jeta_1", &jeta_1, &b_jeta_1);
-      tree->SetBranchAddress("jphi_1", &jphi_1, &b_jphi_1);
-      //tree->SetBranchAddress("jpt_2", &jpt_2, &b_jpt_2);
-      tree->SetBranchAddress("jeta_2", &jeta_2, &b_jeta_2);
-      tree->SetBranchAddress("jphi_2", &jphi_2, &b_jphi_2);
-      tree->SetBranchAddress("m_sv", &m_sv, &b_m_sv);
-      tree->SetBranchAddress("pt_sv", &pt_sv, &b_pt_sv);
-      tree->SetBranchAddress("eta_sv", &eta_sv, &b_eta_sv);
-      tree->SetBranchAddress("phi_sv", &phi_sv, &b_phi_sv);
+
       tree->SetBranchAddress("pt_1", &pt_1, &b_pt_1);
       tree->SetBranchAddress("phi_1", &phi_1, &b_phi_1);
       tree->SetBranchAddress("eta_1", &eta_1, &b_eta_1);
       tree->SetBranchAddress("m_1", &m_1, &b_m_1);
+      tree->SetBranchAddress("q_1", &q_1, &b_q_1);
       tree->SetBranchAddress("pt_2", &pt_2, &b_pt_2);
       tree->SetBranchAddress("phi_2", &phi_2, &b_phi_2);
       tree->SetBranchAddress("eta_2", &eta_2, &b_eta_2);
       tree->SetBranchAddress("m_2", &m_2, &b_m_2);
-      
-      // construct scenario
+      tree->SetBranchAddress("q_2", &q_2, &b_q_2);
+      tree->SetBranchAddress("njets", &njets, &b_njets);
+      tree->SetBranchAddress("jeta_1", &jeta_1, &b_jeta_1);
+      tree->SetBranchAddress("jphi_1", &jphi_1, &b_jphi_1);
+      tree->SetBranchAddress("jeta_2", &jeta_2, &b_jeta_2);
+      tree->SetBranchAddress("jphi_2", &jphi_2, &b_jphi_2);
+
+
+      // Construct scenario
       scenario_info scenario(tree, unc);
 
       // new branches that will need to be filled
@@ -291,7 +230,6 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
       newBranches.push_back(tree->Branch(ME_bkg_unc.c_str(), &ME_bkg));
       newBranches.push_back(tree->Branch(ME_bkg1_unc.c_str(), &ME_bkg1));
       newBranches.push_back(tree->Branch(ME_bkg2_unc.c_str(), &ME_bkg2));
-      
       // angles
       newBranches.push_back(tree->Branch(Q2V1_unc.c_str(), &Q2V1));
       newBranches.push_back(tree->Branch(Q2V2_unc.c_str(), &Q2V2));
@@ -311,6 +249,7 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	if ( jentry % 100000 == 0 ) std::cout << jentry << std::endl;
 	nb = tree->GetEntry(jentry);   nbytes += nb;
 	
+	// initialize
 	mjj = 0;
 	ME_sm_VBF = -100; // ME for SM process VBF H->tt
 	ME_sm_ggH = -100; // ME for ggH + 2 jets
@@ -337,69 +276,62 @@ void processFile(TDirectory*  dir, optutl::CommandLineParser parser, char treeTo
 	
 
 	if (njets>=2){
+	  TLorentzVector tau1, tau2;
+	  tau1.SetPtEtaPhiM(scenario.get_tau1_pt(), scenario.get_tau1_eta(), scenario.get_tau1_phi(), scenario.get_tau1_m());
+	  tau2.SetPtEtaPhiM(scenario.get_tau2_pt(), scenario.get_tau2_eta(), scenario.get_tau2_phi(), scenario.get_tau2_m());
 	  
-	  //if (channel=="tt") {
-	    //std::cout << "pt :" << scenario.get_tau1_pt() << std::endl;
-	    TLorentzVector tau1, tau2;
-	    tau1.SetPtEtaPhiM(scenario.get_tau1_pt(), scenario.get_tau1_eta(), scenario.get_tau1_phi(), scenario.get_tau1_m());
-	    tau2.SetPtEtaPhiM(scenario.get_tau2_pt(), scenario.get_tau2_eta(), scenario.get_tau2_phi(), scenario.get_tau2_m());
+	  // jet 4-vectors
+	  TLorentzVector jet1(0, 0, 1e-3, 1e-3), jet2(0, 0, 1e-3, 1e-3), higgs(0, 0, 0, 0), blank1(0, 0, 0, 0);
+	  jet1.SetPtEtaPhiM(scenario.get_jpt_1(), jeta_1, jphi_1, 0);
+	  jet2.SetPtEtaPhiM(scenario.get_jpt_2(), jeta_2, jphi_2, 0);
+	  mjj = (jet1 +  jet2).M();
 	    
-	    // jet 4-vectors
-	    TLorentzVector jet1(0, 0, 1e-3, 1e-3), jet2(0, 0, 1e-3, 1e-3), higgs(0, 0, 0, 0),
-	      blank1(0, 0, 0, 0);
-	    jet1.SetPtEtaPhiM(scenario.get_jpt_1(), jeta_1, jphi_1, 0);
-	    jet2.SetPtEtaPhiM(scenario.get_jpt_2(), jeta_2, jphi_2, 0);
-	    mjj = (jet1 +  jet2).M();
+	  // tau lepton 4-vectors
+	  TLorentzVector pDaughters1, pDaughters2;
+	  
+	  TLorentzVector visTau1, visTau2;
+	  visTau1.SetPtEtaPhiM(pt_1, eta_1, phi_1, m_1);
+	  visTau2.SetPtEtaPhiM(pt_2, eta_2, phi_2, m_2);
 	    
-	    // tau lepton 4-vectors
-	    TLorentzVector pDaughters1, pDaughters2;
-	    
-	    TLorentzVector visTau1, visTau2;
-	    visTau1.SetPtEtaPhiM(pt_1, eta_1, phi_1, m_1);
-	    visTau2.SetPtEtaPhiM(pt_2, eta_2, phi_2, m_2);
-	    
-	    if ( !trueTau ) {
-	      pDaughters1 = visTau1;
-	      pDaughters2 = visTau2;
-	    } else {
-	      pDaughters1 = tau1;
-	      pDaughters2 = tau2;
-	    }
-	    
-	    
-	    
-	    // Determine the signs of the tau leptons      
-	    int tauCharge1 = q_1;
-	    int tauCharge2 = q_2;
-	    
-	    if ( tau1.DeltaR(visTau1) > tau1.DeltaR(visTau2) )
-	      tauCharge1 = q_2;
-	    if ( tau2.DeltaR(visTau2) > tau2.DeltaR(visTau1) ) 
-	      tauCharge2 = q_1;
-	    
-	    calculateME(pDaughters1, pDaughters2, jet1, jet2, tauCharge1, tauCharge2,
-			ME_sm_VBF, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg1, ME_bkg2,
-			Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
-	    
-	    
-	    ME_bkg = ME_bkg1 + ME_bkg2;
-	    
-	    mela_Dbkg_VBF = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
-	    mela_Dbkg_ggH = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
-	    mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
-	    mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	  if ( !trueTau ) {
+	    pDaughters1 = visTau1;
+	    pDaughters2 = visTau2;
+	  } else {
+	    pDaughters1 = tau1;
+	    pDaughters2 = tau2;
 	  }
-
-	//} // tt channel end
+	  
+	  
+	  
+	  // Determine the signs of the tau leptons      
+	  int tauCharge1 = q_1;
+	  int tauCharge2 = q_2;
+	  
+	  if ( tau1.DeltaR(visTau1) > tau1.DeltaR(visTau2) )
+	    tauCharge1 = q_2;
+	  if ( tau2.DeltaR(visTau2) > tau2.DeltaR(visTau1) ) 
+	    tauCharge2 = q_1;
+	  
+	  calculateME(pDaughters1, pDaughters2, jet1, jet2, tauCharge1, tauCharge2,
+		      ME_sm_VBF, ME_sm_ggH, ME_sm_WH, ME_sm_ZH, ME_bkg1, ME_bkg2,
+		      Q2V1, Q2V2, costheta1, costheta2, Phi, costhetastar, Phi1);
+	  
+	  
+	  ME_bkg = ME_bkg1 + ME_bkg2;
+	  
+	  mela_Dbkg_VBF = ME_sm_VBF / ( ME_sm_VBF + ME_bkg);
+	  mela_Dbkg_ggH = ME_sm_ggH / ( ME_sm_ggH + ME_bkg);
+	  mela_Dbkg_WH  = ME_sm_WH / ( ME_sm_WH + ME_bkg);
+	  mela_Dbkg_ZH  = ME_sm_ZH / ( ME_sm_ZH + ME_bkg);
+	}
 	// Fill new branches
 	for(auto branchToFill : newBranches) branchToFill->Fill();
-
       } // loop over events
-
+      
       dir->cd();
       tree->Write("", TObject::kOverwrite);
       strcpy(treeToUse, stringA);
-
+      
     }
   }
 }
@@ -409,7 +341,7 @@ void calculateME(TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, 
                  float& ME_sm_VBF, float& ME_sm_ggH, float& ME_sm_WH, float& ME_sm_ZH,
                  float& ME_bkg1, float& ME_bkg2,
                  float& Q2V1, float& Q2V2, float& costheta1, float& costheta2, float& Phi, float& costhetastar, float& Phi1) {
-
+  
   /*
   std::cout << "Input " << std::endl;
   std::cout << "\t tau1: " << tau1.Pt() << "\t" << tau1.Eta() << "\t" << tau1.Phi() << "\t" << tau1.M() << std::endl;
