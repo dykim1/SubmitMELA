@@ -28,9 +28,11 @@ scenario_info::scenario_info(TTree* tree, std::string unc) {
   std::string tau1_pt_unc = "tau1_pt";
   std::string tau1_eta_unc = "tau1_eta";
   std::string tau1_phi_unc = "tau1_phi";
+  std::string tau1_m_unc = "tau1_m";
   std::string tau2_pt_unc = "tau2_pt";
   std::string tau2_eta_unc = "tau2_eta";
   std::string tau2_phi_unc = "tau2_phi";
+  std::string tau2_m_unc = "tau2_m";
   std::string jpt_1_unc = "jpt_1";
   std::string jpt_2_unc = "jpt_2";
 
@@ -44,9 +46,11 @@ scenario_info::scenario_info(TTree* tree, std::string unc) {
     if ((tau1_pt_unc+unc)==branch->GetName())             tau1_pt_unc=branch->GetName();
     else if ((tau1_eta_unc+unc)==branch->GetName())       tau1_eta_unc=branch->GetName();
     else if ((tau1_phi_unc+unc)==branch->GetName())       tau1_phi_unc=branch->GetName();
+    else if ((tau1_m_unc+unc)==branch->GetName())         tau1_m_unc=branch->GetName();
     else if ((tau2_pt_unc+unc)==branch->GetName())        tau2_pt_unc=branch->GetName();
     else if ((tau2_eta_unc+unc)==branch->GetName())       tau2_eta_unc=branch->GetName();
     else if ((tau2_phi_unc+unc)==branch->GetName())       tau2_phi_unc=branch->GetName();
+    else if ((tau2_m_unc+unc)==branch->GetName())         tau2_m_unc=branch->GetName();
     else if ((jpt_1_unc+unc)==branch->GetName())          jpt_1_unc=branch->GetName();
     else if ((jpt_2_unc+unc)==branch->GetName())          jpt_2_unc=branch->GetName();
   }
@@ -54,9 +58,11 @@ scenario_info::scenario_info(TTree* tree, std::string unc) {
   std::cout << tau1_pt_unc << std::endl;
   std::cout << tau1_eta_unc << std::endl;
   std::cout << tau1_phi_unc << std::endl;
+  std::cout << tau1_m_unc << std::endl;
   std::cout << tau2_pt_unc << std::endl;
   std::cout << tau2_eta_unc << std::endl;
   std::cout << tau2_phi_unc << std::endl;
+  std::cout << tau2_m_unc << std::endl;
   std::cout << jpt_1_unc << std::endl;
   std::cout << jpt_2_unc << std::endl;
   std::cout << "-------------- used kinematics --------------" << std::endl << std::endl;
@@ -65,9 +71,11 @@ scenario_info::scenario_info(TTree* tree, std::string unc) {
   tree -> SetBranchAddress( tau1_pt_unc.c_str()  , &tau1_pt  );
   tree -> SetBranchAddress( tau1_eta_unc.c_str() , &tau1_eta );
   tree -> SetBranchAddress( tau1_phi_unc.c_str() , &tau1_phi );
+  tree -> SetBranchAddress( tau1_m_unc.c_str()   , &tau1_m );
   tree -> SetBranchAddress( tau2_pt_unc.c_str()  , &tau2_pt  );
   tree -> SetBranchAddress( tau2_eta_unc.c_str() , &tau2_eta );
   tree -> SetBranchAddress( tau2_phi_unc.c_str() , &tau2_phi );
+  tree -> SetBranchAddress( tau2_m_unc.c_str()   , &tau2_m );
   tree -> SetBranchAddress( jpt_1_unc.c_str()    , &jpt_1    );
   tree -> SetBranchAddress( jpt_2_unc.c_str()    , &jpt_2    );
 
