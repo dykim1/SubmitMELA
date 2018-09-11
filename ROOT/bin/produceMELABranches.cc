@@ -42,7 +42,7 @@ void CopyDir(TDirectory *source,optutl::CommandLineParser parser);
 int main (int argc, char* argv[]) {
 
   optutl::CommandLineParser parser("Input parameters");
-  parser.addOption("newFile",optutl::CommandLineParser::kString,"newFile","newFile.root");
+  parser.addOption("newFile",optutl::CommandLineParser::kString,"newFile");//,"newFile.root");
   parser.addOption("inputFile",optutl::CommandLineParser::kString,"input File");
   parser.addOption("trueTau",optutl::CommandLineParser::kBool,"use true 4-vectors of tau leptons",true);
 
@@ -66,7 +66,7 @@ int main (int argc, char* argv[]) {
   fProduce->ls();
 
   // Add systematics here! 
-  string unc[] = {"nominal","ClusteredMet_Up","ClusteredMet_Down","UncMet_Up","UncMet_Down","JESUp","JESDown"};
+  string unc[] = {"nominal","ClusteredMet_Up","ClusteredMet_Down","UncMet_Up","UncMet_Down","JESUp","JESDown","DM0_Up","DM0_Down","DM1_Up","DM1_Down","DM10_Up","DM10_Down"};
   for (unsigned int i=0; i < sizeof(unc)/sizeof(unc[0]); i++) {
     processFile(fProduce, parser,  treeToUse, parser.boolValue("trueTau"),unc[i]);
   }
