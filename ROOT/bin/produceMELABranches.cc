@@ -42,7 +42,7 @@ void CopyDir(TDirectory *source,optutl::CommandLineParser parser);
 int main (int argc, char* argv[]) {
 
   optutl::CommandLineParser parser("Input parameters");
-  parser.addOption("newFile",optutl::CommandLineParser::kString,"newFile");//,"newFile.root");
+  parser.addOption("newFile",optutl::CommandLineParser::kString,"newFile","newFile.root");
   parser.addOption("inputFile",optutl::CommandLineParser::kString,"input File");
   parser.addOption("trueTau",optutl::CommandLineParser::kBool,"use true 4-vectors of tau leptons",true);
 
@@ -57,7 +57,7 @@ int main (int argc, char* argv[]) {
   TFile *fProduce;
   TFile *f = new TFile(parser.stringValue("inputFile").c_str(),"READ");
   std::cout<<"Creating new outputfile"<<std::endl;
-  std::string newFileName = parser.stringValue("newFile");
+  std::string newFileName = parser.stringValue("newFile").c_str();
 
   fProduce = new TFile(newFileName.c_str(),"RECREATE");
   copyFiles(parser, f, fProduce);//new TFile(parser.stringValue("inputFile").c_str()+"SVFit","UPDATE");
